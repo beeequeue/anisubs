@@ -16,5 +16,11 @@
   "scripts": {
     "precommit": "lint-staged",
     "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "class-validator": "0.12.2",
+    "graphql": "15.3.0",
+    "type-graphql": "1.0.0",
+    "typeorm": "0.2.26"
   }
 }
