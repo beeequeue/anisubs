@@ -1,0 +1,20 @@
+{
+  "name": "@federation-server/manager",
+  "version": "0.0.0",
+  "description": "TODO: description",
+  "author": "BeeeQueue",
+  "homepage": "",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "files": [
+    "dist"
+  ],
+  "lint-staged": {
+    "*.{ts,js,json,yml}": "prettier --write"
+  },
+  "scripts": {
+    "precommit": "lint-staged",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  }
+}
