@@ -5,6 +5,10 @@
   "author": "BeeeQueue",
   "homepage": "",
   "license": "MIT",
+  "engines": {
+    "node": ">=14",
+    "yarn": ">=2"
+  },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "files": [

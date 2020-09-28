@@ -1,6 +1,10 @@
 {
   "name": "@anisubs/root",
   "private": true,
+  "engines": {
+    "node": ">=14",
+    "yarn": ">=2"
+  },
   "workspaces": [
     "packages/*",
     "apps/*"
