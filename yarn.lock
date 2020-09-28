@@ -5,6 +5,29 @@ __metadata:
   version: 4
   cacheKey: 6
 
+"@anisubs/manager@workspace:apps/manager":
+  version: 0.0.0-use.local
+  resolution: "@anisubs/manager@workspace:apps/manager"
+  dependencies:
+    "@types/koa": 2.11.4
+    "@types/koa-graphql": 0.8.4
+    "@types/koa-mount": 4.0.0
+    class-validator: 0.12.2
+    graphql: 15.3.0
+    koa: 2.13.0
+    koa-graphql: 0.8.0
+    koa-mount: 4.0.0
+    type-graphql: 1.0.0
+    typeorm: 0.2.26
+  languageName: unknown
+  linkType: soft
+
+"@anisubs/one@workspace:apps/one":
+  version: 0.0.0-use.local
+  resolution: "@anisubs/one@workspace:apps/one"
+  languageName: unknown
+  linkType: soft
+
 "@anisubs/root@workspace:.":
   version: 0.0.0-use.local
   resolution: "@anisubs/root@workspace:."
@@ -16,6 +39,12 @@ __metadata:
     lint-staged: 10.4.0
     prettier: 2.1.2
     typescript: 4.0.3
+  languageName: unknown
+  linkType: soft
+
+"@anisubs/two@workspace:apps/two":
+  version: 0.0.0-use.local
+  resolution: "@anisubs/two@workspace:apps/two"
   languageName: unknown
   linkType: soft
 
@@ -127,35 +156,6 @@ __metadata:
   checksum: 97477b1b47cbd0d7d68a267d88193e85d6d624494fbb3c2f7a61c96aca2834b71ae28e2d6b9ab967212188f25574f65d73be58d5c76c27004525a44327f5072d
   languageName: node
   linkType: hard
-
-"@federation-server/manager@workspace:apps/manager":
-  version: 0.0.0-use.local
-  resolution: "@federation-server/manager@workspace:apps/manager"
-  dependencies:
-    "@types/koa": 2.11.4
-    "@types/koa-graphql": 0.8.4
-    "@types/koa-mount": 4.0.0
-    class-validator: 0.12.2
-    graphql: 15.3.0
-    koa: 2.13.0
-    koa-graphql: 0.8.0
-    koa-mount: 4.0.0
-    type-graphql: 1.0.0
-    typeorm: 0.2.26
-  languageName: unknown
-  linkType: soft
-
-"@federation-server/one@workspace:apps/one":
-  version: 0.0.0-use.local
-  resolution: "@federation-server/one@workspace:apps/one"
-  languageName: unknown
-  linkType: soft
-
-"@federation-server/two@workspace:apps/two":
-  version: 0.0.0-use.local
-  resolution: "@federation-server/two@workspace:apps/two"
-  languageName: unknown
-  linkType: soft
 
 "@lerna/add@npm:3.21.0":
   version: 3.21.0
