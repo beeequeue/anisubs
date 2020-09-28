@@ -2,8 +2,7 @@
   "name": "@anisubs/root",
   "private": true,
   "engines": {
-    "node": ">=14",
-    "yarn": ">=2"
+    "node": ">=14"
   },
   "workspaces": [
     "packages/*",
@@ -20,12 +19,15 @@
     "@lerna/package-graph": "patch:@lerna/package-graph@npm:3.18.5#.yarn-patches/@lerna/package-graph.patch"
   },
   "devDependencies": {
+    "@types/dotenv-flow": "3.1.0",
     "@types/node": "14.11.2",
     "@types/prettier": "2.1.1",
+    "dotenv-flow": "3.2.0",
     "husky": "4.3.0",
     "lerna": "3.22.1",
     "lint-staged": "10.4.0",
     "prettier": "2.1.2",
-    "typescript": "4.0.3"
+    "ts-node": "9.0.0",
+    "typescript": "4.1.0-dev.20200928"
   }
 }
