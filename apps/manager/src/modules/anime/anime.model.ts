@@ -1,14 +1,12 @@
-import { Field, FieldResolver, ID, Int, ObjectType } from "type-graphql"
+import { Field, ID, Int, ObjectType } from "type-graphql"
 import {
   BaseEntity,
   Column,
   Entity,
   Generated,
-  Index,
-  PrimaryColumn,
   OneToMany,
+  PrimaryColumn,
 } from "typeorm"
-import { IsDefined, IsEnum } from "class-validator"
 
 import { Alias } from "@/modules/alias/alias.model"
 
@@ -30,9 +28,4 @@ export class Anime extends BaseEntity {
 
   @OneToMany(() => Alias, (alias) => alias.anime)
   aliases!: Alias[]
-
-  @FieldResolver(() => [String])
-  aliasesField(): string[] {
-    return this.aliases.map((alias) => alias.name)
-  }
 }

@@ -1,13 +1,5 @@
 import { Field, ID, ObjectType } from "type-graphql"
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Generated,
-  Index,
-  PrimaryColumn,
-} from "typeorm"
-import { IsDefined, IsEnum } from "class-validator"
+import { BaseEntity, Entity, Generated, PrimaryColumn } from "typeorm"
 
 @Entity()
 @ObjectType()

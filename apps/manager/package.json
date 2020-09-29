@@ -8,18 +8,13 @@
   "engines": {
     "node": ">=14"
   },
-  "type": "module",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "files": [
-    "dist"
-  ],
   "lint-staged": {
     "*.{ts,js,json,yml}": "prettier --write"
   },
   "scripts": {
     "precommit": "lint-staged",
-    "dev": "node -r dotenv-flow/config --loader ts-node/esm src/index.ts",
+    "dev": "ts-node-dev --respawn --no-deps -r dotenv-flow/config -r tsconfig-paths/register --files --inspect -- src/index.ts",
+    "start": "yarn ts-node -T -r tsconfig-paths/register src/index.ts",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
@@ -28,6 +23,7 @@
     "koa": "2.13.0",
     "koa-graphql": "0.8.0",
     "koa-router": "9.4.0",
+    "reflect-metadata": "0.1.13",
     "type-graphql": "1.0.0",
     "typeorm": "0.2.26"
   },
