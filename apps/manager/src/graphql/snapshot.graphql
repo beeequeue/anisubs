@@ -4,9 +4,12 @@
 # -----------------------------------------------
 
 type Anime {
+  aliases: [String!]!
   anidbId: Int
   anilistId: Int!
+  anilistScore: Int
   id: ID!
+  malScore: Float
 }
 
 type Query {

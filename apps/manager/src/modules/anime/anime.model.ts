@@ -1,4 +1,4 @@
-import { Field, ID, Int, ObjectType } from "type-graphql"
+import { Field, Float, ID, Int, ObjectType } from "type-graphql"
 import {
   BaseEntity,
   Column,
@@ -9,6 +9,7 @@ import {
 } from "typeorm"
 
 import { Alias } from "@/modules/alias/alias.model"
+import { MyAnimeList } from "@/lib/myanimelist"
 
 @Entity()
 @ObjectType()
@@ -18,7 +19,7 @@ export class Anime extends BaseEntity {
   @Field(() => ID)
   id!: string
 
-  @Column({ nullable: true })
+  @Column()
   @Field(() => Int)
   anilistId!: number
 
@@ -26,6 +27,22 @@ export class Anime extends BaseEntity {
   @Field(() => Int, { nullable: true })
   anidbId!: number
 
+  @Column({ nullable: true })
+  @Field(() => Int, { nullable: true })
+  anilistScore!: number
+
+  @Field(() => Float, { nullable: true })
+  async malScore(): Promise<number | null> {
+    return MyAnimeList.fetchRating(this.anilistId)
+  }
+
   @OneToMany(() => Alias, (alias) => alias.anime)
   aliases!: Alias[]
+
+  @Field(() => [String], {
+    name: "aliases",
+  })
+  getAliases(): string[] {
+    return this.aliases.map(({ name }) => name)
+  }
 }

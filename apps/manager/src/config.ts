@@ -32,6 +32,7 @@ type Config = {
   nodeEnv: Environment
   appEnv: Environment.Development | Environment.Production
   port: number
+  userAgent: string
 
   db: PostgresConnectionOptions
 }
@@ -40,6 +41,7 @@ export const config: Config = {
   nodeEnv: envVar("NODE_ENV", Environment.Production),
   appEnv: envVar("APP_ENV", Environment.Production),
   port: Number(envVar("PORT", 3000)),
+  userAgent: "@anisubs/manager",
 
   db: {
     type: "postgres",
