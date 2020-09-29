@@ -49,7 +49,7 @@ export const config: Config = {
     password: envVar("DATABASE_PASS"),
     url: envVar("DATABASE_URL"),
     ssl: envVar("DATABASE_SSL") === "true",
-    database: "postgres",
+    database: envVar("DATABASE_DB", envVar("DATABASE_DATABASE", "postgres")),
 
     migrationsRun: true,
 
