@@ -1,3 +1,10 @@
 import Router from "koa-router"
+import { addGraphQlRoute } from "@/graphql"
 
-export const router = new Router()
+export const createRouter = async () => {
+  const router = new Router()
+
+  await addGraphQlRoute(router)
+
+  return router
+}
