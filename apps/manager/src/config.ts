@@ -8,8 +8,8 @@ const envVar = <T extends string, D extends T | undefined = T>(
 ): D extends undefined ? T | undefined : T => {
   const value = process.env[key] as T | undefined
 
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  return (value || defaultValue) as any
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return (value || defaultValue) as never
 }
 
 // const requiredEnvVar = <T extends string = string>(key: string) => {

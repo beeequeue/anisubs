@@ -38,6 +38,8 @@ export class ARM {
     const ids = response.body as IDs
 
     Object.entries(ids).forEach(([s, i]) => {
+      if (i == null) return
+
       idCache.set(`${s}:${i}`, ids)
     })
 

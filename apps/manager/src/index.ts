@@ -14,4 +14,4 @@ const run = async () => {
   })
 }
 
-run()
+void run()

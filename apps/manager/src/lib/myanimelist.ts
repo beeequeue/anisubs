@@ -48,6 +48,7 @@ export class MyAnimeList {
       return null
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const score = response.body.score as number | null
 
     if (isNaN(score ?? 0) && score != null) {
