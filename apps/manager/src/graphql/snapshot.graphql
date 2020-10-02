@@ -4,12 +4,22 @@
 # -----------------------------------------------
 
 type Anime {
-  aliases: [String!]!
   anidbId: Int
   anilistId: Int!
   anilistScore: Int
-  id: ID!
+  anilistUrl: String!
   malScore: Float
+  names: [String!]!
+  uuid: ID!
+}
+
+type Entry {
+  uuid: ID!
+}
+
+type Group {
+  name: String!
+  uuid: ID!
 }
 
 type Query {

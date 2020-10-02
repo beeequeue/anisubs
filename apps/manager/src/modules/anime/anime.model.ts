@@ -21,6 +21,11 @@ export class Anime extends BaseEntity {
   @Field(() => Int)
   anilistId!: number
 
+  @Field()
+  anilistUrl(): string {
+    return `https://anilist.co/anime/${this.anilistId}`
+  }
+
   @Column({ nullable: true })
   @Field(() => Int, { nullable: true })
   anidbId!: number
