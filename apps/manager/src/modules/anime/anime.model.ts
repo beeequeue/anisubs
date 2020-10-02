@@ -3,21 +3,19 @@ import {
   BaseEntity,
   Column,
   Entity,
-  Generated,
   OneToMany,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from "typeorm"
 
-import { Alias } from "@/modules/alias/alias.model"
+import { Name } from "@/modules/name/name.model"
 import { MyAnimeList } from "@/lib/myanimelist"
 
 @Entity()
 @ObjectType()
 export class Anime extends BaseEntity {
-  @PrimaryColumn()
-  @Generated("uuid")
+  @PrimaryGeneratedColumn("uuid")
   @Field(() => ID)
-  id!: string
+  uuid!: string
 
   @Column()
   @Field(() => Int)
@@ -36,13 +34,16 @@ export class Anime extends BaseEntity {
     return MyAnimeList.fetchRating(this.anilistId)
   }
 
-  @OneToMany(() => Alias, (alias) => alias.anime)
-  aliases!: Alias[]
+  @OneToMany(() => Name, (name) => name.anime, {
+    nullable: false,
+    cascade: true,
+  })
+  names!: Name[]
 
   @Field(() => [String], {
-    name: "aliases",
+    name: "names",
   })
   getAliases(): string[] {
-    return this.aliases.map(({ name }) => name)
+    return this.names.map(({ name }) => name)
   }
 }

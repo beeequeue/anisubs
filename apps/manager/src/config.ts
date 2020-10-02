@@ -54,6 +54,8 @@ export const config: Config = {
     database: envVar("DATABASE_DB", envVar("DATABASE_DATABASE", "postgres")),
 
     migrationsRun: true,
+    // TODO: remove after creating first migration
+    synchronize: envVar("NODE_ENV") === "development",
 
     entities: ["src/**/*.model.ts"],
     migrations: ["migrations/**/*.ts"],

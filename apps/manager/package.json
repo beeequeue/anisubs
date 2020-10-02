@@ -15,7 +15,8 @@
     "precommit": "lint-staged",
     "dev": "ts-node-dev --respawn --no-deps -r dotenv-flow/config -r tsconfig-paths/register --files --inspect -- src/index.ts",
     "start": "yarn ts-node -T -r tsconfig-paths/register src/index.ts",
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "typeorm": "ts-node -r dotenv-flow/config -r tsconfig-paths/register ../../node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "bottleneck": "2.19.5",
@@ -28,13 +29,14 @@
     "reflect-metadata": "0.1.13",
     "superagent": "6.1.0",
     "type-graphql": "1.0.0",
-    "typeorm": "0.2.26"
+    "typeorm": "0.2.28"
   },
   "devDependencies": {
     "@types/koa": "2.11.4",
     "@types/koa-graphql": "0.8.4",
     "@types/koa-mount": "4.0.0",
     "@types/koa-router": "7.4.1",
-    "@types/superagent": "4.1.10"
+    "@types/superagent": "4.1.10",
+    "pg": "8.3.3"
   }
 }
