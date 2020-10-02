@@ -22,6 +22,12 @@ type Group {
   uuid: ID!
 }
 
+type Image {
+  timestamp: String!
+  url: String!
+  uuid: ID!
+}
+
 type Query {
   anime(uuid: String!): Anime
 }

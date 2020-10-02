@@ -9,6 +9,7 @@ import {
 
 import { Name } from "@/modules/name/name.model"
 import { MyAnimeList } from "@/lib/myanimelist"
+import { Entry } from "@/modules/entry/entry.model"
 
 @Entity()
 @ObjectType()
@@ -51,4 +52,10 @@ export class Anime extends BaseEntity {
   getAliases(): string[] {
     return this.names.map(({ name }) => name)
   }
+
+  @OneToMany(() => Entry, (entry) => entry.anime, {
+    nullable: false,
+    cascade: true,
+  })
+  entries!: Entry[]
 }
