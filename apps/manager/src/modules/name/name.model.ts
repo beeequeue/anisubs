@@ -6,6 +6,7 @@ import {
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from "typeorm"
+
 import { Anime } from "@/modules/anime/anime.model"
 
 @Entity()

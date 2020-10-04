@@ -6,6 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm"
+
 import { Anime } from "@/modules/anime/anime.model"
 import { Group } from "@/modules/group/group.model"
 import { Image } from "@/modules/image/image.model"

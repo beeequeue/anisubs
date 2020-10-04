@@ -1,8 +1,9 @@
 import Bottleneck from "bottleneck"
 import NodeCache from "node-cache"
-import { ARM } from "@/lib/arm"
 import request from "superagent"
+
 import { config } from "@/config"
+import { ARM } from "@/lib/arm"
 import { RequestResponse, responseIsError } from "@/lib/utils"
 
 const scoreCache = new NodeCache({

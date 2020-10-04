@@ -1,4 +1,5 @@
 import { Arg, Query, Resolver } from "type-graphql"
+
 import { Anime } from "@/modules/anime/anime.model"
 
 @Resolver()

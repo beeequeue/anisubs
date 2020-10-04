@@ -1,3 +1,4 @@
+import { IsUrl, registerDecorator, ValidationOptions } from "class-validator"
 import { Field, ID, ObjectType } from "type-graphql"
 import {
   BaseEntity,
@@ -7,8 +8,8 @@ import {
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from "typeorm"
+
 import { Entry } from "@/modules/entry/entry.model"
-import { IsUrl, registerDecorator, ValidationOptions } from "class-validator"
 
 const timestampRegex = /^\d{2}:\d{2}:\d{2}$/
 

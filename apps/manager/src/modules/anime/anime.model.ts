@@ -7,9 +7,9 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm"
 
-import { Name } from "@/modules/name/name.model"
 import { MyAnimeList } from "@/lib/myanimelist"
 import { Entry } from "@/modules/entry/entry.model"
+import { Name } from "@/modules/name/name.model"
 
 @Entity()
 @ObjectType()

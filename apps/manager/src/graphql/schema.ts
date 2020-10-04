@@ -1,7 +1,8 @@
 import { resolve } from "path"
 
-import { config } from "@/config"
 import { buildSchema } from "type-graphql"
+
+import { config } from "@/config"
 
 export const createSchema = async (generateSnapshot = true) =>
   buildSchema({

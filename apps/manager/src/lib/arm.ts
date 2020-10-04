@@ -1,5 +1,5 @@
-import request from "superagent"
 import NodeCache from "node-cache"
+import request from "superagent"
 
 import { config } from "@/config"
 import { RequestResponse, responseIsError } from "@/lib/utils"

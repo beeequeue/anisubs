@@ -1,4 +1,5 @@
 import Koa from "koa"
+
 import { createRouter } from "@/rest"
 
 export const createApp = async () => {
