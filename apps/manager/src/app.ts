@@ -1,6 +1,7 @@
 import Koa from "koa"
 
 import { createRouter } from "@/rest"
+
 import { registerApolloServer } from "./graphql"
 
 export const createApp = async () => {

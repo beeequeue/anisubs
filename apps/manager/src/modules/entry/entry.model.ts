@@ -1,6 +1,8 @@
-import { Field, ID, ObjectType } from "type-graphql"
+import { IsMagnetURI, Matches } from "class-validator"
+import { Field, ID, Int, ObjectType } from "type-graphql"
 import {
   BaseEntity,
+  Column,
   Entity,
   ManyToOne,
   OneToMany,
@@ -17,6 +19,21 @@ export class Entry extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   @Field(() => ID)
   uuid!: string
+
+  @Column()
+  @Field(() => Int)
+  episode!: number
+
+  @Column()
+  @IsMagnetURI()
+  @Field()
+  // TODO: make private
+  source!: string
+
+  @Column()
+  @Matches(/.*\.[a-zA-Z\d]{2,}/, { message: "Not a filename." })
+  @Field()
+  filename!: string
 
   @ManyToOne(() => Anime, (anime) => anime.entries)
   anime!: Anime

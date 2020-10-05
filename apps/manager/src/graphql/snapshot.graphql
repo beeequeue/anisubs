@@ -14,6 +14,9 @@ type Anime {
 }
 
 type Entry {
+  episode: Int!
+  filename: String!
+  source: String!
   uuid: ID!
 }
 
@@ -26,6 +29,10 @@ type Image {
   timestamp: String!
   url: String!
   uuid: ID!
+}
+
+type Mutation {
+  createJob(anilistId: Int!, filename: String, source: String!): Entry
 }
 
 type Query {
