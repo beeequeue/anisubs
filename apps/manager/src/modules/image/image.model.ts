@@ -1,14 +1,8 @@
 import { IsUrl, registerDecorator, ValidationOptions } from "class-validator"
-import { Field, ID, ObjectType } from "type-graphql"
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  ManyToOne,
-  PrimaryColumn,
-  PrimaryGeneratedColumn,
-} from "typeorm"
+import { Field, ObjectType } from "type-graphql"
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn } from "typeorm"
 
+import { ExtendedEntity } from "@/modules/base.model"
 import { Entry } from "@/modules/entry/entry.model"
 
 const timestampRegex = /^\d{2}:\d{2}:\d{2}$/
@@ -31,11 +25,7 @@ const IsTimestamp = (validationOptions?: ValidationOptions) => (
 
 @Entity()
 @ObjectType()
-export class Image extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
-  @Field(() => ID)
-  uuid!: string
-
+export class Image extends ExtendedEntity {
   @PrimaryColumn()
   @IsTimestamp()
   @Field()

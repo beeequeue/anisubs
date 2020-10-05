@@ -1,5 +1,5 @@
-import WebTorrent, { Torrent } from "webtorrent"
 import { sync as remove } from "rimraf"
+import WebTorrent, { Torrent } from "webtorrent"
 
 export const client = new WebTorrent()
 
@@ -15,7 +15,7 @@ export const getTorrentMetadata = (magnetUri: string) =>
       torrent.addListener("download", () => {
         resolve(torrent)
 
-        // TODO write why
+        // If we destroy it immediately it breaks
         setTimeout(() => {
           torrent.destroy()
           remove(torrent.path)

@@ -8,25 +8,38 @@ type Anime {
   anilistId: Int!
   anilistScore: Int
   anilistUrl: String!
+  createdAt: DateTime!
   malScore: Float
   names: [String!]!
+  updatedAt: DateTime!
   uuid: ID!
 }
 
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
 type Entry {
+  createdAt: DateTime!
   episode: Int!
   filename: String!
   source: String!
+  updatedAt: DateTime!
   uuid: ID!
 }
 
 type Group {
+  createdAt: DateTime!
   name: String!
+  updatedAt: DateTime!
   uuid: ID!
 }
 
 type Image {
+  createdAt: DateTime!
   timestamp: String!
+  updatedAt: DateTime!
   url: String!
   uuid: ID!
 }

@@ -1,25 +1,15 @@
 import { IsMagnetURI, Matches } from "class-validator"
-import { Field, ID, Int, ObjectType } from "type-graphql"
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm"
+import { Field, Int, ObjectType } from "type-graphql"
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm"
 
 import { Anime } from "@/modules/anime/anime.model"
+import { ExtendedEntity } from "@/modules/base.model"
 import { Group } from "@/modules/group/group.model"
 import { Image } from "@/modules/image/image.model"
 
 @Entity()
 @ObjectType()
-export class Entry extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
-  @Field(() => ID)
-  uuid!: string
-
+export class Entry extends ExtendedEntity {
   @Column()
   @Field(() => Int)
   episode!: number

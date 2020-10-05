@@ -1,23 +1,14 @@
-import { Field, Float, ID, Int, ObjectType } from "type-graphql"
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm"
+import { Field, Float, Int, ObjectType } from "type-graphql"
+import { Column, Entity, OneToMany } from "typeorm"
 
 import { MyAnimeList } from "@/lib/myanimelist"
+import { ExtendedEntity } from "@/modules/base.model"
 import { Entry } from "@/modules/entry/entry.model"
 import { Name } from "@/modules/name/name.model"
 
 @Entity()
 @ObjectType()
-export class Anime extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
-  @Field(() => ID)
-  uuid!: string
-
+export class Anime extends ExtendedEntity {
   @Column()
   @Field(() => Int)
   anilistId!: number

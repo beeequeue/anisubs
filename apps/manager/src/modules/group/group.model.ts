@@ -1,15 +1,12 @@
-import { Field, ID, ObjectType } from "type-graphql"
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Field, ObjectType } from "type-graphql"
+import { Column, Entity, OneToMany } from "typeorm"
 
+import { ExtendedEntity } from "@/modules/base.model"
 import { Entry } from "@/modules/entry/entry.model"
 
 @Entity()
 @ObjectType()
-export class Group extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
-  @Field(() => ID)
-  uuid!: string
-
+export class Group extends ExtendedEntity {
   @Column()
   @Field(() => String)
   name!: string
