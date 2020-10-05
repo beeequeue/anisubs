@@ -19,11 +19,11 @@
     "typeorm": "ts-node -r dotenv-flow/config -r tsconfig-paths/register ../../node_modules/typeorm/cli.js"
   },
   "dependencies": {
+    "apollo-server-koa": "2.18.1",
     "bottleneck": "2.19.5",
     "class-validator": "0.12.2",
     "graphql": "15.3.0",
     "koa": "2.13.0",
-    "koa-graphql": "0.8.0",
     "koa-router": "9.4.0",
     "node-cache": "5.1.2",
     "reflect-metadata": "0.1.13",
