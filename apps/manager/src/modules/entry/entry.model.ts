@@ -25,6 +25,10 @@ export class Entry extends ExtendedEntity {
   @Field()
   filename!: string
 
+  @Column()
+  @Field()
+  accepted!: boolean
+
   @ManyToOne(() => Anime, (anime) => anime.entries)
   anime!: Anime
 
