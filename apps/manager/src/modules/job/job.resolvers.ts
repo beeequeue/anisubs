@@ -8,6 +8,6 @@ export class JobResolvers {
   async createJob(
     @Args() options: JobCreationArgs,
   ): Promise<Job> {
-    return Job.create(options)
+    return Job.createJob(options)
   }
 }

@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { ArgsType, Field, Int, ObjectType } from "type-graphql"
 
 import { Entry } from "@/modules/entry/entry.model"
-import { ArgsType, Field, Int } from "type-graphql"
 import { getTorrentMetadata } from "@/lib/webtorrent"
 import { UserInputError } from "apollo-server-koa"
 import { IsMagnetURI, Matches } from "class-validator"
@@ -21,6 +21,7 @@ export class JobCreationArgs {
 }
 
 @Entity()
+@ObjectType()
 export class Job extends Entry {
   @PrimaryGeneratedColumn("increment")
   @Field()
@@ -30,7 +31,8 @@ export class Job extends Entry {
   @Field()
   inProgress!: boolean
 
-  static async create({ anilistId, source, filename }: JobCreationArgs): Promise<Job> {
+  // TODO: Fix
+  static async createJob({ source, filename }: JobCreationArgs): Promise<Job> {
     const torrent = await getTorrentMetadata(source)
 
     if (
@@ -48,7 +50,6 @@ export class Job extends Entry {
       }
     }
 
-    const job = new Job()
-    job.
+    return new Job()
   }
 }
