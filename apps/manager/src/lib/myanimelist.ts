@@ -1,9 +1,10 @@
 import Bottleneck from "bottleneck"
 import NodeCache from "node-cache"
 import request from "superagent"
+import { Service } from "typedi"
 
 import { config } from "@/config"
-import { ARM } from "@/lib/arm"
+import { IdsService } from "@/lib/arm"
 import { RequestResponse, responseIsError } from "@/lib/utils"
 
 const scoreCache = new NodeCache({
@@ -22,14 +23,17 @@ const jikanLimiter = new Bottleneck({
   reservoirIncreaseInterval: 0.5,
 })
 
-export class MyAnimeList {
-  static async fetchRating(anilistId: number): Promise<number | null> {
+@Service()
+export class MyAnimeListService {
+  constructor(private readonly idsService: IdsService) {}
+
+  async fetchRating(anilistId: number): Promise<number | null> {
     if (scoreCache.has(anilistId)) {
       return scoreCache.get<number>(anilistId)!
     }
 
     const { myanimelist: malId } =
-      (await ARM.fetchIds("anilist", anilistId)) ?? {}
+      (await this.idsService.fetchIds("anilist", anilistId)) ?? {}
 
     if (malId == null) {
       return null

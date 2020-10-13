@@ -1,12 +1,11 @@
-import { Entity, Index, ManyToOne, PrimaryColumn } from "typeorm"
+import { Column, Entity, Index, PrimaryColumn } from "typeorm"
 
-import { Anime } from "@/modules/anime/anime.model"
 import { ExtendedEntity } from "@/modules/base.model"
 
 @Entity()
 export class Name extends ExtendedEntity {
-  @ManyToOne(() => Anime, (anime) => anime.names)
-  anime!: Anime
+  @Column()
+  animeId!: number
 
   @PrimaryColumn()
   @Index()

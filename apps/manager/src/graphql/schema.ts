@@ -1,6 +1,7 @@
 import { resolve } from "path"
 
 import { buildSchema } from "type-graphql"
+import { Container } from "typedi"
 
 import { config } from "@/config"
 
@@ -12,4 +13,5 @@ export const createSchema = async (generateSnapshot = true) =>
         : { path: resolve(__dirname, "snapshot.graphql") },
     dateScalarMode: "isoDate",
     resolvers: [resolve(__dirname, "../modules/**/*.resolvers.ts")],
+    container: () => Container.of(Math.random() * Number.MAX_SAFE_INTEGER),
   })

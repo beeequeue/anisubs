@@ -7,8 +7,8 @@ import { ExtendedEntity } from "@/modules/base.model"
 import { Group } from "@/modules/group/group.model"
 import { Image } from "@/modules/image/image.model"
 
-@Entity()
 @ObjectType()
+@Entity()
 export class Entry extends ExtendedEntity {
   @Column()
   @Field(() => Int)
@@ -29,8 +29,8 @@ export class Entry extends ExtendedEntity {
   @Field()
   accepted!: boolean
 
-  @ManyToOne(() => Anime, (anime) => anime.entries)
-  anime!: Anime
+  @Column()
+  animeId!: number
 
   @ManyToOne(() => Group, (group) => group.entries)
   group!: Anime

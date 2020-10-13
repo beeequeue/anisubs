@@ -6,13 +6,11 @@
 type Anime {
   anidbId: Int
   anilistId: Int!
-  anilistScore: Int
   anilistUrl: String!
-  createdAt: DateTime!
+  entries: [Entry!]!
   malScore: Float
   names: [String!]!
-  updatedAt: DateTime!
-  uuid: ID!
+  score: Int
 }
 
 """
@@ -22,6 +20,7 @@ scalar DateTime
 
 type Entry {
   accepted: Boolean!
+  anime: Anime!
   createdAt: DateTime!
   episode: Int!
   filename: String!
@@ -45,10 +44,23 @@ type Image {
   uuid: ID!
 }
 
+type Job {
+  accepted: Boolean!
+  anime: Anime!
+  createdAt: DateTime!
+  episode: Int!
+  filename: String!
+  index: Float!
+  inProgress: Boolean!
+  source: String!
+  updatedAt: DateTime!
+  uuid: ID!
+}
+
 type Mutation {
-  createJob(anilistId: Int!, filename: String, source: String!): Entry
+  createJob(anilistId: Int!, filename: String, source: String!): Job!
 }
 
 type Query {
-  anime(uuid: String!): Anime
+  anime(id: Float!): Anime
 }

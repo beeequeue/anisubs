@@ -1,5 +1,6 @@
-import NodeCache from "node-cache"
+import DataLoader from "dataloader"
 import request from "superagent"
+import { Service } from "typedi"
 
 import { config } from "@/config"
 import { RequestResponse, responseIsError } from "@/lib/utils"
@@ -10,39 +11,39 @@ type IDs = {
   [K in Source]: number | null
 }
 
-const idCache = new NodeCache({
-  stdTTL: 1000 * 60 * 60 * 24, // 24h
-  checkperiod: 1000 * 60,
-})
+@Service()
+export class IdsService {
+  idLoader: DataLoader<Partial<IDs>, IDs | null>
 
-export class ARM {
-  static async fetchIds(source: Source, id: number): Promise<IDs | null> {
-    const cacheKey = `${source}:${id}`
-    if (idCache.has(cacheKey)) {
-      return idCache.get<IDs>(cacheKey)!
-    }
+  constructor() {
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    this.idLoader = new DataLoader(IdsService.batchFetchIds, {
+      maxBatchSize: 100,
+      batchScheduleFn: (callback) => setTimeout(callback, 100),
+      cacheKeyFn: (input) => {
+        const source = Object.keys(input)[0]
+        return `${source}:${input[source as Source] ?? -1}`
+      },
+    })
+  }
 
+  private static async batchFetchIds(
+    ids: ReadonlyArray<Partial<IDs>>,
+  ): Promise<Array<IDs | null>> {
     const response = (await request
-      .get("https://relations.yuna.moe/api/ids")
+      .post("http://localhost:3000/api/ids")
       .set("User-Agent", config.userAgent)
-      .query({
-        source,
-        id,
-      })
+      .send(ids)
       .ok((res) => res.status < 299)) as RequestResponse<IDs>
 
     if (responseIsError(response)) {
-      return null
+      return ids.map(() => null)
     }
 
-    const ids = response.body as IDs
+    return response.body as Array<IDs | null>
+  }
 
-    Object.entries(ids).forEach(([s, i]) => {
-      if (i == null) return
-
-      idCache.set(`${s}:${i}`, ids)
-    })
-
-    return ids
+  async fetchIds(source: Source, id: number): Promise<IDs | null> {
+    return this.idLoader.load({ [source]: id })
   }
 }
