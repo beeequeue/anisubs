@@ -7,6 +7,7 @@ export const registerApolloServer = async (app: Koa) => {
   const schema = await createSchema(true)
   const server = new ApolloServer({
     schema,
+    context: ({ req, res }: Koa.Context): Context => ({ req, res }),
     introspection: true,
     uploads: false,
   })
