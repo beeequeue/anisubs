@@ -31,7 +31,7 @@ export class IdsService {
     ids: ReadonlyArray<Partial<IDs>>,
   ): Promise<Array<IDs | null>> {
     const response = (await request
-      .post("http://localhost:3000/api/ids")
+      .post("https://relations.yuna.moe/api/ids")
       .set("User-Agent", config.userAgent)
       .send(ids)
       .ok((res) => res.status < 299)) as RequestResponse<IDs>
