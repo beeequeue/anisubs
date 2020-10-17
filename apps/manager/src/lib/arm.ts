@@ -11,6 +11,7 @@ type IDs = {
   [K in Source]: number | null
 }
 
+// TODO: Add caching
 @Service()
 export class IdsService {
   idLoader: DataLoader<Partial<IDs>, IDs | null>
