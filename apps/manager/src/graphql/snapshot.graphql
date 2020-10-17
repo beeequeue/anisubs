@@ -5,9 +5,11 @@
 
 type Anime {
   anidbId: Int
-  anilistId: Int!
   anilistUrl: String!
   entries: [Entry!]!
+
+  """AniList ID"""
+  id: Int!
   malScore: Float
   names: [String!]!
   score: Int
@@ -25,6 +27,7 @@ type Entry {
   episode: Int!
   filename: String!
   source: String!
+  sourceUri: String!
   updatedAt: DateTime!
   uuid: ID!
 }
@@ -53,12 +56,13 @@ type Job {
   index: Float!
   inProgress: Boolean!
   source: String!
+  sourceUri: String!
   updatedAt: DateTime!
   uuid: ID!
 }
 
 type Mutation {
-  createJob(anilistId: Int!, filename: String, source: String!): Job!
+  createJob(animeId: Int!, filename: String, source: String!): Job!
 }
 
 type Query {

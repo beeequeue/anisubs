@@ -16,7 +16,7 @@ export class AnimeResolvers {
   })
   anime(@Arg("id") id: number): Anime | null {
     const anime = new Anime(this.idsService, this.malService)
-    anime.anilistId = id
+    anime.id = id
 
     return anime
   }

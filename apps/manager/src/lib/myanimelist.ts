@@ -27,13 +27,13 @@ const jikanLimiter = new Bottleneck({
 export class MyAnimeListService {
   constructor(private readonly idsService: IdsService) {}
 
-  async fetchRating(anilistId: number): Promise<number | null> {
-    if (scoreCache.has(anilistId)) {
-      return scoreCache.get<number>(anilistId)!
+  async fetchRating(animeId: number): Promise<number | null> {
+    if (scoreCache.has(animeId)) {
+      return scoreCache.get<number>(animeId)!
     }
 
     const { myanimelist: malId } =
-      (await this.idsService.fetchIds("anilist", anilistId)) ?? {}
+      (await this.idsService.fetchIds("anilist", animeId)) ?? {}
 
     if (malId == null) {
       return null
@@ -60,7 +60,7 @@ export class MyAnimeListService {
       throw new Error(`Got weird score: "${score}"`)
     }
 
-    scoreCache.set(anilistId, score)
+    scoreCache.set(animeId, score)
 
     return score
   }

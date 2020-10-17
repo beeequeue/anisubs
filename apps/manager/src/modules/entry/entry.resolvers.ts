@@ -15,7 +15,7 @@ export class EntryResolvers {
   @FieldResolver()
   anime(@Root() entry: Entry): Anime {
     const anime = new Anime(this.idsService, this.malService)
-    anime.anilistId = entry.animeId
+    anime.id = entry.animeId
 
     return anime
   }

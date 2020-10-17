@@ -15,10 +15,14 @@ export class Entry extends ExtendedEntity {
   episode!: number
 
   @Column()
+  @Field()
+  source!: string
+
+  @Column()
   @IsMagnetURI()
   @Field()
   // TODO: make private
-  source!: string
+  sourceUri!: string
 
   @Column()
   @Matches(/.*\.[a-zA-Z\d]{2,}/, { message: "Not a filename." })

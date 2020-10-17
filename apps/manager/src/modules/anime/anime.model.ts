@@ -12,32 +12,34 @@ export class Anime {
     private readonly malService: MyAnimeListService,
   ) {}
 
-  @Field(() => Int)
-  anilistId!: number
+  @Field(() => Int, {
+    description: "AniList ID",
+  })
+  id!: number
 
   @Field(() => Int, { nullable: true })
   score!: number
 
   @Field()
   anilistUrl(): string {
-    return `https://anilist.co/anime/${this.anilistId}`
+    return `https://anilist.co/anime/${this.id}`
   }
 
   @Field(() => Int, { nullable: true })
   async anidbId(): Promise<number | null> {
-    const result = await this.idsService.fetchIds("anilist", this.anilistId)
+    const result = await this.idsService.fetchIds("anilist", this.id)
     return result?.anidb ?? null
   }
 
   @Field(() => Float, { nullable: true })
   async malScore(): Promise<number | null> {
-    return this.malService.fetchRating(this.anilistId)
+    return this.malService.fetchRating(this.id)
   }
 
   @Field(() => [String])
   async names(): Promise<string[]> {
     const names = await Name.find({
-      where: { animeId: this.anilistId },
+      where: { animeId: this.id },
       select: ["name"],
     })
 
@@ -47,7 +49,7 @@ export class Anime {
   @Field(() => [Entry])
   async entries(): Promise<Entry[]> {
     return Entry.find({
-      where: { animeId: this.anilistId },
+      where: { animeId: this.id },
     })
   }
 }
