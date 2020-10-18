@@ -1,6 +1,6 @@
 import { IsMagnetURI, Matches } from "class-validator"
 import { Field, Int, ObjectType } from "type-graphql"
-import { Column, Entity, ManyToOne, OneToMany } from "typeorm"
+import { Column, Entity, Index, ManyToOne, OneToMany } from "typeorm"
 
 import { ExtendedEntity } from "@/modules/base.model"
 import { Group } from "@/modules/group/group.model"
@@ -9,6 +9,11 @@ import { Image } from "@/modules/image/image.model"
 @ObjectType()
 @Entity()
 export class Entry extends ExtendedEntity {
+  @Column()
+  @Index()
+  @Field()
+  hash!: string
+
   @Column()
   @Field(() => Int)
   episode!: number
@@ -26,7 +31,7 @@ export class Entry extends ExtendedEntity {
   @Column()
   @Matches(/.*\.[a-zA-Z\d]{2,}/, { message: "Not a filename." })
   @Field()
-  filename!: string
+  fileName!: string
 
   @Column({ default: false })
   @Field()
@@ -36,7 +41,8 @@ export class Entry extends ExtendedEntity {
   animeId!: number
 
   @ManyToOne(() => Group, (group) => group.entries)
-  group!: Group
+  @Field(() => Group)
+  group!: Promise<Group>
 
   @OneToMany(() => Image, (image) => image.entry)
   images!: Image[]

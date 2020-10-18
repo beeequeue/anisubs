@@ -25,7 +25,9 @@ type Entry {
   anime: Anime!
   createdAt: DateTime!
   episode: Int!
-  filename: String!
+  fileName: String!
+  group: Group!
+  hash: String!
   source: String!
   sourceUri: String!
   updatedAt: DateTime!
@@ -52,7 +54,9 @@ type Job {
   anime: Anime!
   createdAt: DateTime!
   episode: Int!
-  filename: String!
+  fileName: String!
+  group: Group!
+  hash: String!
   index: Float!
   inProgress: Boolean!
   source: String!
@@ -68,7 +72,7 @@ type JobPage {
 }
 
 type Mutation {
-  createJob(animeId: Int!, filename: String, source: String!): Job!
+  createJob(animeId: Int!, fileName: String, source: String!): Job!
 }
 
 type Query {

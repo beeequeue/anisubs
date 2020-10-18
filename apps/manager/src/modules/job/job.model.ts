@@ -1,12 +1,15 @@
 import { parse } from "anitomy-js"
 import { UserInputError } from "apollo-server-koa"
 import { IsMagnetURI, Matches } from "class-validator"
+import { createHash } from "crypto"
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 import { ArgsType, Field, Int, ObjectType } from "type-graphql"
 
 import { Entry } from "@/modules/entry/entry.model"
 import { Group } from "@/modules/group/group.model"
 import { getTorrentMetadata } from "@/lib/webtorrent"
+
+const md5 = createHash("md5")
 
 @ArgsType()
 export class JobCreationArgs {
@@ -19,7 +22,7 @@ export class JobCreationArgs {
 
   @Matches(/.*\.[a-zA-Z\d]{2,}/, { message: "Not a filename." })
   @Field(() => String, { nullable: true })
-  filename!: string | null
+  fileName!: string | null
 }
 
 @Entity()
@@ -36,22 +39,22 @@ export class Job extends Entry {
   static async createJob({
     animeId,
     source,
-    filename,
+    fileName,
   }: JobCreationArgs): Promise<Job> {
     const torrent = await getTorrentMetadata(source)
 
     if (
-      filename != null &&
-      torrent.files.find((file) => file.name === filename) == null
+      fileName != null &&
+      torrent.files.find((file) => file.name === fileName) == null
     ) {
       throw new UserInputError(
-        `Torrent does not include a file named ${filename}`,
+        `Torrent does not include a file named ${fileName}`,
       )
     }
 
-    if (filename == null) {
+    if (fileName == null) {
       if (torrent.files.length === 1) {
-        filename = torrent.files[0].name
+        fileName = torrent.files[0].name
       } else {
         throw new UserInputError(
           `Torrent has multiple files, need to specify which one to analyze with \`filename\`.`,
@@ -59,6 +62,8 @@ export class Job extends Entry {
       }
     }
 
+    // TODO: block duplicate hashes
+    const hash = md5.update(torrent.infoHash + fileName).digest("hex")
     const info = await parse(torrent.name)
 
     if (info.release_group == null) {
@@ -80,15 +85,20 @@ export class Job extends Entry {
     job.animeId = animeId
     job.source = torrent.name
     job.sourceUri = source
-    job.group = group
-    job.filename = filename
+    job.group = Promise.resolve(group)
+    job.fileName = fileName
+    job.hash = hash
     job.episode = Number(episodeNumber)
 
     try {
       await job.save()
     } catch (err: any) {
       console.error(
-        `Failed to save Job.\n${err.toString()}\n${JSON.stringify(job, null, 2)}`,
+        `Failed to save Job.\n${err.toString()}\n${JSON.stringify(
+          job,
+          null,
+          2,
+        )}`,
       )
       throw new UserInputError("Failed to create Job.")
     }
