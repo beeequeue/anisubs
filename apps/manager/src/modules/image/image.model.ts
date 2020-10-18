@@ -1,6 +1,13 @@
 import { IsUrl, registerDecorator, ValidationOptions } from "class-validator"
 import { Field, ObjectType } from "type-graphql"
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn } from "typeorm"
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  Index,
+  ManyToOne,
+  PrimaryColumn,
+} from "typeorm"
 
 import { ExtendedEntity } from "@/modules/base.model"
 import { Entry } from "@/modules/entry/entry.model"
@@ -44,5 +51,6 @@ export class Image extends ExtendedEntity {
   url!: string
 
   @ManyToOne(() => Entry, (entry) => entry.images)
+  @Index()
   entry!: Entry
 }
