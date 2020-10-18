@@ -61,10 +61,21 @@ type Job {
   uuid: ID!
 }
 
+type JobPage {
+  items: [Job!]!
+  nextOffset: Int
+  total: Int!
+}
+
 type Mutation {
   createJob(animeId: Int!, filename: String, source: String!): Job!
 }
 
 type Query {
   anime(id: Float!): Anime
+  jobQueue(
+    """Maximum 20"""
+    limit: Int = 20
+    offset: Int = 0
+  ): JobPage!
 }

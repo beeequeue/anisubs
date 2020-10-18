@@ -2,7 +2,6 @@ import { IsMagnetURI, Matches } from "class-validator"
 import { Field, Int, ObjectType } from "type-graphql"
 import { Column, Entity, ManyToOne, OneToMany } from "typeorm"
 
-import { Anime } from "@/modules/anime/anime.model"
 import { ExtendedEntity } from "@/modules/base.model"
 import { Group } from "@/modules/group/group.model"
 import { Image } from "@/modules/image/image.model"
@@ -29,7 +28,7 @@ export class Entry extends ExtendedEntity {
   @Field()
   filename!: string
 
-  @Column()
+  @Column({ default: false })
   @Field()
   accepted!: boolean
 
@@ -37,7 +36,7 @@ export class Entry extends ExtendedEntity {
   animeId!: number
 
   @ManyToOne(() => Group, (group) => group.entries)
-  group!: Anime
+  group!: Group
 
   @OneToMany(() => Image, (image) => image.entry)
   images!: Image[]
