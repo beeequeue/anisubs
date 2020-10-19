@@ -1188,23 +1188,6 @@
   dependencies:
     "@types/koa" "*"
 
-"@types/koa-graphql@0.8.4":
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/@types/koa-graphql/-/koa-graphql-0.8.4.tgz#519f74399de2097b9d442f19b2d7a8551ed4d2ce"
-  integrity sha512-BnjmDTwfP+Fd7SQnXB83NPi4J6v5pWtVF8Tm9hEVxbxAPj1BGPvJh78rh09Cr9xoqAqRsjdem6ifoM3HERWzjQ==
-  dependencies:
-    "@types/koa" "*"
-    "@types/node" "*"
-    express-graphql "^0.9.0"
-    graphql "^15.1.0"
-
-"@types/koa-mount@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@types/koa-mount/-/koa-mount-4.0.0.tgz#aa0505763c0d20bf4a16cdec0d9ccd2f4f2d2a86"
-  integrity sha512-56iBULArwY3uKLl28eRFchZ2v0diEoJzJbDaHH/ehgruF/s2/KMHyWsKcIhvDJ3tGdKu9oZNQvxaMg++1IKFdA==
-  dependencies:
-    "@types/koa" "*"
-
 "@types/koa-router@7.4.1":
   version "7.4.1"
   resolved "https://registry.yarnpkg.com/@types/koa-router/-/koa-router-7.4.1.tgz#3702a4cabe4558cc4eec70d5574acc04beecff7c"
@@ -1486,7 +1469,7 @@ abbrev@1:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
-accepts@^1.3.5, accepts@^1.3.7:
+accepts@^1.3.5:
   version "1.3.7"
   resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.7.tgz#531bc726517a3b2b41f850021c6cc15eaab507cd"
   integrity sha512-Il80Qs2WjYlJIBNzNkK6KYqlVMTbZLXgHx2oT0pU/fjRHyEp+PEfEPY0R3WCwAGVOtauxh1hOxNgIf5bv7dQpA==
@@ -3564,16 +3547,6 @@ expand-brackets@^2.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-express-graphql@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/express-graphql/-/express-graphql-0.9.0.tgz#00fd8552f866bac5c9a4612b2c4c82076107b3c2"
-  integrity sha512-wccd9Lb6oeJ8yHpUs/8LcnGjFUUQYmOG9A5BNLybRdCzGw0PeUrtBxsIR8bfiur6uSW4OvPkVDoYH06z6/N9+w==
-  dependencies:
-    accepts "^1.3.7"
-    content-type "^1.0.4"
-    http-errors "^1.7.3"
-    raw-body "^2.4.1"
-
 extend-shallow@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/extend-shallow/-/extend-shallow-2.0.1.tgz#51af7d614ad9a9f610ea1bafbb989d6b1c56890f"
@@ -4172,7 +4145,7 @@ graphql-upload@^8.0.2:
     http-errors "^1.7.3"
     object-path "^0.11.4"
 
-graphql@15.3.0, graphql@^15.1.0, graphql@^15.3.0:
+graphql@15.3.0, graphql@^15.3.0:
   version "15.3.0"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.3.0.tgz#3ad2b0caab0d110e3be4a5a9b2aa281e362b5278"
   integrity sha512-GTCJtzJmkFLWRfFJuoo9RWWa/FfamUHgiFosxi/X1Ani4AVWbeyBenZTNX6dM+7WSbbFfTo/25eh0LLkwHMw2w==
@@ -6675,7 +6648,7 @@ range-slice-stream@^2.0.0:
   dependencies:
     readable-stream "^3.0.2"
 
-raw-body@^2.3.3, raw-body@^2.4.1:
+raw-body@^2.3.3:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/raw-body/-/raw-body-2.4.1.tgz#30ac82f98bb5ae8c152e67149dac8d55153b168c"
   integrity sha512-9WmIKF6mkvA0SLmA2Knm9+qj89e+j1zqgyn8aXGd7+nAduPoqgI9lO57SAZNn/Byzo5P7JhXTyg9PzaJbH73bA==
