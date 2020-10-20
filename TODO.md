@@ -2,27 +2,24 @@
 
 ## Data Models
 
-- [ ] Anime
-- [ ] Aliases
+- [x] Anime
+- [x] Names
 - [ ] Comparison Entry
 - [ ] Group
+  - [ ] Urls
 
 ## Jobs
 
 - [ ] Sync anime aliases from AniList 
 - [ ] Populate Queue
-  - [ ] Based on recency + score
-- [ ]  
-
-## Manager
-
-- [ ] Queue system (events?)
-- [ ] Create a job from anime+source combo
+  - [x] Manual
+  - [ ] Automatic
+    - [ ] Based on recency + score
 
 ## Worker
 
-- [ ] Queue system (events?)
 - [ ] Create comparison entry
+  - [ ] Toggleable `active` state
   - [ ] Receive new job
   - [ ] Get file
     - [ ] Check cached (downloaded) files
