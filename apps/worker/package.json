@@ -4,7 +4,7 @@
   "description": "TODO: description",
   "author": "BeeeQueue",
   "homepage": "",
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "engines": {
     "node": ">=14"
   },
@@ -24,6 +24,7 @@
     "bottleneck": "2.19.5",
     "class-validator": "0.12.2",
     "dataloader": "2.0.0",
+    "envsafe": "1.1.0",
     "koa": "2.13.0",
     "koa-router": "9.4.0",
     "reflect-metadata": "0.1.13",
