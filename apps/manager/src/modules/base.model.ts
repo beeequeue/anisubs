@@ -10,7 +10,7 @@ import {
 export class ExtendedEntity extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   @Field(() => ID)
-  uuid!: string
+  id!: string
 
   @CreateDateColumn()
   @Field()

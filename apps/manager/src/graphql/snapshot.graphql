@@ -28,25 +28,25 @@ type Entry {
   fileName: String!
   group: Group!
   hash: String!
+  id: ID!
   source: String!
   sourceUri: String!
   updatedAt: DateTime!
-  uuid: ID!
 }
 
 type Group {
   createdAt: DateTime!
+  id: ID!
   name: String!
   updatedAt: DateTime!
-  uuid: ID!
 }
 
 type Image {
   createdAt: DateTime!
+  id: ID!
   timestamp: String!
   updatedAt: DateTime!
   url: String!
-  uuid: ID!
 }
 
 type Job {
@@ -57,12 +57,12 @@ type Job {
   fileName: String!
   group: Group!
   hash: String!
+  id: ID!
   index: Float!
   inProgress: Boolean!
   source: String!
   sourceUri: String!
   updatedAt: DateTime!
-  uuid: ID!
 }
 
 type JobPage {
