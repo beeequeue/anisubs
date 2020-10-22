@@ -50,19 +50,18 @@ type Image {
 }
 
 type Job {
-  accepted: Boolean!
   anime: Anime!
   createdAt: DateTime!
   episode: Int!
   fileName: String!
   group: Group!
   hash: String!
+
+  """A mapping for `hash`, useful in caching"""
   id: ID!
-  index: Float!
   inProgress: Boolean!
   source: String!
   sourceUri: String!
-  updatedAt: DateTime!
 }
 
 type JobPage {

@@ -1,7 +1,14 @@
 import { JobType } from "@anisubs/shared"
 import { IsMagnetURI, Matches } from "class-validator"
 import { Field, Int, ObjectType } from "type-graphql"
-import { Column, Entity, Index, ManyToOne, OneToMany } from "typeorm"
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm"
 
 import { ExtendedEntity } from "@/modules/base.model"
 import { Group } from "@/modules/group/group.model"
@@ -40,6 +47,9 @@ export class Entry extends ExtendedEntity implements JobType {
 
   @Column()
   animeId!: number
+
+  @JoinColumn()
+  groupId!: string
 
   @ManyToOne(() => Group, (group) => group.entries)
   @Field(() => Group)

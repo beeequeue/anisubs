@@ -18,7 +18,7 @@ export class Anime {
   id!: number
 
   @Field(() => Int, { nullable: true })
-  score!: number
+  score!: number | null
 
   @Field()
   anilistUrl(): string {

@@ -14,6 +14,7 @@ import { getJobCount, getJobs } from "@/queue"
 import { Anime } from "@/modules/anime/anime.model"
 import { IdsService } from "@/lib/arm"
 import { MyAnimeListService } from "@/lib/myanimelist"
+import { Group } from "@/modules/group/group.model"
 
 @ObjectType()
 export class JobPage extends PaginatedResponse(Job) {}
@@ -57,5 +58,10 @@ export class JobResolvers {
     anime.id = job.animeId
 
     return anime
+  }
+
+  @FieldResolver(() => Group)
+  async group(@Root() job: Job): Promise<Group> {
+    return Group.findOneOrFail(job.groupId)
   }
 }
