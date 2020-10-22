@@ -1,5 +1,6 @@
 {
   "name": "@anisubs/manager",
+  "private": true,
   "version": "0.0.0",
   "description": "TODO: description",
   "author": "BeeeQueue",
@@ -22,6 +23,7 @@
     "anitomy-js": "5.0.0",
     "apollo-server-koa": "2.18.1",
     "bottleneck": "2.19.5",
+    "bullmq": "1.10.0",
     "class-validator": "0.12.2",
     "dataloader": "2.0.0",
     "graphql": "15.3.0",

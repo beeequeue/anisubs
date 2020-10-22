@@ -1,13 +1,16 @@
-import { parse } from "anitomy-js"
-import { UserInputError } from "apollo-server-koa"
-import { IsMagnetURI, Matches } from "class-validator"
 import { createHash } from "crypto"
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
-import { ArgsType, Field, Int, ObjectType } from "type-graphql"
 
-import { Entry } from "@/modules/entry/entry.model"
-import { Group } from "@/modules/group/group.model"
+import { JobType } from "@anisubs/shared"
+import { parse } from "anitomy-js"
+import { Job as QueueJob } from "bullmq"
+import { UserInputError } from "apollo-server-koa"
+import { IsMagnetURI, Matches, validate } from "class-validator"
+import { ArgsType, Field, ID, Int, ObjectType } from "type-graphql"
+import { Index } from "typeorm"
+
 import { getTorrentMetadata } from "@/lib/webtorrent"
+import { Group } from "@/modules/group/group.model"
+import { addJob } from "@/queue"
 
 const md5 = createHash("md5")
 
@@ -25,16 +28,59 @@ export class JobCreationArgs {
   fileName!: string | null
 }
 
-@Entity()
 @ObjectType()
-export class Job extends Entry {
-  @PrimaryGeneratedColumn("increment")
+export class Job implements JobType {
+  @Index()
   @Field()
-  index!: number
+  hash!: string
 
-  @Column({ default: false })
+  @Field(() => ID, { description: "A mapping for `hash`, useful in caching" })
+  get id(): string {
+    return this.hash
+  }
+
+  animeId!: number
+
+  groupId!: string
+
+  @Field(() => Int)
+  episode!: number
+
+  @Field()
+  source!: string
+
+  @IsMagnetURI()
+  @Field()
+  // TODO: make private
+  sourceUri!: string
+
+  @Matches(/.*\.[a-zA-Z\d]{2,}/, { message: "Not a filename." })
+  @Field()
+  fileName!: string
+
   @Field()
   inProgress!: boolean
+
+  @Field()
+  createdAt!: Date
+
+  static async fromQueueJob(
+    queueJob: QueueJob<JobType, unknown>,
+  ): Promise<Job> {
+    const job = new Job()
+
+    job.hash = queueJob.data.hash
+    job.animeId = queueJob.data.animeId
+    job.groupId = queueJob.data.groupId
+    job.episode = queueJob.data.episode
+    job.source = queueJob.data.source
+    job.sourceUri = queueJob.data.sourceUri
+    job.fileName = queueJob.data.fileName
+    job.inProgress = await queueJob.isActive()
+    job.createdAt = new Date(queueJob.timestamp)
+
+    return job
+  }
 
   static async createJob({
     animeId,
@@ -81,28 +127,29 @@ export class Job extends Entry {
 
     const group = await Group.findOrCreateByName(info.release_group)
 
-    const job = new Job()
-    job.animeId = animeId
-    job.source = torrent.name
-    job.sourceUri = source
-    job.group = Promise.resolve(group)
-    job.fileName = fileName
-    job.hash = hash
-    job.episode = Number(episodeNumber)
+    const options: JobType = {
+      hash: hash,
+      id: hash,
+      animeId: animeId,
+      groupId: group.id,
+      source: torrent.name,
+      sourceUri: source,
+      fileName: fileName,
+      episode: Number(episodeNumber),
+    }
 
-    try {
-      await job.save()
-    } catch (err: any) {
+    const errors = await validate(options)
+    if (errors.length > 0) {
       console.error(
-        `Failed to save Job.\n${err.toString()}\n${JSON.stringify(
-          job,
-          null,
-          2,
-        )}`,
+        `Failed to save Job.\n${errors
+          .map((e) => e.toString())
+          .join("\n")}\n${JSON.stringify(options, null, 2)}`,
       )
       throw new UserInputError("Failed to create Job.")
     }
 
-    return job
+    const job = await addJob(options)
+
+    return Job.fromQueueJob(job)
   }
 }

@@ -1,3 +1,4 @@
+import { RedisOptions } from "ioredis"
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions"
 
 const errors: string[] = []
@@ -35,6 +36,8 @@ type Config = {
   userAgent: string
 
   db: PostgresConnectionOptions
+
+  redis: RedisOptions
 }
 
 export const config: Config = {
@@ -63,6 +66,13 @@ export const config: Config = {
       entitiesDir: "src/modules",
       migrationsDir: "migrations",
     },
+  },
+
+  redis: {
+    host: envVar("REDIS_HOST", "localhost"),
+    port: Number(envVar("REDIS_PORT", 6739)),
+    username: envVar("REDIS_USER"),
+    password: envVar("REDIS_PASS"),
   },
 }
 

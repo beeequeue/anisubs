@@ -1,3 +1,4 @@
+import { JobType } from "@anisubs/shared"
 import { IsMagnetURI, Matches } from "class-validator"
 import { Field, Int, ObjectType } from "type-graphql"
 import { Column, Entity, Index, ManyToOne, OneToMany } from "typeorm"
@@ -8,7 +9,7 @@ import { Image } from "@/modules/image/image.model"
 
 @ObjectType()
 @Entity()
-export class Entry extends ExtendedEntity {
+export class Entry extends ExtendedEntity implements JobType {
   @Column()
   @Index()
   @Field()

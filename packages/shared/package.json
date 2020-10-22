@@ -1,0 +1,18 @@
+{
+  "name": "@anisubs/shared",
+  "private": true,
+  "version": "0.0.0",
+  "description": "TODO: description",
+  "author": "BeeeQueue",
+  "license": "AGPL-3.0-only",
+  "engines": {
+    "node": ">=14"
+  },
+  "main": "src/index",
+  "lint-staged": {
+    "*.{ts,js,json,yml}": "prettier --write"
+  },
+  "scripts": {
+    "precommit": "lint-staged"
+  }
+}

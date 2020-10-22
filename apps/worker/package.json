@@ -1,5 +1,6 @@
 {
   "name": "@anisubs/worker",
+  "private": true,
   "version": "0.0.0",
   "description": "TODO: description",
   "author": "BeeeQueue",
@@ -20,16 +21,11 @@
   },
   "dependencies": {
     "anitomy-js": "5.0.0",
-    "apollo-server-koa": "2.18.1",
-    "bottleneck": "2.19.5",
-    "class-validator": "0.12.2",
-    "dataloader": "2.0.0",
+    "bullmq": "1.10.0",
     "envsafe": "1.1.0",
     "koa": "2.13.0",
     "koa-router": "9.4.0",
-    "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
-    "superagent": "6.1.0",
     "webtorrent": "0.108.6"
   },
   "devDependencies": {
