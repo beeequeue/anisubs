@@ -16,7 +16,8 @@
   },
   "scripts": {
     "lint": "yarn lint:nocache --cache --cache-location ./node_modules/.cache/eslint",
-    "lint:nocache": "eslint apps/*/src/**/*.ts"
+    "lint:nocache": "eslint apps/*/src/**/*.ts",
+    "dev": "lerna run dev --stream "
   },
   "devDependencies": {
     "@types/dotenv-flow": "3.1.0",
