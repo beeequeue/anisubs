@@ -1,9 +1,12 @@
 import DataLoader from "dataloader"
-import request from "superagent"
 import { Service } from "typedi"
 
-import { config } from "@/config"
-import { RequestResponse, responseIsError } from "@/lib/utils"
+import { HttpClient } from "@/http"
+import { responseIsError } from "@/lib/utils"
+
+const armClient = HttpClient.extend({
+  prefixUrl: "https://relations.yuna.moe/api",
+})
 
 type Source = "anidb" | "anilist" | "myanimelist" | "kitsu"
 
@@ -31,17 +34,15 @@ export class IdsService {
   private static async batchFetchIds(
     ids: ReadonlyArray<Partial<IDs>>,
   ): Promise<Array<IDs | null>> {
-    const response = (await request
-      .post("https://relations.yuna.moe/api/ids")
-      .set("User-Agent", config.userAgent)
-      .send(ids)
-      .ok((res) => res.status < 299)) as RequestResponse<IDs>
+    const response = await armClient.post<IDs[]>("ids", {
+      json: ids,
+    })
 
     if (responseIsError(response)) {
       return ids.map(() => null)
     }
 
-    return response.body as Array<IDs | null>
+    return response.body
   }
 
   async fetchIds(source: Source, id: number): Promise<IDs | null> {

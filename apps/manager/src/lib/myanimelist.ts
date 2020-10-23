@@ -1,11 +1,14 @@
 import Bottleneck from "bottleneck"
 import NodeCache from "node-cache"
-import request from "superagent"
 import { Service } from "typedi"
 
-import { config } from "@/config"
+import { HttpClient } from "@/http"
 import { IdsService } from "@/lib/arm"
-import { RequestResponse, responseIsError } from "@/lib/utils"
+import { responseIsError } from "@/lib/utils"
+
+const malClient = HttpClient.extend({
+  prefixUrl: "https://api.jikan.moe/v3",
+})
 
 const scoreCache = new NodeCache({
   stdTTL: 1000 * 60 * 60 * 24, // 24h
@@ -39,22 +42,15 @@ export class MyAnimeListService {
       return null
     }
 
-    const response = await jikanLimiter.schedule(
-      () =>
-        request
-          .get(`https://api.jikan.moe/v3/anime/${malId}`)
-          .set("User-Agent", config.userAgent)
-          .ok((res) => res.status < 299) as Promise<
-          RequestResponse<{ score: number | null }>
-        >,
+    const response = await jikanLimiter.schedule(() =>
+      malClient.get<{ score: number | null }>(`anime/${malId}`),
     )
 
     if (responseIsError(response)) {
       return null
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    const score = response.body.score as number | null
+    const score = response.body.score
 
     if (isNaN(score ?? 0) && score != null) {
       throw new Error(`Got weird score: "${score}"`)
