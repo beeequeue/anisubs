@@ -71,6 +71,7 @@ type JobPage {
 }
 
 type Mutation {
+  addWorker(host: String!, name: String!): Worker!
   createJob(animeId: Int!, fileName: String, source: String!): Job!
 }
 
@@ -81,4 +82,17 @@ type Query {
     limit: Int = 20
     offset: Int = 0
   ): JobPage!
+  workers: [Worker!]!
+}
+
+type Worker {
+  confirmed: Boolean!
+  createdAt: DateTime!
+  enabled: Boolean!
+  host: String!
+  id: ID!
+  name: String!
+  online: Boolean!
+  token: String!
+  updatedAt: DateTime!
 }
