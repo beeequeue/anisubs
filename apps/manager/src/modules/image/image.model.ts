@@ -1,34 +1,10 @@
-import { IsUrl, registerDecorator, ValidationOptions } from "class-validator"
+import { IsUrl } from "class-validator"
 import { Field, ObjectType } from "type-graphql"
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  Index,
-  ManyToOne,
-  PrimaryColumn,
-} from "typeorm"
+import { Column, Entity, Index, ManyToOne, PrimaryColumn } from "typeorm"
 
 import { ExtendedEntity } from "@/modules/base.model"
 import { Entry } from "@/modules/entry/entry.model"
-
-const timestampRegex = /^\d{2}:\d{2}:\d{2}$/
-
-const IsTimestamp = (validationOptions?: ValidationOptions) => (
-  obj: BaseEntity,
-  propertyName: string,
-) => {
-  registerDecorator({
-    name: "isTimestamp",
-    target: obj.constructor,
-    propertyName,
-    options: validationOptions,
-    validator: {
-      validate: (value: unknown) =>
-        typeof value === "string" && timestampRegex.test(value),
-    },
-  })
-}
+import { IsTimestamp } from "@/validators"
 
 @Entity()
 @ObjectType()
