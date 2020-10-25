@@ -1,18 +1,20 @@
 import { WorkerStatusResponse } from "@anisubs/shared"
 import DataLoader from "dataloader"
+import { Service } from "typedi"
 
 import { HttpClient } from "@/http"
 import type { Worker } from "@/modules/worker/worker.model"
 
 const workerClient = HttpClient.extend()
 
+@Service()
 export class WorkerService {
   statusLoader: DataLoader<Worker, WorkerStatusResponse | null>
 
   constructor() {
     // eslint-disable-next-line @typescript-eslint/unbound-method
     this.statusLoader = new DataLoader(WorkerService.fetchGetStatuses, {
-      cacheKeyFn: ({ id }) => id,
+      cacheKeyFn: (worker) => worker.id,
     })
   }
 
@@ -38,9 +40,5 @@ export class WorkerService {
 
       return result.value.body
     })
-  }
-
-  async getStatusOf(worker: Worker): Promise<WorkerStatusResponse | null> {
-    return this.statusLoader.load(worker)
   }
 }

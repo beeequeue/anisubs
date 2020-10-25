@@ -2,8 +2,8 @@ import { Field, ObjectType } from "type-graphql"
 import { Column, Entity } from "typeorm"
 
 import { ExtendedEntity } from "@/modules/base.model"
-import { IsHost } from "@/validators"
 import { Job } from "@/modules/job/job.model"
+import { IsHost } from "@/validators"
 
 @ObjectType()
 @Entity()
