@@ -8,3 +8,17 @@ export type JobType = {
   groupId: string
   animeId: number
 }
+
+export enum WorkerState {
+  Idle = "Idle",
+  Downloading = "Downloading",
+  Extracting = "Extracting",
+  Uploading = "Uploading",
+  Confirming = "Confirming",
+}
+
+export type WorkerStatusResponse = {
+  enabled: boolean
+  state: WorkerState
+  job: JobType | null
+}

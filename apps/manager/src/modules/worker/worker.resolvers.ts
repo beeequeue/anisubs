@@ -1,8 +1,20 @@
-import { UserInputError } from "apollo-server-koa"
 import { randomBytes } from "crypto"
-import { Arg, Ctx, Int, Mutation, Query, Resolver } from "type-graphql"
+
+import { UserInputError } from "apollo-server-koa"
+import {
+  Arg,
+  Ctx,
+  FieldResolver,
+  Int,
+  Mutation,
+  Query,
+  Resolver,
+  ResolverInterface,
+  Root,
+} from "type-graphql"
 
 import { Worker } from "@/modules/worker/worker.model"
+import { WorkerService } from "@/lib/worker"
 
 @Resolver()
 export class WorkerResolvers {
@@ -42,7 +54,9 @@ export class WorkerResolvers {
 
     console.log(`A worker is trying to confirm ${ip}:${port}`)
 
-    const worker = await Worker.findOne({ where: { host: `${ip}:${port}`, token } })
+    const worker = await Worker.findOne({
+      where: { host: `${ip}:${port}`, token },
+    })
 
     if (worker == null) {
       throw new UserInputError("No such worker is registered.")
@@ -52,5 +66,20 @@ export class WorkerResolvers {
     await worker.save()
 
     return true
+  }
+}
+
+@Resolver(() => Worker)
+export class WorkerFieldResolvers implements ResolverInterface<Worker> {
+  constructor(private readonly workerService: WorkerService) {}
+
+  @FieldResolver()
+  async enabled(@Root() worker: Worker) {
+    return (await this.workerService.getStatusOf(worker))?.enabled ?? false
+  }
+
+  @FieldResolver()
+  async online(@Root() worker: Worker) {
+    return (await this.workerService.getStatusOf(worker)) != null
   }
 }

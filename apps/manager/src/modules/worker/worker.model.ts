@@ -24,17 +24,9 @@ export class Worker extends ExtendedEntity {
   @Field()
   confirmed!: boolean
 
-  @Field(() => Boolean)
-  async enabled(): Promise<boolean> {
-    return false
-  }
+  @Field(() => Boolean, {})
+  enabled!: Promise<boolean>
 
   @Field(() => Boolean)
-  async online(): Promise<boolean> {
-    return false
-  }
-
-  async ping(): Promise<boolean> {
-    return false
-  }
+  online!: Promise<boolean>
 }

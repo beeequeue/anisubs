@@ -9,12 +9,12 @@ import {
 } from "type-graphql"
 
 import { PaginatedResponse, PaginationArgs } from "../pagination"
-import { Job, JobCreationArgs } from "@/modules/job/job.model"
-import { getJobCount, getJobs } from "@/queue"
-import { Anime } from "@/modules/anime/anime.model"
 import { IdsService } from "@/lib/arm"
 import { MyAnimeListService } from "@/lib/myanimelist"
+import { Anime } from "@/modules/anime/anime.model"
 import { Group } from "@/modules/group/group.model"
+import { Job, JobCreationArgs } from "@/modules/job/job.model"
+import { getJobCount, getJobs } from "@/queue"
 
 @ObjectType()
 export class JobPage extends PaginatedResponse(Job) {}
