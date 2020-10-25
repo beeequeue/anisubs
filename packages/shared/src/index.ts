@@ -1,3 +1,5 @@
+import { Job } from "bullmq"
+
 export type JobType = {
   id: string
   hash: string
@@ -20,5 +22,5 @@ export enum WorkerState {
 export type WorkerStatusResponse = {
   enabled: boolean
   state: WorkerState
-  job: JobType | null
+  job: Job<JobType, null> | null
 }

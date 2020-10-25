@@ -15,6 +15,7 @@ import {
 
 import { Worker } from "@/modules/worker/worker.model"
 import { WorkerService } from "@/lib/worker"
+import { Job } from "@/modules/job/job.model"
 
 @Resolver()
 export class WorkerResolvers {
@@ -81,5 +82,14 @@ export class WorkerFieldResolvers implements ResolverInterface<Worker> {
   @FieldResolver()
   async online(@Root() worker: Worker) {
     return (await this.workerService.getStatusOf(worker)) != null
+  }
+
+  @FieldResolver()
+  async currentJob(@Root() worker: Worker) {
+    const status = await this.workerService.getStatusOf(worker)
+
+    return status != null && status.job != null
+      ? Job.fromQueueJob(status.job)
+      : null
   }
 }

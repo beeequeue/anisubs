@@ -3,6 +3,7 @@ import { Column, Entity } from "typeorm"
 
 import { ExtendedEntity } from "@/modules/base.model"
 import { IsHost } from "@/validators"
+import { Job } from "@/modules/job/job.model"
 
 @ObjectType()
 @Entity()
@@ -29,4 +30,7 @@ export class Worker extends ExtendedEntity {
 
   @Field(() => Boolean)
   online!: Promise<boolean>
+
+  @Field(() => Job, { nullable: true })
+  currentJob!: Promise<Job | null>
 }

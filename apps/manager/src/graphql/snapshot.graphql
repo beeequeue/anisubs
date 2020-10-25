@@ -89,6 +89,7 @@ type Query {
 type Worker {
   confirmed: Boolean!
   createdAt: DateTime!
+  currentJob: Job
   enabled: Boolean!
   host: String!
   id: ID!
