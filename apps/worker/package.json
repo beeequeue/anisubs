@@ -23,6 +23,7 @@
     "anitomy-js": "5.0.0",
     "bullmq": "1.10.0",
     "envsafe": "1.1.0",
+    "got": "11.8.0",
     "koa": "2.13.0",
     "koa-router": "9.4.0",
     "rimraf": "3.0.2",

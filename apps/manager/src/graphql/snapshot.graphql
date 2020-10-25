@@ -72,6 +72,7 @@ type JobPage {
 
 type Mutation {
   addWorker(host: String!, name: String!): Worker!
+  confirmWorker(port: Int!, token: String!): Boolean!
   createJob(animeId: Int!, fileName: String, source: String!): Job!
 }
 
