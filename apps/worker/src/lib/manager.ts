@@ -19,14 +19,22 @@ const confirmQuery = `
 
 export class Manager {
   static async confirmSelf() {
+    console.log("Confirming with manager...")
+
     const response = await managerClient.post<
       GraphQLResponse<{ confirmWorker: boolean }>
     >("graphql", {
-      throwHttpErrors: false,
       json: {
         query: confirmQuery,
         variables: { token: CONFIG.TOKEN, port: CONFIG.PORT },
       },
+      throwHttpErrors: false,
+      retry: {
+        limit: 720,
+        calculateDelay: () => 5000,
+        methods: ["POST"],
+        errorCodes: ["ETIMEDOUT", "ECONNRESET", "ECONNREFUSED"]
+      }
     })
 
     if (response.body.errors != null) {
@@ -40,5 +48,7 @@ export class Manager {
     if (!response.body.data.confirmWorker) {
       throw new Error("Didn't get true when confirming token with manager!")
     }
+
+    console.log("All good!")
   }
 }
