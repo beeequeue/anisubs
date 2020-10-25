@@ -1,7 +1,7 @@
 import { JobType } from "@anisubs/shared"
 import { Queue } from "bullmq"
 
-import { config } from "./config"
+import { config } from "../config"
 
 const jobQueue = new Queue<JobType>("extraction", {
   connection: {

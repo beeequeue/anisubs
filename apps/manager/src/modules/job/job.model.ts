@@ -8,9 +8,9 @@ import { IsMagnetURI, Matches, validate } from "class-validator"
 import { ArgsType, Field, ID, Int, ObjectType } from "type-graphql"
 import { Index } from "typeorm"
 
+import { addJob } from "@/lib/queue"
 import { getTorrentMetadata } from "@/lib/webtorrent"
 import { Group } from "@/modules/group/group.model"
-import { addJob } from "@/queue"
 
 const md5 = createHash("md5")
 
