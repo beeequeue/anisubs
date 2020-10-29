@@ -20,19 +20,18 @@
     "typeorm": "ts-node -r dotenv-flow/config -r tsconfig-paths/register ../../node_modules/typeorm/cli.js"
   },
   "dependencies": {
+    "@anisubs/shared": "*",
     "anitomy-js": "5.0.0",
     "bullmq": "1.10.0",
     "envsafe": "1.1.0",
     "got": "11.8.0",
     "koa": "2.13.0",
     "koa-router": "9.4.0",
-    "rimraf": "3.0.2",
-    "webtorrent": "0.108.6"
+    "rimraf": "3.0.2"
   },
   "devDependencies": {
     "@types/koa": "2.11.4",
     "@types/koa-router": "7.4.1",
-    "@types/rimraf": "3.0.0",
-    "@types/webtorrent": "0.107.2"
+    "@types/rimraf": "3.0.0"
   }
 }
