@@ -1,20 +1,13 @@
 import { JobType, WorkerState } from "@anisubs/shared"
 import { Job } from "bullmq"
 
-type State = {
-  enabled: boolean
-  state: WorkerState
-  job: Job<JobType, null> | null
-}
-
-const state: State = {
+const state = {
   enabled: false,
-  state: WorkerState.Idle,
-  job: null,
+  state: WorkerState.Idle as WorkerState,
+  job: null as Job<JobType, null> | null,
+  setEnabled(enabled: boolean) {
+    this.enabled = enabled
+  },
 }
 
-export const useState = () => ({
-  ...state as Readonly<State>,
-})
-
-useState().enabled = true
+export const useState = () => state as Readonly<typeof state>

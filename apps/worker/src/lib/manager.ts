@@ -1,5 +1,6 @@
 import { CONFIG } from "@/config"
 import { HttpClient } from "@/http"
+import { useState } from "@/state"
 
 type GraphQLResponse<D extends Record<string, unknown>> = {
   data: D
@@ -50,5 +51,7 @@ export class Manager {
     }
 
     console.log("All good!")
+    const state = useState()
+    state.setEnabled(true)
   }
 }
