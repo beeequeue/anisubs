@@ -12,8 +12,6 @@ import { addJob } from "@/lib/queue"
 import { getTorrentMetadata } from "@/lib/webtorrent"
 import { Group } from "@/modules/group/group.model"
 
-const md5 = createHash("md5")
-
 @ArgsType()
 export class JobCreationArgs {
   @Field(() => Int)
@@ -109,7 +107,9 @@ export class Job implements JobType {
     }
 
     // TODO: block duplicate hashes
-    const hash = md5.update(torrent.infoHash + fileName).digest("hex")
+    const hash = createHash("md5")
+      .update(torrent.infoHash + fileName)
+      .digest("hex")
     const info = await parse(torrent.name)
 
     if (info.release_group == null) {
