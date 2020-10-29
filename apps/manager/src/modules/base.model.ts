@@ -48,7 +48,7 @@ export class ExtendedEntity extends BaseEntity {
       const messageDetails = errors
         .map(
           ({ property, value, constraints }) =>
-            `${property}: "${value}" [ ${Object.keys(constraints ?? {}).join(
+            `${property}: "${value as string}" [ ${Object.keys(constraints ?? {}).join(
               ", ",
             )} ]`,
         )

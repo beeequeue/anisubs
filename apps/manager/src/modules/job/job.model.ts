@@ -1,6 +1,6 @@
 import { createHash } from "crypto"
 
-import { JobType } from "@anisubs/shared"
+import { JobType, WebTorrent } from "@anisubs/shared"
 import { parse } from "anitomy-js"
 import { UserInputError } from "apollo-server-koa"
 import { Job as QueueJob } from "bullmq"
@@ -9,7 +9,6 @@ import { ArgsType, Field, ID, Int, ObjectType } from "type-graphql"
 import { Index } from "typeorm"
 
 import { addJob } from "@/lib/queue"
-import { getTorrentMetadata } from "@/lib/webtorrent"
 import { Group } from "@/modules/group/group.model"
 
 @ArgsType()
@@ -85,7 +84,7 @@ export class Job implements JobType {
     source,
     fileName,
   }: JobCreationArgs): Promise<Job> {
-    const torrent = await getTorrentMetadata(source)
+    const torrent = await WebTorrent.getMetadata(source)
 
     if (
       fileName != null &&
