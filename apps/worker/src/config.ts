@@ -1,3 +1,4 @@
+import { RedisOptions } from "bullmq"
 import { envsafe, port, str, url } from "envsafe"
 
 enum Environment {
@@ -28,6 +29,28 @@ const baseEnv = envsafe({
   TOKEN: str(),
 })
 
+const redisEnv = envsafe({
+  REDIS_HOST: str({
+    default: "",
+    devDefault: "localhost",
+  }),
+  REDIS_PORT: port({
+    default: 6379
+  }),
+  REDIS_USER: str({
+    default: "",
+  }),
+  REDIS_PASS: str({
+    default: "",
+  }),
+})
+
 export const CONFIG = {
   ...baseEnv,
+  redis: {
+    host: redisEnv.REDIS_HOST,
+    port: redisEnv.REDIS_PORT,
+    username: redisEnv.REDIS_USER,
+    password: redisEnv.REDIS_PASS,
+  } as RedisOptions,
 }
