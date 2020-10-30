@@ -109,22 +109,23 @@ export class Job implements JobType {
     const hash = createHash("md5")
       .update(torrent.infoHash + fileName)
       .digest("hex")
-    const info = await parse(torrent.name)
+    const torrentInfo = await parse(torrent.name)
+    const fileInfo = await parse(fileName)
 
-    if (info.release_group == null) {
+    if (torrentInfo.release_group == null) {
       throw new UserInputError(
         "Could not determine release group from torrent name.",
       )
     }
 
-    const episodeNumber = /^(\d+)/.exec(info.episode_number ?? "")?.[1]
-    if (info.episode_number == null || episodeNumber == null) {
+    const episodeNumber = /^(\d+)/.exec(fileInfo.episode_number ?? "")?.[1]
+    if (fileInfo.episode_number == null || episodeNumber == null) {
       throw new UserInputError(
         "Could not determine episode number from torrent name.",
       )
     }
 
-    const group = await Group.findOrCreateByName(info.release_group)
+    const group = await Group.findOrCreateByName(torrentInfo.release_group)
 
     const options: JobType = {
       hash: hash,
