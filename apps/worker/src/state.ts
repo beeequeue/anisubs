@@ -1,10 +1,10 @@
-import { JobType, WorkerState } from "@anisubs/shared"
+import { ExtractOptions, WorkerState } from "@anisubs/shared"
 import { Job } from "bullmq"
 
 const state = {
   enabled: false,
   state: WorkerState.Idle as WorkerState,
-  job: null as Job<JobType, null> | null,
+  job: null as Job<ExtractOptions, null> | null,
 
   setEnabled(enabled: boolean) {
     this.enabled = enabled

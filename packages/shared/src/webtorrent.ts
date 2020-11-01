@@ -1,7 +1,7 @@
 import { sync as remove } from "rimraf"
 import { default as TorrentClient, Torrent } from "webtorrent"
 
-import { JobType } from "./types"
+import { ExtractOptions } from "./types"
 import { formatBytes, throttle } from "./utils"
 
 const TIMEOUT_MS = 1000 * 60 * 5
@@ -12,26 +12,31 @@ export class WebTorrent {
   static async getMetadata(magnetUri: string) {
     return new Promise<Torrent>((resolve, reject) => {
       this.client.add(magnetUri, (torrent) => {
-        console.log(`Getting metadata for:\n${torrent.infoHash} "${torrent.name}"`)
+        console.log(
+          `Getting metadata for:\n${torrent.infoHash} "${torrent.name}"`,
+        )
 
         torrent.addListener("error", reject)
-        torrent.addListener("noPeers", () => reject(`[${torrent.name}]: Found no peers.`))
+        torrent.addListener("noPeers", () =>
+          reject(`[${torrent.name}]: Found no peers.`),
+        )
 
         torrent.addListener("download", () => {
           resolve(torrent)
 
-          // If we destroy it immediately it breaks
-          setTimeout(() => {
-            torrent.destroy()
-            remove(torrent.path)
-          }, 0)
+          if (process.env.NODE_ENV === "production") {
+            // If we destroy it immediately it breaks
+            setTimeout(() => {
+              torrent.destroy()
+              remove(torrent.path)
+            }, 0)
+          }
         })
       })
     })
   }
 
-  static async download(job: JobType): Promise<Torrent> {
-    return new Promise<Torrent>((resolve, reject) => {
+  static async download(job: ExtractOptions): Promise<TorrentFile> {
       this.client.add(job.sourceUri, (torrent) => {
         console.log(`Downloading:\n${torrent.infoHash} "${torrent.name}"`)
 
@@ -50,14 +55,18 @@ export class WebTorrent {
           if (correctFile == null) {
             torrent.destroy()
             remove(torrent.path)
-            return reject(`[${torrent.name}]: Failed to find wanted file in torrent.`)
+            return reject(
+              `[${torrent.name}]: Failed to find wanted file in torrent.`,
+            )
           }
 
           correctFile.select()
         }
 
         torrent.addListener("error", reject)
-        torrent.addListener("noPeers", () => reject(`[${torrent.name}]: Found no peers.`))
+        torrent.addListener("noPeers", () =>
+          reject(`[${torrent.name}]: Found no peers.`),
+        )
 
         torrent.addListener("done", () => {
           console.log(`Downloaded ${torrent.name}!`)
@@ -80,11 +89,18 @@ WebTorrent.client.on("torrent", (torrent) => {
   })
 
   torrent.addListener("download", () => {
-    throttledLogger(`${prefix} ${formatBytes(torrent.downloaded)} ${(torrent.progress * 100).toFixed(0)}%`)
+    throttledLogger(
+      `${prefix} ${formatBytes(torrent.downloaded)} ${(
+        torrent.progress * 100
+      ).toFixed(0)}%`,
+    )
   })
 
   torrent.addListener("upload", () => {
-    throttledLogger(`${prefix} Uploaded ${formatBytes(torrent.uploaded)}. Currently at a ${torrent.ratio} ratio.`)
+    throttledLogger(
+      `${prefix} Uploaded ${formatBytes(torrent.uploaded)}. Currently at a ${
+        torrent.ratio
+      } ratio.`,
+    )
   })
 })
-

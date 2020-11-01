@@ -1,9 +1,9 @@
-import { JobType } from "@anisubs/shared"
+import { ExtractOptions } from "@anisubs/shared"
 import { Queue } from "bullmq"
 
 import { config } from "../config"
 
-const jobQueue = new Queue<JobType>("extraction", {
+const jobQueue = new Queue<ExtractOptions>("extraction", {
   connection: {
     ...config.redis,
   }
@@ -13,7 +13,7 @@ enum Job {
   Extract = "extract"
 }
 
-export const addJob = async (job: JobType) => {
+export const addJob = async (job: ExtractOptions) => {
   return jobQueue.add(Job.Extract, job)
 }
 

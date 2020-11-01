@@ -1,9 +1,10 @@
 import { Job } from "bullmq"
 
-export type JobType = {
+export type ExtractOptions = {
   id: string
   hash: string
   episode: number
+  timestamps: string[]
   source: string
   sourceUri: string
   fileName: string
@@ -22,5 +23,5 @@ export enum WorkerState {
 export type WorkerStatusResponse = {
   enabled: boolean
   state: WorkerState
-  job: Job<JobType, null> | null
+  job: Job<ExtractOptions, null> | null
 }

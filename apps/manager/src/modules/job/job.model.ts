@@ -1,6 +1,6 @@
 import { createHash } from "crypto"
 
-import { JobType, WebTorrent } from "@anisubs/shared"
+import { ExtractOptions, WebTorrent } from "@anisubs/shared"
 import { parse } from "anitomy-js"
 import { UserInputError } from "apollo-server-koa"
 import { Job as QueueJob } from "bullmq"
@@ -8,6 +8,7 @@ import { IsMagnetURI, Matches, validate } from "class-validator"
 import { ArgsType, Field, ID, Int, ObjectType } from "type-graphql"
 import { Index } from "typeorm"
 
+import { Timestamp } from "@/graphql/scalars"
 import { addJob } from "@/lib/queue"
 import { Group } from "@/modules/group/group.model"
 
@@ -23,10 +24,13 @@ export class JobCreationArgs {
   @Matches(/.*\.[a-zA-Z\d]{2,}/, { message: "Not a filename." })
   @Field(() => String, { nullable: true })
   fileName!: string | null
+
+  @Field(() => [Timestamp], { nullable: true })
+  timestamps!: string[] | null
 }
 
 @ObjectType()
-export class Job implements JobType {
+export class Job implements ExtractOptions {
   @Index()
   @Field()
   hash!: string
@@ -42,6 +46,9 @@ export class Job implements JobType {
 
   @Field(() => Int)
   episode!: number
+
+  @Field(() => [Timestamp])
+  timestamps!: string[]
 
   @Field()
   source!: string
@@ -62,7 +69,7 @@ export class Job implements JobType {
   createdAt!: Date
 
   static async fromQueueJob(
-    queueJob: QueueJob<JobType, unknown>,
+    queueJob: QueueJob<ExtractOptions, unknown>,
   ): Promise<Job> {
     const job = new Job()
 
@@ -83,6 +90,7 @@ export class Job implements JobType {
     animeId,
     source,
     fileName,
+    timestamps,
   }: JobCreationArgs): Promise<Job> {
     const torrent = await WebTorrent.getMetadata(source)
 
@@ -126,16 +134,22 @@ export class Job implements JobType {
     }
 
     const group = await Group.findOrCreateByName(torrentInfo.release_group)
+    const existingTimestamps = [] as string[]
 
-    const options: JobType = {
+    if (existingTimestamps == null && timestamps == null) {
+      throw new UserInputError("TODO")
+    }
+
+    const options: ExtractOptions = {
       hash: hash,
       id: hash,
-      animeId: animeId,
-      groupId: group.id,
-      source: torrent.name,
-      sourceUri: source,
       fileName: fileName,
       episode: Number(episodeNumber),
+      timestamps: existingTimestamps ?? timestamps,
+      source: torrent.name,
+      sourceUri: source,
+      animeId: animeId,
+      groupId: group.id,
     }
 
     const errors = await validate(options)

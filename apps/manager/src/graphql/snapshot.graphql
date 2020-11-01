@@ -31,6 +31,7 @@ type Entry {
   id: ID!
   source: String!
   sourceUri: String!
+  timestamps: [Timestamp!]!
   updatedAt: DateTime!
 }
 
@@ -44,7 +45,7 @@ type Group {
 type Image {
   createdAt: DateTime!
   id: ID!
-  timestamp: String!
+  timestamp: Timestamp!
   updatedAt: DateTime!
   url: String!
 }
@@ -62,6 +63,7 @@ type Job {
   inProgress: Boolean!
   source: String!
   sourceUri: String!
+  timestamps: [Timestamp!]!
 }
 
 type JobPage {
@@ -73,7 +75,7 @@ type JobPage {
 type Mutation {
   addWorker(host: String!, name: String!): Worker!
   confirmWorker(port: Int!, token: String!): Boolean!
-  createJob(animeId: Int!, fileName: String, source: String!): Job!
+  createJob(animeId: Int!, fileName: String, source: String!, timestamps: [Timestamp!]): Job!
 }
 
 type Query {
@@ -85,6 +87,8 @@ type Query {
   ): JobPage!
   workers: [Worker!]!
 }
+
+scalar Timestamp
 
 type Worker {
   confirmed: Boolean!

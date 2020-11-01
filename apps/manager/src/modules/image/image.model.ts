@@ -2,16 +2,15 @@ import { IsUrl } from "class-validator"
 import { Field, ObjectType } from "type-graphql"
 import { Column, Entity, Index, ManyToOne, PrimaryColumn } from "typeorm"
 
+import { Timestamp } from "@/graphql/scalars"
 import { ExtendedEntity } from "@/modules/base.model"
 import { Entry } from "@/modules/entry/entry.model"
-import { IsTimestamp } from "@/validators"
 
 @Entity()
 @ObjectType()
 export class Image extends ExtendedEntity {
   @PrimaryColumn()
-  @IsTimestamp()
-  @Field()
+  @Field(() => Timestamp)
   timestamp!: string
 
   @Column()
