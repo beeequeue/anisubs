@@ -1,5 +1,5 @@
 import { sync as remove } from "rimraf"
-import { default as TorrentClient, Torrent } from "webtorrent"
+import { default as TorrentClient, Torrent, TorrentFile } from "webtorrent"
 
 import { ExtractOptions } from "./types"
 import { formatBytes, throttle } from "./utils"
@@ -16,16 +16,16 @@ export class WebTorrent {
           `Getting metadata for:\n${torrent.infoHash} "${torrent.name}"`,
         )
 
-        // Deselect all files so we don't download anything
-        torrent.files.forEach((file) => file.deselect())
-        torrent.deselect(0, torrent.pieces.length - 1, 0)
-
         torrent.addListener("error", reject)
         torrent.addListener("noPeers", () =>
           reject(`[${torrent.name}]: Found no peers.`),
         )
 
         torrent.addListener("download", () => {
+          // Deselect all files so we don't download anything
+          torrent.files.forEach((file) => file.deselect())
+          torrent.deselect(0, torrent.pieces.length - 1, 0)
+
           resolve(torrent)
 
           setTimeout(() => {
@@ -42,6 +42,7 @@ export class WebTorrent {
   }
 
   static async download(job: ExtractOptions): Promise<TorrentFile> {
+    return new Promise<TorrentFile>((resolve, reject) => {
       this.client.add(job.sourceUri, (torrent) => {
         console.log(`Downloading:\n${torrent.infoHash} "${torrent.name}"`)
 
@@ -51,13 +52,13 @@ export class WebTorrent {
           reject(`[${torrent.name}]: Timed out downloading.`)
         }, TIMEOUT_MS)
 
+        const correctFileIndex =
+          torrent.files.length > 1
+            ? torrent.files.findIndex((file) => file.name === job.fileName)
+            : 0
+
         if (torrent.files.length > 1) {
-          torrent.files.forEach(file => file.deselect())
-          torrent.deselect(0, torrent.pieces.length - 1, 0)
-
-          const correctFile = torrent.files.find((file) => file.name === job.fileName)
-
-          if (correctFile == null) {
+          if (correctFileIndex === -1) {
             torrent.destroy()
             remove(torrent.path)
             return reject(
@@ -65,7 +66,10 @@ export class WebTorrent {
             )
           }
 
-          correctFile.select()
+          torrent.files.forEach((file) => file.deselect())
+          torrent.deselect(0, torrent.pieces.length - 1, 0)
+
+          torrent.files[correctFileIndex].select()
         }
 
         torrent.addListener("error", reject)
@@ -77,7 +81,9 @@ export class WebTorrent {
           console.log(`Downloaded ${torrent.name}!`)
 
           clearTimeout(timeout)
-          resolve(torrent)
+          resolve(torrent.files[correctFileIndex])
+
+          torrent.destroy()
         })
       })
     })
