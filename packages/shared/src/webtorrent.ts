@@ -16,6 +16,10 @@ export class WebTorrent {
           `Getting metadata for:\n${torrent.infoHash} "${torrent.name}"`,
         )
 
+        // Deselect all files so we don't download anything
+        torrent.files.forEach((file) => file.deselect())
+        torrent.deselect(0, torrent.pieces.length - 1, 0)
+
         torrent.addListener("error", reject)
         torrent.addListener("noPeers", () =>
           reject(`[${torrent.name}]: Found no peers.`),
@@ -24,13 +28,14 @@ export class WebTorrent {
         torrent.addListener("download", () => {
           resolve(torrent)
 
-          if (process.env.NODE_ENV === "production") {
-            // If we destroy it immediately it breaks
-            setTimeout(() => {
-              torrent.destroy()
+          setTimeout(() => {
+            torrent.destroy()
+
+            if (process.env.NODE_ENV === "production") {
+              // If we destroy it immediately it breaks
               remove(torrent.path)
-            }, 0)
-          }
+            }
+          }, 0)
         })
       })
     })

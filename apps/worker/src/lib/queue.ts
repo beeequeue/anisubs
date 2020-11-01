@@ -15,4 +15,8 @@ export const startWorker = () => {
     connection,
     concurrency: 1,
   })
+
+  worker.addListener("failed", (job: Job) => {
+    console.error(`Failed to extract files:\n${job.stacktrace[0]}`)
+  })
 }

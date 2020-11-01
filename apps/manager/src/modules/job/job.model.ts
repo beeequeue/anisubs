@@ -11,6 +11,7 @@ import { Index } from "typeorm"
 import { Timestamp } from "@/graphql/scalars"
 import { addJob } from "@/lib/queue"
 import { Group } from "@/modules/group/group.model"
+import { Entry } from "@/modules/entry/entry.model"
 
 @ArgsType()
 export class JobCreationArgs {
@@ -134,7 +135,7 @@ export class Job implements ExtractOptions {
     }
 
     const group = await Group.findOrCreateByName(torrentInfo.release_group)
-    const existingTimestamps = [] as string[]
+    const existingTimestamps = await Entry.getTimestampsForAnime(animeId)
 
     if (existingTimestamps == null && timestamps == null) {
       throw new UserInputError("TODO")
@@ -145,7 +146,7 @@ export class Job implements ExtractOptions {
       id: hash,
       fileName: fileName,
       episode: Number(episodeNumber),
-      timestamps: existingTimestamps ?? timestamps,
+      timestamps: existingTimestamps ?? timestamps!, //  TS doesn't realize one of the vars will not be null
       source: torrent.name,
       sourceUri: source,
       animeId: animeId,

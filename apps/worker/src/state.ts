@@ -9,7 +9,9 @@ const state = {
   setEnabled(enabled: boolean) {
     this.enabled = enabled
   },
-  setState(state: WorkerState, job?: Job<JobType>) {
+  setState(state: WorkerState, job?: Job<ExtractOptions>) {
+    console.log(`State changed to ${state}`)
+
     this.state = state
     this.job = state !== WorkerState.Idle ? job ?? this.job : null
   },
