@@ -17,6 +17,7 @@ export const registerApolloServer = async (app: Koa<KoaContext>) => {
       res,
       state,
     }),
+    formatError: (error) => (console.error(error), error),
     introspection: true,
     uploads: false,
     plugins: [

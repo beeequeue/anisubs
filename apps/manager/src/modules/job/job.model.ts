@@ -10,8 +10,8 @@ import { Index } from "typeorm"
 
 import { Timestamp } from "@/graphql/scalars"
 import { addJob } from "@/lib/queue"
-import { Group } from "@/modules/group/group.model"
 import { Entry } from "@/modules/entry/entry.model"
+import { Group } from "@/modules/group/group.model"
 
 @ArgsType()
 export class JobCreationArgs {
