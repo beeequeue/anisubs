@@ -1,6 +1,7 @@
 import { sync as remove } from "rimraf"
 import { default as TorrentClient, Torrent, TorrentFile } from "webtorrent"
 
+import { DOWNLOADS_PATH } from "./constants"
 import { ExtractOptions } from "./types"
 import { formatBytes, throttle } from "./utils"
 
@@ -11,7 +12,7 @@ export class WebTorrent {
 
   static async getMetadata(magnetUri: string) {
     return new Promise<Torrent>((resolve, reject) => {
-      this.client.add(magnetUri, (torrent) => {
+      this.client.add(magnetUri, { path: DOWNLOADS_PATH }, (torrent) => {
         console.log(
           `Getting metadata for:\n${torrent.infoHash} "${torrent.name}"`,
         )
@@ -43,7 +44,7 @@ export class WebTorrent {
 
   static async download(job: ExtractOptions): Promise<TorrentFile> {
     return new Promise<TorrentFile>((resolve, reject) => {
-      this.client.add(job.sourceUri, (torrent) => {
+      this.client.add(job.sourceUri, { path: DOWNLOADS_PATH }, (torrent) => {
         console.log(`Downloading:\n${torrent.infoHash} "${torrent.name}"`)
 
         const timeout = setTimeout(() => {
