@@ -59,7 +59,7 @@ export class Ffmpeg {
 
     const options = {
       timestamps: job.timestamps.slice(0, 1), // TODO
-      filename: `${job.hash}-%s.png`,
+      filename: `${job.hash}-%s.webp`,
       folder: join(SCREENSHOTS_PATH, job.hash),
     }
 
@@ -86,9 +86,10 @@ export class Ffmpeg {
             ["-i", `${inputPath}`],
             ["-vframes", "1"],
             ["-vf", `subtitles='${subtitleFilePath}':si=0`],
+            ["-quality", "95"],
             join(
               screenshotFolder,
-              `${job.hash}-${timestamp.replace(/[:,]/g, "_")}.png`,
+              `${job.hash}-${timestamp.replace(/[:,.]/g, "_")}.webp`,
             ),
           ].flat(2)
 
@@ -108,10 +109,8 @@ export class Ffmpeg {
     await Promise.all(promises)
 
     const files = readdirSync(options.folder).filter((filename) =>
-      filename.endsWith(".png"),
+      filename.endsWith(".webp"),
     )
-
-    console.log(files)
 
     return files
   }
