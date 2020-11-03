@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@anisubs/shared": "*",
+    "@aws-sdk/client-s3": "1.0.0-rc.4",
     "anitomy-js": "5.0.0",
     "bullmq": "1.10.0",
     "envsafe": "1.1.0",

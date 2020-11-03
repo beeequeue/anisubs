@@ -27,6 +27,10 @@ const baseEnv = envsafe({
     devDefault: "http://localhost:3000",
   }),
   TOKEN: str(),
+
+  S3_DOMAIN: str(),
+  SPACE_CLIENT: str(),
+  SPACE_SECRET: str(),
 })
 
 const redisEnv = envsafe({

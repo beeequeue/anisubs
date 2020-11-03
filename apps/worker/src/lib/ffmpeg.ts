@@ -75,7 +75,6 @@ export class Ffmpeg {
             /\\/g,
             "\\\\\\\\",
           )
-          console.log(subtitleFilePath)
 
           // prettier-ignore
           const args = [
