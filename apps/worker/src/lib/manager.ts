@@ -12,13 +12,13 @@ const managerClient = HttpClient.extend({
   prefixUrl: `${CONFIG.MANAGER_URL}`,
 })
 
-const confirmQuery = `
-  mutation ConfirmSelf($token: String!, $port: Int!) {
-    confirmWorker(token: $token, port: $port)
-  }
-`
-
 export class Manager {
+  static confirmQuery = `
+    mutation ConfirmSelf($token: String!, $port: Int!) {
+      confirmWorker(token: $token, port: $port)
+    }
+  `
+
   static async confirmSelf() {
     console.log("Confirming with manager...")
 
@@ -26,7 +26,7 @@ export class Manager {
       GraphQLResponse<{ confirmWorker: boolean }>
     >("graphql", {
       json: {
-        query: confirmQuery,
+        query: this.confirmQuery,
         variables: { token: CONFIG.TOKEN, port: CONFIG.PORT },
       },
       throwHttpErrors: false,
@@ -34,15 +34,15 @@ export class Manager {
         limit: 720,
         calculateDelay: () => 5000,
         methods: ["POST"],
-        errorCodes: ["ETIMEDOUT", "ECONNRESET", "ECONNREFUSED"]
-      }
+        errorCodes: ["ETIMEDOUT", "ECONNRESET", "ECONNREFUSED"],
+      },
     })
 
     if (response.body.errors != null) {
       throw new Error(
-        `Failed to confirm token with manager:\n${response.body.errors.map(
-          (err) => (err as any).message,
-        ).join("\n")}`,
+        `Failed to confirm token with manager:\n${response.body.errors
+          .map((err) => (err as any).message)
+          .join("\n")}`,
       )
     }
 

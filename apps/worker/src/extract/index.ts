@@ -5,7 +5,9 @@ import { Ffmpeg } from "@/lib/ffmpeg"
 import { useState } from "@/state"
 import { uploadFilesToSpace } from "@/lib/upload"
 
-export const startNewExtraction: Processor = async (job: QueueJob<ExtractOptions>): Promise<unknown> => {
+export const startNewExtraction: Processor = async (
+  job: QueueJob<ExtractOptions>,
+): Promise<unknown> => {
   const state = useState()
 
   state.setState(WorkerState.Downloading, job)

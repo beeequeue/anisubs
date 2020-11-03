@@ -29,9 +29,9 @@ type Entry {
   group: Group!
   hash: String!
   id: ID!
+  images: [Image!]!
   source: String!
   sourceUri: String!
-  timestamps: [Timestamp!]!
   updatedAt: DateTime!
 }
 

@@ -9,8 +9,6 @@ import {
   ManyToOne,
   OneToMany,
 } from "typeorm"
-
-import { Timestamp } from "@/graphql/scalars"
 import { ExtendedEntity } from "@/modules/base.model"
 import { Group } from "@/modules/group/group.model"
 import { Image } from "@/modules/image/image.model"
@@ -30,10 +28,6 @@ export class Entry extends ExtendedEntity implements ExtractOptions {
   @Column()
   @Field()
   source!: string
-
-  @Column({ type: "simple-array" })
-  @Field(() => [Timestamp])
-  timestamps!: string[]
 
   @Column()
   @IsMagnetURI()
@@ -59,6 +53,8 @@ export class Entry extends ExtendedEntity implements ExtractOptions {
   @ManyToOne(() => Group, (group) => group.entries)
   @Field(() => Group)
   group!: Promise<Group>
+
+  timestamps!: string[]
 
   @OneToMany(() => Image, (image) => image.entry)
   images!: Image[]
