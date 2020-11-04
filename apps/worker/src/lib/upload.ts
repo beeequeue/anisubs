@@ -36,7 +36,7 @@ export const uploadFilesToSpace = async (
 
       await s3Client.send(command)
 
-      return key
+      return `https://cdn.anisubs.app/${key}`
     }),
   )
 

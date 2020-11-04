@@ -1,9 +1,18 @@
-import { FieldResolver, Resolver, Root } from "type-graphql"
+import { Arg, FieldResolver, Query, Resolver, Root } from "type-graphql"
+
 import { IdsService } from "@/lib/arm"
 import { MyAnimeListService } from "@/lib/myanimelist"
 import { Anime } from "@/modules/anime/anime.model"
 import { Entry } from "@/modules/entry/entry.model"
 import { Image } from "@/modules/image/image.model"
+
+@Resolver()
+export class EntryResolvers {
+  @Query(() => [Entry])
+  async entries(@Arg("animeId") animeId: number): Promise<Entry[]> {
+    return Entry.find({ where: { animeId } })
+  }
+}
 
 @Resolver(() => Entry)
 export class EntryFieldResolvers {
@@ -22,6 +31,6 @@ export class EntryFieldResolvers {
 
   @FieldResolver(() => [Image])
   async images(@Root() entry: Entry): Promise<Image[]> {
-    return await Image.find({ where: { entryId: entry.id } })
+    return await Image.find({ where: { entry: entry.id } })
   }
 }

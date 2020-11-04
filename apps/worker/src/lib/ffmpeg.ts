@@ -1,3 +1,4 @@
+import { spawn } from "child_process"
 import { mkdirSync, readdirSync } from "fs"
 import { join, relative } from "path"
 
@@ -8,7 +9,6 @@ import {
 } from "@anisubs/shared"
 import FluentFfmpeg, { FfmpegCommand, FfprobeStream } from "fluent-ffmpeg"
 import { TorrentFile } from "webtorrent"
-import { spawn } from "child_process"
 
 export class Ffmpeg {
   private static async getVideoStream(command: FfmpegCommand) {

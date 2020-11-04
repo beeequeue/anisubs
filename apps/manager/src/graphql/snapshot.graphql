@@ -80,6 +80,7 @@ type Mutation {
 
 type Query {
   anime(id: Float!): Anime
+  entries(animeId: Float!): [Entry!]!
   jobQueue(
     """Maximum 20"""
     limit: Int = 20

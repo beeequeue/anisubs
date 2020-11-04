@@ -1,6 +1,6 @@
 import { IsUrl } from "class-validator"
 import { Field, ObjectType } from "type-graphql"
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm"
+import { Column, Entity, Index, ManyToOne, PrimaryColumn } from "typeorm"
 
 import { Timestamp } from "@/graphql/scalars"
 import { ExtendedEntity } from "@/modules/base.model"
@@ -28,7 +28,4 @@ export class Image extends ExtendedEntity {
   @ManyToOne(() => Entry, (entry) => entry.images)
   @Index()
   entry!: Entry
-
-  @JoinColumn()
-  entryId!: string
 }

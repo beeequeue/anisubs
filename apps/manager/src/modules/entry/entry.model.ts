@@ -1,14 +1,9 @@
 import { ExtractOptions } from "@anisubs/shared"
+import { Job as QueueJob } from "bullmq/dist/classes/job"
 import { IsMagnetURI, Matches } from "class-validator"
 import { Field, Int, ObjectType } from "type-graphql"
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-} from "typeorm"
+import { Column, Entity, Index, ManyToOne, OneToMany } from "typeorm"
+
 import { ExtendedEntity } from "@/modules/base.model"
 import { Group } from "@/modules/group/group.model"
 import { Image } from "@/modules/image/image.model"
@@ -47,7 +42,6 @@ export class Entry extends ExtendedEntity implements ExtractOptions {
   @Column()
   animeId!: number
 
-  @JoinColumn()
   groupId!: string
 
   @ManyToOne(() => Group, (group) => group.entries)
@@ -63,5 +57,20 @@ export class Entry extends ExtendedEntity implements ExtractOptions {
     animeId: number,
   ): Promise<string[] | null> {
     return (await Entry.findOne({ animeId }))?.timestamps ?? null
+  }
+
+  static fromQueueJob(queueJob: QueueJob<ExtractOptions, unknown>): Entry {
+    const entry = new Entry()
+
+    entry.hash = queueJob.data.hash
+    entry.animeId = queueJob.data.animeId
+    // Can't set groupId for some reason :(
+    entry.group = (queueJob.data.groupId as unknown) as Promise<Group>
+    entry.episode = queueJob.data.episode
+    entry.source = queueJob.data.source
+    entry.sourceUri = queueJob.data.sourceUri
+    entry.fileName = queueJob.data.fileName
+
+    return entry
   }
 }
