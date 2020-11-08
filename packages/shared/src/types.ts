@@ -1,4 +1,4 @@
-import { Job } from "bullmq"
+import type { Job } from "bullmq"
 
 export type ExtractOptions = {
   id: string
