@@ -1,0 +1,29 @@
+{
+  "name": "@anisubs/ui",
+  "private": true,
+  "version": "0.0.0",
+  "description": "TODO: description",
+  "author": "BeeeQueue",
+  "homepage": "",
+  "license": "AGPL-3.0-only",
+  "engines": {
+    "node": ">=14"
+  },
+  "lint-staged": {
+    "*.{ts,js,json,yml}": "prettier --write"
+  },
+  "scripts": {
+    "precommit": "lint-staged",
+    "dev": "vite",
+    "build": "typecheck && vite build"
+  },
+  "dependencies": {
+    "vue": "3.0.2"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "3.0.2",
+    "@vuedx/typecheck": "0.2.4-0",
+    "@vuedx/typescript-plugin-vue": "0.2.4-0",
+    "vite": "1.0.0-rc.8"
+  }
+}
