@@ -32,7 +32,7 @@ export class WorkerService {
     return results.map((result, i) => {
       if (result.status === "rejected") {
         console.log(
-          `Failed to fetch worker (${workers[i].id}) status:\n${result.reason}`,
+          `Failed to fetch worker (${workers[i].id}) status:\n${result.reason as string}`,
         )
 
         return null

@@ -23,8 +23,8 @@ export const registerApolloServer = async (app: Koa<KoaContext>) => {
     plugins: [
       {
         requestDidStart: () => ({
-          willSendResponse: async ({ context }) => {
-            Container.reset(context.state.requestId)
+          willSendResponse: ({ context }) => {
+            Container.reset((context as Context).state.requestId)
           },
         }),
       },

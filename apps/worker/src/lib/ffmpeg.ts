@@ -109,8 +109,8 @@ export class Ffmpeg {
       logger: console,
     })
 
-    command.on("start", function (commandLine) {
-      console.log("Spawned Ffmpeg with command:\n\n" + commandLine + "\n\n")
+    command.on("start", function (commandLine: string) {
+      console.log(`Spawned Ffmpeg with command:\n\n${commandLine}\n\n`)
     })
 
     const probeData = await this.probeCommand(command)

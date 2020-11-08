@@ -41,7 +41,7 @@ export class Manager {
     if (response.body.errors != null) {
       throw new Error(
         `Failed to confirm token with manager:\n${response.body.errors
-          .map((err) => (err as any).message)
+          .map((err) => (err as Error).message)
           .join("\n")}`,
       )
     }
