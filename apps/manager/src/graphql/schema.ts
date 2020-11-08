@@ -13,7 +13,6 @@ export const createSchema = async (generateSnapshot = true) =>
         : { path: resolve(__dirname, "snapshot.graphql") },
     dateScalarMode: "isoDate",
     resolvers: [resolve(__dirname, "../modules/**/*.resolvers.ts")],
-    // TODO: Clean up container
     container: ({ context }: { context: Context }) =>
       Container.of(context.state.requestId),
   })

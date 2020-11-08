@@ -125,7 +125,7 @@ export class Ffmpeg {
     }
 
     const options = {
-      timestamps: job.timestamps.slice(0, 1), // TODO
+      timestamps: job.timestamps,
       filename: `${job.hash}-%s.webp`,
       folder: join(SCREENSHOTS_PATH, job.hash),
     }
