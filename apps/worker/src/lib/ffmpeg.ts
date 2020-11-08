@@ -7,37 +7,101 @@ import {
   ExtractOptions,
   SCREENSHOTS_PATH,
 } from "@anisubs/shared"
-import FluentFfmpeg, { FfmpegCommand, FfprobeStream } from "fluent-ffmpeg"
+import FluentFfmpeg, {
+  FfmpegCommand,
+  FfprobeData,
+  FfprobeStream,
+} from "fluent-ffmpeg"
 import { TorrentFile } from "webtorrent"
 
+declare module "fluent-ffmpeg" {
+  interface FfprobeStream {
+    tags: {
+      title?: string
+      language?: string
+    }
+  }
+}
+
+const anyIncludes = (arr: Array<string | undefined>, checks: string[]) =>
+  arr.some(
+    (str) =>
+      str != null && checks.some((check) => str.toLowerCase().includes(check)),
+  )
+
+const modifiers = {
+  english: 100,
+  forcedSubtitles: 10,
+  signsOnly: -100,
+}
+
+const scoreSubtitleStream = (
+  stream: FfprobeStream,
+  _: number,
+  allStreams: FfprobeStream[],
+) => {
+  let score = 0
+
+  if (stream.tags.language === "eng") score += modifiers.english
+
+  if (stream.disposition?.forced === 1) score += modifiers.forcedSubtitles
+
+  if (
+    stream.tags.title?.toLowerCase()?.includes("signs") &&
+    anyIncludes(
+      allStreams.map((s) => s.tags.title?.toLowerCase()),
+      ["subs", "subtitles"],
+    )
+  ) {
+    score += modifiers.signsOnly
+  }
+
+  return { score, stream }
+}
+
 export class Ffmpeg {
-  private static async getVideoStream(command: FfmpegCommand) {
-    return new Promise<FfprobeStream>((resolve, reject) => {
+  private static async probeCommand(
+    command: FfmpegCommand,
+  ): Promise<FfprobeData> {
+    return new Promise<FfprobeData>((resolve, reject) => {
       command.ffprobe((err, data) => {
         if (err) return reject(err)
 
-        resolve(data.streams.find((stream) => stream.codec_type === "video")!)
+        resolve(data)
       })
     })
   }
 
-  private static async getEnglishSubtitleStream(command: FfmpegCommand) {
-    return new Promise<FfprobeStream>((resolve, reject) => {
-      command.ffprobe((err, data) => {
-        if (err) return reject(err)
+  private static getVideoStream(data: FfprobeData) {
+    return data.streams.find((stream) => stream.codec_type === "video")!
+  }
 
-        const englishSubtitles = data.streams.filter(
-          (s) => s.codec_type === "subtitle" && s.tags.language === "eng",
-        )
+  private static getLastNonSubtitleStreamIndex(data: FfprobeData) {
+    let index = 0
 
-        if (englishSubtitles.length === 1) {
-          return resolve(englishSubtitles[0])
-        }
+    for (const stream of data.streams) {
+      if (stream.codec_type === "subtitle") break
 
-        // TODO: Improve logic
-        resolve(englishSubtitles[0])
-      })
-    })
+      index++
+    }
+
+    return index
+  }
+
+  private static getBestSubtitleStream(data: FfprobeData) {
+    const subtitleStreams = data.streams.filter(
+      (s) => s.codec_type === "subtitle",
+    )
+
+    if (subtitleStreams.length === 1) {
+      return subtitleStreams[0]
+    }
+
+    const streamScores = subtitleStreams
+      .map(scoreSubtitleStream)
+      .sort(({ score: a }, { score: b }) => b - a)
+
+    return streamScores[0].stream
   }
 
   static async extractScreenshots(job: ExtractOptions, file: TorrentFile) {
@@ -49,9 +113,12 @@ export class Ffmpeg {
       console.log("Spawned Ffmpeg with command:\n\n" + commandLine + "\n\n")
     })
 
-    const videoInfo = await this.getVideoStream(command)
-    // @ts-ignore
-    const englishSubtitleStream = await this.getEnglishSubtitleStream(command)
+    const probeData = await this.probeCommand(command)
+    const videoInfo = this.getVideoStream(probeData)
+    const lastNonSubtitleStreamIndex = this.getLastNonSubtitleStreamIndex(probeData)
+    const bestSubtitleStream = this.getBestSubtitleStream(probeData)
+    const bestSubtitleStreamIndex =
+      bestSubtitleStream.index - lastNonSubtitleStreamIndex
 
     if (videoInfo.height == null) {
       throw new Error(`Could not get height of video. ${job.source}`)
@@ -85,7 +152,7 @@ export class Ffmpeg {
             ["-ss", timestamp],
             ["-i", `${inputPath}`],
             ["-vframes", "1"],
-            ["-vf", `subtitles='${subtitleFilePath}':si=0`],
+            ["-vf", `subtitles='${subtitleFilePath}':si=${bestSubtitleStreamIndex}`],
             ["-quality", "95"],
             join(
               screenshotFolder,
@@ -99,8 +166,14 @@ export class Ffmpeg {
 
           let error: string | null = null
 
-          process.stderr.on("data", (buffer: Buffer) => error += buffer.toString())
-          process.stdout.on("data", (buffer: Buffer) => error += buffer.toString())
+          process.stderr.on(
+            "data",
+            (buffer: Buffer) => (error += buffer.toString()),
+          )
+          process.stdout.on(
+            "data",
+            (buffer: Buffer) => (error += buffer.toString()),
+          )
 
           process.on("exit", (code) => (code === 0 ? resolve() : reject(error)))
         }),
