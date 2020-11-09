@@ -2,7 +2,7 @@
   <h1>{{ msg }}</h1>
   <p>
     Recommended setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
+    <a href="https://code.visualstudio.com/" target="_blank"> VSCode </a>
     +
     <a
       href="https://marketplace.visualstudio.com/items?itemName=octref.vetur"

@@ -16,7 +16,7 @@
   },
   "scripts": {
     "lint": "yarn lint:nocache --cache --cache-location ./node_modules/.cache/eslint",
-    "lint:nocache": "eslint apps/*/src/**/*.ts",
+    "lint:nocache": "eslint apps/*/src/**/*.{ts,vue}",
     "dev": "lerna run dev --stream "
   },
   "devDependencies": {
@@ -26,9 +26,10 @@
     "@typescript-eslint/eslint-plugin": "4.3.0",
     "@typescript-eslint/parser": "4.3.0",
     "dotenv-flow": "3.2.0",
-    "eslint": "7.10.0",
+    "eslint": "7.13.0",
     "eslint-import-resolver-typescript": "2.3.0",
     "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-vue": "7.1.0",
     "husky": "4.3.0",
     "lerna": "3.22.1",
     "lint-staged": "10.4.0",

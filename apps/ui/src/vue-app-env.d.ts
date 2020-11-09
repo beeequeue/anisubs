@@ -16,7 +16,7 @@ declare namespace NodeJS {
   }
 }
 
-declare var process: NodeJS.Process
+declare let process: NodeJS.Process
 
 declare module "*.gif" {
   const src: string
