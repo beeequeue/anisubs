@@ -4,15 +4,23 @@ module.exports = {
     node: true,
     es6: true,
   },
-  plugins: ["@typescript-eslint", "import"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:vue/vue3-recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
+    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint",
+    "prettier/vue",
   ],
+  parserOptions: {
+    extraFileExtensions: [".vue"],
+    parser: "@typescript-eslint/parser",
+    warnOnUnsupportedTypeScriptVersion: false,
+  },
   settings: {
     "import/resolver": {
       typescript: {
@@ -21,6 +29,8 @@ module.exports = {
     },
   },
   rules: {
+    "prettier/prettier": "off",
+
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",

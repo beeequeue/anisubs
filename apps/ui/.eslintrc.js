@@ -2,11 +2,19 @@ const { join } = require("path")
 
 module.exports = {
   root: false,
-  extends: ["../../.eslintrc.js", "plugin:vue/vue3-recommended"],
+  extends: ["../../.eslintrc.js"],
   parserOptions: {
-    extraFileExtensions: [".vue"],
-    parser: "@typescript-eslint/parser",
-    warnOnUnsupportedTypeScriptVersion: false,
     project: join(__dirname, "./tsconfig.json"),
+  },
+  rules: {
+    "import/no-default-export": "off",
+    "vue/html-self-closing": [
+      "error",
+      {
+        html: {
+          void: "always",
+        },
+      },
+    ],
   },
 }

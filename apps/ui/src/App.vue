@@ -1,15 +1,13 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-
   <HelloWorld msg="Hello Vue 3.0 + Vite" />
 </template>
 
 <script lang="ts">
-import { defineComponent, provide } from "vue"
 import { DefaultApolloClient } from "@vue/apollo-composable"
+import { defineComponent, provide } from "vue"
 
-import HelloWorld from "./components/HelloWorld.vue"
 import { apolloClient } from "./apollo"
+import HelloWorld from "./components/HelloWorld.vue"
 
 export default defineComponent({
   name: "App",
