@@ -1,0 +1,14 @@
+{
+  "name": "Anisubs API",
+  "schemaPath": "../manager/src/graphql/snapshot.graphql",
+  "extensions": {
+    "endpoints": {
+      "localhost": {
+        "url": "http://localhost:3001/",
+        "headers": {
+          "Authorization": "poopoo"
+        }
+      }
+    }
+  }
+}

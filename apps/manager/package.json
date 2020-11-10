@@ -28,7 +28,7 @@
     "class-validator": "0.12.2",
     "dataloader": "2.0.0",
     "got": "11.8.0",
-    "graphql": "15.3.0",
+    "graphql": "15.4.0",
     "koa": "2.13.0",
     "koa-router": "9.4.0",
     "node-cache": "5.1.2",
