@@ -7,7 +7,7 @@ import { DefaultApolloClient } from "@vue/apollo-composable"
 import { defineComponent, provide } from "vue"
 
 import { apolloClient } from "./apollo"
-import HelloWorld from "./components/HelloWorld.vue"
+import HelloWorld from "./components/hello-world.vue"
 
 export default defineComponent({
   name: "App",
