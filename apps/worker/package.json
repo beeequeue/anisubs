@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@anisubs/shared": "*",
-    "@aws-sdk/client-s3": "1.0.0-rc.4",
+    "@aws-sdk/client-s3": "1.0.0-rc.5",
     "anitomy-js": "5.0.0",
     "bullmq": "1.10.0",
     "envsafe": "1.1.0",
@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@types/fluent-ffmpeg": "2.1.16",
-    "@types/koa": "2.11.4",
+    "@types/koa": "2.11.6",
     "@types/koa-router": "7.4.1",
     "@types/rimraf": "3.0.0"
   }
