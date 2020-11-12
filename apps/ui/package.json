@@ -14,21 +14,26 @@
   },
   "scripts": {
     "precommit": "lint-staged",
-    "dev": "vite",
-    "build": "typecheck && vite build"
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "@apollo/client": "3.2.5",
-    "@vue/apollo-composable": "4.0.0-alpha.10",
+    "@vue/apollo-composable": "4.0.0-alpha.12",
+    "core-js": "3.7.0",
     "graphql": "15.4.0",
     "modern-normalize": "1.0.0",
-    "vue": "3.0.2"
+    "vue": "3.0.0",
+    "vue-router": "4.0.0-rc.2"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "3.0.2",
-    "@vuedx/typecheck": "0.2.4-0",
-    "@vuedx/typescript-plugin-vue": "0.2.4-0",
+    "@vue/cli-plugin-babel": "4.5.8",
+    "@vue/cli-plugin-router": "4.5.8",
+    "@vue/cli-plugin-typescript": "4.5.8",
+    "@vue/cli-service": "4.5.8",
+    "@vue/compiler-sfc": "3.0.0",
     "postcss-nesting": "7.0.1",
-    "vite": "1.0.0-rc.9"
+    "sass": "1.29.0",
+    "sass-loader": "10.1.0"
   }
 }
