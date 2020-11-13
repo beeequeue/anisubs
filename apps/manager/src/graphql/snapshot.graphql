@@ -86,6 +86,7 @@ type Query {
     limit: Int = 20
     offset: Int = 0
   ): JobPage!
+  recentlyAdded: [Entry!]!
   workers: [Worker!]!
 }
 

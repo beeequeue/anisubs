@@ -3,6 +3,7 @@ import { Arg, Query, Resolver } from "type-graphql"
 import { IdsService } from "@/lib/arm"
 import { MyAnimeListService } from "@/lib/myanimelist"
 import { Anime } from "@/modules/anime/anime.model"
+import { Entry } from "@/modules/entry/entry.model"
 
 @Resolver()
 export class AnimeResolvers {
@@ -19,5 +20,10 @@ export class AnimeResolvers {
     anime.id = id
 
     return anime
+  }
+
+  @Query(() => [Entry])
+  async recentlyAdded(): Promise<Entry[]> {
+    return Entry.find({ order: { createdAt: "DESC" }, take: 10 })
   }
 }
