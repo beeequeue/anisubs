@@ -1,6 +1,9 @@
 import { ProjectOptions } from "@vue/cli-service"
 
 const config: ProjectOptions = {
+  devServer: {
+    progress: false,
+  },
   // prettier-ignore
   chainWebpack: chain =>
     chain

@@ -1,0 +1,38 @@
+overwrite: true
+
+schema:
+  - http://localhost:3001/graphql
+
+hooks:
+  afterOneFileWrite:
+    - prettier --write
+
+generates:
+  src/graphql/types.ts:
+    plugins:
+      - add:
+          content: "/* eslint-disable */"
+      - add:
+          content: "/* THIS IS A GENERATED FILE */"
+      - typescript
+    config:
+      pureMagicComment: true
+      immutableTypes: true
+      avoidOptionals: true
+      namingConvention:
+        default: change-case#pascalCase
+        enumValues: change-case#upperCase
+      scalars:
+        DateTime: string
+        Timestamp: string
+
+  src/graphql/introspection-result.ts:
+    plugins:
+      - add:
+          content: "/* eslint-disable */"
+      - add:
+          content: "/* THIS IS A GENERATED FILE */"
+      - fragment-matcher
+    config:
+      apolloClientVersion: 3
+      useExplicitTyping: true

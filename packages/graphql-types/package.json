@@ -1,0 +1,26 @@
+{
+  "name": "@anisubs/graphql-types",
+  "private": true,
+  "version": "0.0.0",
+  "description": "TODO: description",
+  "author": "BeeeQueue",
+  "license": "AGPL-3.0-only",
+  "engines": {
+    "node": ">=14"
+  },
+  "main": "src/index",
+  "lint-staged": {
+    "*.{ts,js,json,yml}": "prettier --write"
+  },
+  "scripts": {
+    "build": "gql-gen --config codegen.yml",
+    "dev": "gql-gen --watch --config codegen.yml ",
+    "precommit": "lint-staged"
+  },
+  "devDependencies": {
+    "@graphql-codegen/add": "2.0.1",
+    "@graphql-codegen/cli": "1.19.1",
+    "@graphql-codegen/fragment-matcher": "2.0.0",
+    "@graphql-codegen/typescript": "1.17.11"
+  }
+}
