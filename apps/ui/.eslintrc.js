@@ -7,7 +7,6 @@ module.exports = {
     project: join(__dirname, "./tsconfig.json"),
   },
   rules: {
-    "import/no-default-export": "off",
     "vue/html-self-closing": [
       "error",
       {
@@ -17,4 +16,12 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ["**/*.vue"],
+      rules: {
+        "import/no-default-export": "off",
+      },
+    },
+  ],
 }
