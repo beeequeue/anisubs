@@ -21,6 +21,7 @@ generates:
       - add:
           content: "/* THIS IS A GENERATED FILE */"
       - typescript
+      - typescript-operations
       - typescript-vue-apollo
     config:
       pureMagicComment: true

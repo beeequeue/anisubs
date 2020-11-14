@@ -149,6 +149,23 @@ export type MutationConfirmWorkerArgs = {
   token: Scalars["String"]
 }
 
+export type RecentlyAddedFeedQueryVariables = Exact<{ [key: string]: never }>
+
+export type RecentlyAddedFeedQuery = { readonly __typename?: "Query" } & {
+  readonly recentlyAdded: ReadonlyArray<
+    { readonly __typename?: "Entry" } & Pick<
+      Entry,
+      "id" | "source" | "episode" | "createdAt"
+    > & {
+        readonly group: { readonly __typename?: "Group" } & Pick<Group, "name">
+        readonly anime: { readonly __typename?: "Anime" } & Pick<
+          Anime,
+          "id" | "anilistUrl"
+        >
+      }
+  >
+}
+
 export const RecentlyAddedFeedDocument = /*#__PURE__*/ gql`
   query RecentlyAddedFeed {
     recentlyAdded {
