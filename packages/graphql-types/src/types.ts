@@ -1,9 +1,13 @@
 /* eslint-disable */
 /* THIS IS A GENERATED FILE */
+import { gql } from "@apollo/client"
+import * as VueApolloComposable from "@vue/apollo-composable"
+import type * as VueCompositionApi from "vue"
 export type Maybe<T> = T | null
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K]
 }
+export type ReactiveFunction<TParam> = () => TParam
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string
@@ -144,3 +148,62 @@ export type MutationConfirmWorkerArgs = {
   port: Scalars["Int"]
   token: Scalars["String"]
 }
+
+export const RecentlyAddedFeedDocument = /*#__PURE__*/ gql`
+  query RecentlyAddedFeed {
+    recentlyAdded {
+      id
+      source
+      episode
+      createdAt
+      group {
+        name
+      }
+      anime {
+        id
+        anilistUrl
+      }
+    }
+  }
+`
+
+/**
+ * __useRecentlyAddedFeedQuery__
+ *
+ * To run a query within a Vue component, call `useRecentlyAddedFeedQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRecentlyAddedFeedQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useRecentlyAddedFeedQuery();
+ */
+export function useRecentlyAddedFeedQuery(
+  options:
+    | VueApolloComposable.UseQueryOptions<
+        RecentlyAddedFeedQuery,
+        RecentlyAddedFeedQueryVariables
+      >
+    | VueCompositionApi.Ref<
+        VueApolloComposable.UseQueryOptions<
+          RecentlyAddedFeedQuery,
+          RecentlyAddedFeedQueryVariables
+        >
+      >
+    | ReactiveFunction<
+        VueApolloComposable.UseQueryOptions<
+          RecentlyAddedFeedQuery,
+          RecentlyAddedFeedQueryVariables
+        >
+      > = {},
+) {
+  return VueApolloComposable.useQuery<
+    RecentlyAddedFeedQuery,
+    RecentlyAddedFeedQueryVariables
+  >(RecentlyAddedFeedDocument, {}, options)
+}
+export type RecentlyAddedFeedQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<
+  RecentlyAddedFeedQuery,
+  RecentlyAddedFeedQueryVariables
+>

@@ -1,5 +1,11 @@
 overwrite: true
 
+documents:
+  - ../../apps/**/*.graphql
+
+watch:
+  - ../../apps/**/*.graphql
+
 schema:
   - http://localhost:3001/graphql
 
@@ -8,25 +14,30 @@ hooks:
     - prettier --write
 
 generates:
-  src/graphql/types.ts:
+  src/types.ts:
     plugins:
       - add:
           content: "/* eslint-disable */"
       - add:
           content: "/* THIS IS A GENERATED FILE */"
       - typescript
+      - typescript-vue-apollo
     config:
       pureMagicComment: true
       immutableTypes: true
       avoidOptionals: true
+      useTypeImports: true
       namingConvention:
         default: change-case#pascalCase
         enumValues: change-case#upperCase
       scalars:
         DateTime: string
         Timestamp: string
+      # Vue 3
+      gqlImport: "@apollo/client#gql"
+      vueCompositionApiImportFrom: vue
 
-  src/graphql/introspection-result.ts:
+  src/introspection-result.ts:
     plugins:
       - add:
           content: "/* eslint-disable */"

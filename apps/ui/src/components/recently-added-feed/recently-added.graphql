@@ -1,0 +1,17 @@
+query RecentlyAddedFeed {
+  recentlyAdded {
+    id
+    source
+    episode
+    createdAt
+
+    group {
+      name
+    }
+
+    anime {
+      id
+      anilistUrl
+    }
+  }
+}

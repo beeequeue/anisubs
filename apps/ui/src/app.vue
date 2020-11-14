@@ -8,5 +8,14 @@
   <router-view />
 </template>
 
+<script setup>
+import { DefaultApolloClient } from "@vue/apollo-composable"
+import { provide } from "vue"
+
+import { apolloClient } from "@/apollo"
+
+provide(DefaultApolloClient, apolloClient)
+</script>
+
 <style lang="scss">
 </style>
