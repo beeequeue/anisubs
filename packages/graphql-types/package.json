@@ -10,7 +10,7 @@
   },
   "main": "src/index",
   "lint-staged": {
-    "*.{ts,js,json,yml}": "prettier --write"
+    "*.{ts,js,vue,html,json,yml}": "prettier --write"
   },
   "scripts": {
     "build": "gql-gen --config codegen.yml",

@@ -10,7 +10,7 @@
     "node": ">=14"
   },
   "lint-staged": {
-    "*.{ts,js,json,yml}": "prettier --write"
+    "*.{ts,js,vue,html,json,yml}": "prettier --write"
   },
   "scripts": {
     "precommit": "lint-staged",
