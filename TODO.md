@@ -4,7 +4,7 @@
 
 - [x] Anime
 - [x] Names
-- [ ] Comparison Entry
+- [x] Comparison Entry
 - [ ] Group
   - [ ] Urls
 
@@ -18,14 +18,13 @@
 
 ## Worker
 
-- [ ] Create comparison entry
+- [x] Create comparison entry
   - [ ] Toggleable `active` state
-  - [ ] Receive new job
-  - [ ] Get file
-    - [ ] Check cached (downloaded) files
-    - [ ] Download torrent/file if not cached
-      - [ ] Support specific file in torrents
-  - [ ] Extract screenshot of timestamp
+  - [x] Receive new job
+  - [x] Get file
+    - [x] Download torrent/file if not cached
+      - [x] Support specific file in torrents
+  - [x] Extract screenshot of timestamp
 
 ## Web
 
