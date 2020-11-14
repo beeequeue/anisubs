@@ -15,9 +15,9 @@
     }
   },
   "scripts": {
+    "dev": "lerna run dev --parallel",
     "lint": "yarn lint:nocache --cache --cache-location ./node_modules/.cache/eslint",
-    "lint:nocache": "eslint apps/*/src/**/*.{ts,vue}",
-    "dev": "lerna run dev --stream "
+    "lint:nocache": "eslint apps/*/src/**/*.{ts,vue}"
   },
   "resolutions": {
     "@types/node": "14.14.7",

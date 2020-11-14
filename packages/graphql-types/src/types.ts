@@ -1,6 +1,6 @@
 /* eslint-disable */
 /* THIS IS A GENERATED FILE */
-import { gql } from "@apollo/client"
+import { gql } from "@apollo/client/core"
 import * as VueApolloComposable from "@vue/apollo-composable"
 import type * as VueCompositionApi from "vue"
 export type Maybe<T> = T | null

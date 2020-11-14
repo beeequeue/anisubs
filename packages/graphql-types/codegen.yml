@@ -3,9 +3,6 @@ overwrite: true
 documents:
   - ../../apps/**/*.graphql
 
-watch:
-  - ../../apps/**/*.graphql
-
 schema:
   - http://localhost:3001/graphql
 
@@ -35,7 +32,7 @@ generates:
         DateTime: string
         Timestamp: string
       # Vue 3
-      gqlImport: "@apollo/client#gql"
+      gqlImport: "@apollo/client/core#gql"
       vueCompositionApiImportFrom: vue
 
   src/introspection-result.ts:

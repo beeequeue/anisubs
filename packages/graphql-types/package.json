@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "gql-gen --config codegen.yml",
-    "dev": "gql-gen --watch --config codegen.yml ",
+    "dev": "gql-gen --config codegen.yml --watch \"../../apps/**/*.graphql\"",
     "precommit": "lint-staged"
   },
   "devDependencies": {
