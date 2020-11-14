@@ -4,7 +4,9 @@
 
 - [x] Anime
 - [x] Names
-- [x] Comparison Entry
+- [ ] Comparison Entry
+  - [ ] download time
+  - [ ] extraction time
 - [ ] Group
   - [ ] Urls
 
