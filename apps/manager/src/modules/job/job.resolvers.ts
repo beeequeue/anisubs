@@ -8,13 +8,14 @@ import {
   Root,
 } from "type-graphql"
 
-import { PaginatedResponse, PaginationArgs } from "../pagination"
 import { IdsService } from "@/lib/arm"
 import { MyAnimeListService } from "@/lib/myanimelist"
 import { getJobCount, getJobs } from "@/lib/queue"
 import { Anime } from "@/modules/anime/anime.model"
 import { Group } from "@/modules/group/group.model"
 import { Job, JobCreationArgs } from "@/modules/job/job.model"
+
+import { PaginatedResponse, PaginationArgs } from "../pagination"
 
 @ObjectType()
 export class JobPage extends PaginatedResponse(Job) {}
