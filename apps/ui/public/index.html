@@ -8,6 +8,12 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title><%= htmlWebpackPlugin.options.title %></title>
 
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Solway:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
       * {
         box-sizing: border-box;
@@ -20,10 +26,12 @@
         width: 100%;
         margin: 0;
         padding: 0;
+        user-select: none;
       }
 
       #app {
-        background: url('/papyrus-dark.webp') #111;
+        font-family: "Solway", serif;
+        background: url("/papyrus-dark.webp") #111;
         color: #eee;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;

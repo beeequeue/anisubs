@@ -1,21 +1,20 @@
 <template>
-  <div class="hello"/>
+  <div class="container">
+    <div v-for="entry in entries" :key="entry.id" class="entry">
+      {{ entry.group.name }}
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { useRecentlyAddedFeedQuery } from "@anisubs/graphql-types"
-import { defineComponent } from "vue"
+import { useResult } from "@vue/apollo-composable"
 
-export default defineComponent({
-  props: {
-  },
-  setup() {
-    const result = useRecentlyAddedFeedQuery()
-
-  },
-})
+const { result } = useRecentlyAddedFeedQuery()
+export const entries = useResult(result, [], (data) => data.recentlyAdded)
 </script>
 
 <style lang="scss" scoped>
-
+.container {
+}
 </style>

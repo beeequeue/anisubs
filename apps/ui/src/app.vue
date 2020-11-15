@@ -1,9 +1,9 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-
-    <router-link to="/about">About</router-link>
-  </div>
+  <nav id="navbar">
+    <router-link to="/">
+      <img class="logo" src="/logo-full.svg" alt="anisubs.app" />
+    </router-link>
+  </nav>
 
   <router-view />
 </template>
@@ -18,4 +18,16 @@ provide(DefaultApolloClient, apolloClient)
 </script>
 
 <style lang="scss">
+#navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 24px 32px;
+
+  & .logo {
+    display: block;
+    width: 350px;
+  }
+}
 </style>
