@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <h1 class="subtitle">Anime Fansub<br />Comparisons</h1>
+    <Title>Anime Fansub Comparisons</Title>
+    <br />
 
     Either...
     <br />
@@ -25,17 +26,25 @@
 import { defineComponent } from "vue"
 
 import RecentlyAddedFeed from "@/components/recently-added-feed/recently-added-feed.vue" // @ is an alias to /src
+import Title from "@/components/title.vue"
 
 export default defineComponent({
   name: "Home",
   components: {
     RecentlyAddedFeed,
+    Title,
   },
 })
 </script>
 
 <style lang="scss" scoped>
-.subtitle {
-  margin: 0 0 32px;
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    font-size: 48px;
+  }
 }
 </style>
