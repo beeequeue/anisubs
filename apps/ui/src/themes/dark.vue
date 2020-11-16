@@ -10,11 +10,11 @@ body {
 
   --highlight-primary-primary: #1ed497;
   --highlight-primary-secondary: #5ce6da;
-  --highlight-primary-shine: transparentize(#1ed497, 0.25);
+  --highlight-primary-shine: rgba(30, 212, 151, 0.75);
 
   --highlight-danger-primary: #f0163d;
   --highlight-danger-secondary: #e21b57;
-  --highlight-danger-shine: transparentize(#f0163d, 0.25);
+  --highlight-danger-shine: rgba(240, 22, 61, 0.75);
 
   --highlight-gradient-primary: linear-gradient(
     90deg,

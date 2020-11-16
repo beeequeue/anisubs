@@ -1,9 +1,10 @@
 import { ProjectOptions } from "@vue/cli-service"
+import { Configuration } from "webpack"
 
-const config: ProjectOptions = {
+const config: ProjectOptions & { devServer: Configuration["devServer"] } = {
   devServer: {
-    progress: false,
     host: "localhost",
+    clientLogLevel: "warn",
   },
   // prettier-ignore
   chainWebpack: chain =>
