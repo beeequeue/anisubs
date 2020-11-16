@@ -5,14 +5,18 @@
     </router-link>
   </nav>
 
+  <dark-theme />
+
   <router-view />
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { DefaultApolloClient } from "@vue/apollo-composable"
 import { provide } from "vue"
 
 import { apolloClient } from "@/apollo"
+
+export { default as DarkTheme } from "@/themes/dark.vue"
 
 provide(DefaultApolloClient, apolloClient)
 </script>
@@ -33,35 +37,6 @@ provide(DefaultApolloClient, apolloClient)
 
 * {
   transition: color 0.5s, background-color 0.5s;
-}
-
-body {
-  --bg-body: #101516;
-  --bg-primary: #182225;
-  --bg-secondary: #1e2b2e;
-
-  --text-primary: #eee;
-  --text-secondary: #a1bab3;
-  --text-tertiary: #6c9389;
-
-  --highlight-primary-primary: #1ed497;
-  --highlight-primary-secondary: #5ce6da;
-  --highlight-primary-shine: transparentize(#1ed497, 0.25);
-
-  --highlight-danger-primary: #f0163d;
-  --highlight-danger-secondary: #e21b57;
-  --highlight-danger-shine: transparentize(#f0163d, 0.25);
-
-  --highlight-gradient-primary: linear-gradient(
-    90deg,
-    var(--highlight-primary-primary) 25%,
-    var(--highlight-primary-secondary)
-  );
-  --highlight-gradient-danger: linear-gradient(
-    90deg,
-    var(--highlight-danger-primary) 25%,
-    var(--highlight-danger-secondary)
-  );
 }
 
 #app {
