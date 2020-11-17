@@ -35,6 +35,11 @@ type Config = {
   port: number
   userAgent: string
 
+  anilist: {
+    url: string
+    token?: string
+  }
+
   db: PostgresConnectionOptions
 
   redis: RedisOptions
@@ -45,6 +50,11 @@ export const config: Config = {
   appEnv: envVar("APP_ENV", Environment.Production),
   port: Number(envVar("PORT", 3000)),
   userAgent: "@anisubs/manager",
+
+  anilist: {
+    url: "https://graphql.anilist.co",
+    token: envVar("ANILIST_TOKEN"),
+  },
 
   db: {
     type: "postgres",

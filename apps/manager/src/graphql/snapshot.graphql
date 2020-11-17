@@ -3,8 +3,17 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+"""Data from AniList"""
+type Anilist {
+  banner: String
+  imageLarge: String!
+  imageMedium: String!
+  title: String!
+}
+
 type Anime {
   anidbId: Int
+  anilist: Anilist
   anilistUrl: String!
   entries: [Entry!]!
 

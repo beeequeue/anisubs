@@ -1,5 +1,6 @@
 import { Field, Float, Int, ObjectType } from "type-graphql"
 
+import { Anilist } from "@/lib/anilist"
 import { IdsService } from "@/lib/arm"
 import { MyAnimeListService } from "@/lib/myanimelist"
 import { Entry } from "@/modules/entry/entry.model"
@@ -51,5 +52,10 @@ export class Anime {
     return Entry.find({
       where: { animeId: this.id },
     })
+  }
+
+  @Field(() => Anilist, { nullable: true })
+  async anilist(): Promise<Anilist | null> {
+    return Anilist.fetch(this.id)
   }
 }

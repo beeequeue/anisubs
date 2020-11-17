@@ -21,6 +21,15 @@ export type Scalars = {
   Timestamp: string
 }
 
+/** Data from AniList */
+export type Anilist = {
+  readonly __typename?: "Anilist"
+  readonly title: Scalars["String"]
+  readonly imageMedium: Scalars["String"]
+  readonly imageLarge: Scalars["String"]
+  readonly banner: Maybe<Scalars["String"]>
+}
+
 export type Group = {
   readonly __typename?: "Group"
   readonly id: Scalars["ID"]
@@ -64,6 +73,7 @@ export type Anime = {
   readonly malScore: Maybe<Scalars["Float"]>
   readonly names: ReadonlyArray<Scalars["String"]>
   readonly entries: ReadonlyArray<Entry>
+  readonly anilist: Maybe<Anilist>
 }
 
 export type Job = {
