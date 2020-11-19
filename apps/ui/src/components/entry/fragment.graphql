@@ -5,6 +5,7 @@ fragment EntryComponent on Entry {
   createdAt
 
   group {
+    id
     name
   }
 

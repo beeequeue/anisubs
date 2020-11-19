@@ -163,7 +163,10 @@ export type EntryComponentFragment = { readonly __typename?: "Entry" } & Pick<
   Entry,
   "id" | "source" | "episode" | "createdAt"
 > & {
-    readonly group: { readonly __typename?: "Group" } & Pick<Group, "name">
+    readonly group: { readonly __typename?: "Group" } & Pick<
+      Group,
+      "id" | "name"
+    >
     readonly anime: { readonly __typename?: "Anime" } & Pick<
       Anime,
       "id" | "anilistUrl"
@@ -192,6 +195,7 @@ export const EntryComponentFragmentDoc = /*#__PURE__*/ gql`
     episode
     createdAt
     group {
+      id
       name
     }
     anime {

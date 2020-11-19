@@ -7,6 +7,7 @@
     "strict": true,
     "jsx": "preserve",
     "lib": ["esnext", "dom"],
+    "types": ["webpack-env"],
     "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
     "baseUrl": "./"
   },
