@@ -159,39 +159,58 @@ export type MutationConfirmWorkerArgs = {
   token: Scalars["String"]
 }
 
+export type EntryComponentFragment = { readonly __typename?: "Entry" } & Pick<
+  Entry,
+  "id" | "source" | "episode" | "createdAt"
+> & {
+    readonly group: { readonly __typename?: "Group" } & Pick<Group, "name">
+    readonly anime: { readonly __typename?: "Anime" } & Pick<
+      Anime,
+      "id" | "anilistUrl"
+    > & {
+        readonly anilist: Maybe<
+          { readonly __typename?: "Anilist" } & Pick<
+            Anilist,
+            "title" | "imageMedium"
+          >
+        >
+      }
+  }
+
 export type RecentlyAddedFeedQueryVariables = Exact<{ [key: string]: never }>
 
 export type RecentlyAddedFeedQuery = { readonly __typename?: "Query" } & {
   readonly recentlyAdded: ReadonlyArray<
-    { readonly __typename?: "Entry" } & Pick<
-      Entry,
-      "id" | "source" | "episode" | "createdAt"
-    > & {
-        readonly group: { readonly __typename?: "Group" } & Pick<Group, "name">
-        readonly anime: { readonly __typename?: "Anime" } & Pick<
-          Anime,
-          "id" | "anilistUrl"
-        >
-      }
+    { readonly __typename?: "Entry" } & EntryComponentFragment
   >
 }
 
-export const RecentlyAddedFeedDocument = /*#__PURE__*/ gql`
-  query RecentlyAddedFeed {
-    recentlyAdded {
+export const EntryComponentFragmentDoc = /*#__PURE__*/ gql`
+  fragment EntryComponent on Entry {
+    id
+    source
+    episode
+    createdAt
+    group {
+      name
+    }
+    anime {
       id
-      source
-      episode
-      createdAt
-      group {
-        name
-      }
-      anime {
-        id
-        anilistUrl
+      anilistUrl
+      anilist {
+        title
+        imageMedium
       }
     }
   }
+`
+export const RecentlyAddedFeedDocument = /*#__PURE__*/ gql`
+  query RecentlyAddedFeed {
+    recentlyAdded {
+      ...EntryComponent
+    }
+  }
+  ${EntryComponentFragmentDoc}
 `
 
 /**

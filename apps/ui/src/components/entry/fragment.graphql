@@ -1,0 +1,20 @@
+fragment EntryComponent on Entry {
+  id
+  source
+  episode
+  createdAt
+
+  group {
+    name
+  }
+
+  anime {
+    id
+    anilistUrl
+
+    anilist {
+      title
+      imageMedium
+    }
+  }
+}
