@@ -9,11 +9,15 @@
     <div class="info">
       <div class="title">{{ entry.anime.anilist.title }}</div>
 
-      <router-link :to="`/group/${entry.group.id}`" class="group"
-        >{{ entry.group.name }}
+      <router-link :to="`/group/${entry.group.id}`" class="group">
+        <icon :icon="mdiAccountMultiple" />
+
+        {{ entry.group.name }}
       </router-link>
 
-      <time :datetime="entry.createdAt">{{ createdAt }}</time>
+      <time :datetime="entry.createdAt">
+        {{ createdAt }}
+      </time>
     </div>
 
     <span class="end-line" />
@@ -21,8 +25,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue"
 import { EntryComponentFragment } from "@anisubs/graphql-types"
+import { mdiAccountMultiple } from "@mdi/js"
+import { defineComponent, PropType } from "vue"
+
+import Icon from "@/components/icon.vue"
 
 const dateOptions = {
   year: "numeric",
@@ -38,12 +45,16 @@ const dateFormatter = (date: Date | number | string) =>
   )
 
 export default defineComponent({
+  components: { Icon },
   props: {
     entry: {
       type: Object as PropType<EntryComponentFragment>,
       required: true,
     },
   },
+  data: () => ({
+    mdiAccountMultiple,
+  }),
   computed: {
     createdAt(): string {
       return dateFormatter(this.entry.createdAt)
@@ -104,6 +115,19 @@ export default defineComponent({
 
     width: 100%;
     padding: 0 12px;
+
+    & > .title {
+      margin-bottom: 4px;
+    }
+
+    & > .group {
+      display: flex;
+      align-items: center;
+
+      & > .icon {
+        margin-right: 4px;
+      }
+    }
 
     & > time {
       margin-top: auto;

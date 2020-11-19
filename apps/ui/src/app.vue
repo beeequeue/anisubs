@@ -40,6 +40,8 @@ provide(DefaultApolloClient, apolloClient)
 #app {
   background: var(--bg-body);
   color: var(--text-primary);
+  fill: var(--text-primary);
+  overflow: auto;
 }
 
 a {
@@ -47,6 +49,11 @@ a {
   font-weight: 100;
   text-shadow: 0 0 2px var(--highlight-primary-shine);
   text-decoration: none;
+
+  & .icon {
+    fill: var(--highlight-primary-secondary);
+    filter: drop-shadow(0 0 2px var(--highlight-primary-shine));
+  }
 
   &:hover {
     text-decoration: underline;
