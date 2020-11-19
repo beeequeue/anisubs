@@ -19,14 +19,6 @@ export class Anime {
   id!: number
 
   @Field(() => Int, { nullable: true })
-  score!: number | null
-
-  @Field()
-  anilistUrl(): string {
-    return `https://anilist.co/anime/${this.id}`
-  }
-
-  @Field(() => Int, { nullable: true })
   async anidbId(): Promise<number | null> {
     const result = await this.idsService.fetchIds("anilist", this.id)
     return result?.anidb ?? null

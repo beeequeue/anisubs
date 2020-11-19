@@ -1,0 +1,22 @@
+query AnimePage($id: Int!) {
+  anime(id: $id) {
+    id
+
+    entries {
+      id
+      source
+      createdAt
+
+      group {
+        id
+        name
+      }
+
+      images {
+        id
+        url
+        timestamp
+      }
+    }
+  }
+}

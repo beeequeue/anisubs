@@ -9,19 +9,18 @@ type Anilist {
   imageLarge: String!
   imageMedium: String!
   title: String!
+  url: String!
 }
 
 type Anime {
   anidbId: Int
   anilist: Anilist
-  anilistUrl: String!
   entries: [Entry!]!
 
   """AniList ID"""
   id: Int!
   malScore: Float
   names: [String!]!
-  score: Int
 }
 
 """
@@ -88,7 +87,7 @@ type Mutation {
 }
 
 type Query {
-  anime(id: Float!): Anime
+  anime(id: Int!): Anime
   entries(animeId: Float!): [Entry!]!
   jobQueue(
     """Maximum 20"""

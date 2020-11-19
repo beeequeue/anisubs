@@ -2,9 +2,10 @@ import Bottleneck from "bottleneck"
 import DataLoader from "dataloader"
 import { GraphQLClient, gql } from "graphql-request"
 import Redis from "ioredis"
-import { Field, ObjectType } from "type-graphql"
+import { Field, ObjectType, Root } from "type-graphql"
 
 import { config } from "@/config"
+import { Anime } from "@/modules/anime/anime.model"
 
 const anilistLimiter = new Bottleneck({
   maxConcurrent: 2,
@@ -137,6 +138,11 @@ export class Anilist {
 
   @Field(() => String, { nullable: true })
   banner!: string | null
+
+  @Field()
+  url(@Root() root: Anime): string {
+    return `https://anilist.co/anime/${root.id}`
+  }
 
   static fetch = async (id: number) => {
     const data = await AnilistLoader.load(id)

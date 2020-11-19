@@ -28,6 +28,7 @@ export type Anilist = {
   readonly imageMedium: Scalars["String"]
   readonly imageLarge: Scalars["String"]
   readonly banner: Maybe<Scalars["String"]>
+  readonly url: Scalars["String"]
 }
 
 export type Group = {
@@ -67,8 +68,6 @@ export type Anime = {
   readonly __typename?: "Anime"
   /** AniList ID */
   readonly id: Scalars["Int"]
-  readonly score: Maybe<Scalars["Int"]>
-  readonly anilistUrl: Scalars["String"]
   readonly anidbId: Maybe<Scalars["Int"]>
   readonly malScore: Maybe<Scalars["Float"]>
   readonly names: ReadonlyArray<Scalars["String"]>
@@ -123,7 +122,7 @@ export type Query = {
 }
 
 export type QueryAnimeArgs = {
-  id: Scalars["Float"]
+  id: Scalars["Int"]
 }
 
 export type QueryEntriesArgs = {
@@ -167,14 +166,11 @@ export type EntryComponentFragment = { readonly __typename?: "Entry" } & Pick<
       Group,
       "id" | "name"
     >
-    readonly anime: { readonly __typename?: "Anime" } & Pick<
-      Anime,
-      "id" | "anilistUrl"
-    > & {
+    readonly anime: { readonly __typename?: "Anime" } & Pick<Anime, "id"> & {
         readonly anilist: Maybe<
           { readonly __typename?: "Anilist" } & Pick<
             Anilist,
-            "title" | "imageMedium"
+            "title" | "url" | "imageMedium"
           >
         >
       }
@@ -185,6 +181,34 @@ export type RecentlyAddedFeedQueryVariables = Exact<{ [key: string]: never }>
 export type RecentlyAddedFeedQuery = { readonly __typename?: "Query" } & {
   readonly recentlyAdded: ReadonlyArray<
     { readonly __typename?: "Entry" } & EntryComponentFragment
+  >
+}
+
+export type AnimePageQueryVariables = Exact<{
+  id: Scalars["Int"]
+}>
+
+export type AnimePageQuery = { readonly __typename?: "Query" } & {
+  readonly anime: Maybe<
+    { readonly __typename?: "Anime" } & Pick<Anime, "id"> & {
+        readonly entries: ReadonlyArray<
+          { readonly __typename?: "Entry" } & Pick<
+            Entry,
+            "id" | "source" | "createdAt"
+          > & {
+              readonly group: { readonly __typename?: "Group" } & Pick<
+                Group,
+                "id" | "name"
+              >
+              readonly images: ReadonlyArray<
+                { readonly __typename?: "Image" } & Pick<
+                  Image,
+                  "id" | "url" | "timestamp"
+                >
+              >
+            }
+        >
+      }
   >
 }
 
@@ -200,9 +224,9 @@ export const EntryComponentFragmentDoc = /*#__PURE__*/ gql`
     }
     anime {
       id
-      anilistUrl
       anilist {
         title
+        url
         imageMedium
       }
     }
@@ -256,4 +280,74 @@ export function useRecentlyAddedFeedQuery(
 export type RecentlyAddedFeedQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<
   RecentlyAddedFeedQuery,
   RecentlyAddedFeedQueryVariables
+>
+export const AnimePageDocument = /*#__PURE__*/ gql`
+  query AnimePage($id: Int!) {
+    anime(id: $id) {
+      id
+      entries {
+        id
+        source
+        createdAt
+        group {
+          id
+          name
+        }
+        images {
+          id
+          url
+          timestamp
+        }
+      }
+    }
+  }
+`
+
+/**
+ * __useAnimePageQuery__
+ *
+ * To run a query within a Vue component, call `useAnimePageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAnimePageQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useAnimePageQuery({
+ *   id: // value for 'id'
+ * });
+ */
+export function useAnimePageQuery(
+  variables:
+    | AnimePageQueryVariables
+    | VueCompositionApi.Ref<AnimePageQueryVariables>
+    | ReactiveFunction<AnimePageQueryVariables>,
+  options:
+    | VueApolloComposable.UseQueryOptions<
+        AnimePageQuery,
+        AnimePageQueryVariables
+      >
+    | VueCompositionApi.Ref<
+        VueApolloComposable.UseQueryOptions<
+          AnimePageQuery,
+          AnimePageQueryVariables
+        >
+      >
+    | ReactiveFunction<
+        VueApolloComposable.UseQueryOptions<
+          AnimePageQuery,
+          AnimePageQueryVariables
+        >
+      > = {},
+) {
+  return VueApolloComposable.useQuery<AnimePageQuery, AnimePageQueryVariables>(
+    AnimePageDocument,
+    variables,
+    options,
+  )
+}
+export type AnimePageQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<
+  AnimePageQuery,
+  AnimePageQueryVariables
 >

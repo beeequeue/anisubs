@@ -1,4 +1,4 @@
-import { Arg, Query, Resolver } from "type-graphql"
+import { Arg, Int, Query, Resolver } from "type-graphql"
 
 import { IdsService } from "@/lib/arm"
 import { MyAnimeListService } from "@/lib/myanimelist"
@@ -15,7 +15,7 @@ export class AnimeResolvers {
   @Query(() => Anime, {
     nullable: true,
   })
-  anime(@Arg("id") id: number): Anime | null {
+  anime(@Arg("id", () => Int) id: number): Anime | null {
     const anime = new Anime(this.idsService, this.malService)
     anime.id = id
 

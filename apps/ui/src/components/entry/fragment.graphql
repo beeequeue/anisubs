@@ -11,10 +11,10 @@ fragment EntryComponent on Entry {
 
   anime {
     id
-    anilistUrl
 
     anilist {
       title
+      url
       imageMedium
     }
   }
