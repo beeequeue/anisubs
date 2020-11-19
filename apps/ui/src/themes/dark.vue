@@ -21,6 +21,12 @@ body {
     var(--highlight-primary-primary) 25%,
     var(--highlight-primary-secondary)
   );
+  --highlight-gradient-primary-vertical: linear-gradient(
+    0deg,
+    var(--highlight-primary-primary) 25%,
+    var(--highlight-primary-secondary)
+  );
+
   --highlight-gradient-danger: linear-gradient(
     90deg,
     var(--highlight-danger-primary) 25%,

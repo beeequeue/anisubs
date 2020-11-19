@@ -8,13 +8,22 @@
 import { useRecentlyAddedFeedQuery } from "@anisubs/graphql-types"
 import { useResult } from "@vue/apollo-composable"
 
-export { default as Entry } from "../entry/entry.vue"
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Component import
+import Entry from "../entry/entry.vue"
 
 const { result } = useRecentlyAddedFeedQuery()
-export const entries = useResult(result, [], (data) => data.recentlyAdded)
+const entries = useResult(result, [], (data) => data.recentlyAdded)
+
+export { Entry, entries }
 </script>
 
 <style lang="scss" scoped>
 .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
 }
 </style>

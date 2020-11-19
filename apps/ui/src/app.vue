@@ -47,5 +47,9 @@ a {
   font-weight: 100;
   text-shadow: 0 0 2px var(--highlight-primary-shine);
   text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 </style>

@@ -1,23 +1,17 @@
 <template>
   <div class="home">
-    <Title>Anime Fansub Comparisons</Title>
-    <br />
+    <Title class="big">Anime Fansub Comparisons</Title>
 
     Either...
-    <br />
 
     <input placeholder="Search for an anime" />
-    <br />
 
     Or check out shows by season:
     <br />
 
     SEASONS HERE
-    <br />
-    <br />
-    <br />
 
-    <h3>Recently added</h3>
+    <Title>Recently added</Title>
     <recently-added-feed />
   </div>
 </template>
@@ -43,7 +37,7 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
 
-  .title {
+  .title.big {
     font-size: 48px;
   }
 }
