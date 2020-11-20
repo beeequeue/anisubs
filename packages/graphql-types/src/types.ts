@@ -191,6 +191,12 @@ export type AnimePageQueryVariables = Exact<{
 export type AnimePageQuery = { readonly __typename?: "Query" } & {
   readonly anime: Maybe<
     { readonly __typename?: "Anime" } & Pick<Anime, "id"> & {
+        readonly anilist: Maybe<
+          { readonly __typename?: "Anilist" } & Pick<
+            Anilist,
+            "title" | "banner" | "url"
+          >
+        >
         readonly entries: ReadonlyArray<
           { readonly __typename?: "Entry" } & Pick<
             Entry,
@@ -285,6 +291,11 @@ export const AnimePageDocument = /*#__PURE__*/ gql`
   query AnimePage($id: Int!) {
     anime(id: $id) {
       id
+      anilist {
+        title
+        banner
+        url
+      }
       entries {
         id
         source
