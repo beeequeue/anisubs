@@ -1,5 +1,5 @@
 <template>
-  <div class="comparison">
+  <div class="comparison" :class="{ single: entries.length === 1 }">
     <column
       v-for="(entry, index) in entries"
       :key="entry.id"
@@ -36,5 +36,11 @@ export default defineComponent({
 
   width: 100%;
   height: 100%;
+
+  &.single {
+    grid-auto-columns: initial;
+    grid-template-columns: 80%;
+    justify-content: center;
+  }
 }
 </style>
