@@ -49,14 +49,19 @@ export default defineComponent({
 
   background: var(--bg-body);
   font-size: 32px;
+
+  z-index: 2;
 }
 
 .images {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  //gap: 16px;
 
   & > .image-container {
+    display: flex;
+    flex-direction: column;
+
     & > .image {
       min-height: calc(50vw * 0.55);
       width: 100%;
@@ -64,6 +69,11 @@ export default defineComponent({
     }
 
     & > .timestamp {
+      position: sticky;
+      bottom: 0;
+      padding: 4px;
+
+      background: var(--bg-body);
       color: var(--text-secondary);
       font-size: 20px;
       font-weight: 800;
