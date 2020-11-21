@@ -5,7 +5,7 @@ import { DOWNLOADS_PATH } from "./constants"
 import { ExtractOptions } from "./types"
 import { formatBytes, throttle } from "./utils"
 
-const TIMEOUT_MS = 1000 * 60 * 5
+const TIMEOUT_MS = 1000 * 60 * 30
 
 export class WebTorrent {
   static client = new TorrentClient()
@@ -49,8 +49,11 @@ export class WebTorrent {
 
         const timeout = setTimeout(() => {
           torrent.destroy()
-          remove(torrent.path)
-          reject(`[${torrent.name}]: Timed out downloading.`)
+
+          setTimeout(() => {
+            remove(torrent.path)
+            reject(`[${torrent.name}]: Timed out downloading.`)
+          }, 50)
         }, TIMEOUT_MS)
 
         const correctFileIndex =
