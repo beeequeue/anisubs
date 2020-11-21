@@ -75,6 +75,10 @@ export type Anime = {
   readonly anilist: Maybe<Anilist>
 }
 
+export type AnimeEntriesArgs = {
+  all: Maybe<Scalars["Boolean"]>
+}
+
 export type Job = {
   readonly __typename?: "Job"
   readonly hash: Scalars["String"]

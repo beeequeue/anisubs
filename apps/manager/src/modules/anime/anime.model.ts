@@ -1,4 +1,4 @@
-import { Field, Float, Int, ObjectType } from "type-graphql"
+import { Arg, Field, Float, Int, ObjectType } from "type-graphql"
 
 import { Anilist } from "@/lib/anilist"
 import { IdsService } from "@/lib/arm"
@@ -40,10 +40,28 @@ export class Anime {
   }
 
   @Field(() => [Entry])
-  async entries(): Promise<Entry[]> {
-    return Entry.find({
+  async entries(
+    @Arg("all", () => Boolean, { nullable: true })
+    all: boolean | null,
+  ): Promise<Entry[]> {
+    const entries = await Entry.find({
       where: { animeId: this.id },
+      relations: ["group"],
     })
+
+    if (all) return entries
+
+    const distinctEntries: Record<string, Entry> = {}
+
+    for (const entry of entries) {
+      const group = await entry.group
+
+      if (Object.keys(distinctEntries).includes(group.id)) continue
+
+      distinctEntries[group.id] = entry
+    }
+
+    return Object.values(distinctEntries)
   }
 
   @Field(() => Anilist, { nullable: true })

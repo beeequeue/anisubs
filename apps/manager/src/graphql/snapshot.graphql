@@ -15,7 +15,7 @@ type Anilist {
 type Anime {
   anidbId: Int
   anilist: Anilist
-  entries: [Entry!]!
+  entries(all: Boolean): [Entry!]!
 
   """AniList ID"""
   id: Int!
