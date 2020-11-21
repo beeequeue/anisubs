@@ -1,7 +1,6 @@
 {
   "name": "@anisubs/root",
   "private": true,
-  "license": "AGPL-3.0-only",
   "engines": {
     "node": ">=14"
   },

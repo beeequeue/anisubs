@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "description": "TODO: description",
   "author": "BeeeQueue",
-  "license": "AGPL-3.0-only",
   "engines": {
     "node": ">=14"
   },
