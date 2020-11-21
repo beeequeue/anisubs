@@ -20,18 +20,25 @@
 
 ## Worker
 
-- [x] Create comparison entry
-  - [ ] Toggleable `active` state
-  - [x] Receive new job
+- [ ] Toggleable `active` state
+- [x] Receive new job
+- [ ] Get Torrent Metadata
+- [x] Extract screenshots
   - [x] Get file
-    - [x] Download torrent/file if not cached
-      - [x] Support specific file in torrents
+  - [x] Support specific file in torrents
   - [x] Extract screenshot of timestamp
 
 ## Web
 
 - [ ] Comparison/Anime page
+  - [ ] Anime info
+  - [x] Comparisons
+  - [ ] Handle more than two entries
+- [ ] Group page
 - [ ] Admin pages
   - [ ] Queue Management Page
+  - [ ] Fix mistakes in data
+     - [ ] Wrong `animeId`
+     - [ ] Wrong `animeId`
   - [ ] Create job
-    - [ ] Manual File Upload
+    - [ ] Torrent search
