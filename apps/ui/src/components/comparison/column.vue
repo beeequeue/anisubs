@@ -1,12 +1,19 @@
 <template>
-  <router-link
+  <div
     v-bind="$attrs"
-    :to="`/group/${entry.group.id}`"
-    class="group"
+    class="info"
     :style="{ gridColumn: `${index + 1} / span 1`, gridRow: '1 / span 1' }"
   >
-    {{ entry.group.name }}
-  </router-link>
+    <span class="source">
+      <span>{{ splitSource[0] }}</span>
+
+      <router-link :to="`/group/${entry.group.id}`">
+        {{ entry.group.name }}
+      </router-link>
+
+      <span>{{ splitSource[1] }}</span>
+    </span>
+  </div>
 
   <div
     :style="{ gridColumn: `${index + 1} / span 1`, gridRow: '2 / span 1' }"
@@ -36,11 +43,16 @@ export default defineComponent({
       required: true,
     },
   },
+  computed: {
+    splitSource(): [string, string] {
+      return this.entry.source.split(this.entry.group.name) as [string, string]
+    },
+  },
 })
 </script>
 
 <style lang="scss" scoped>
-.group {
+.info {
   position: sticky;
   top: 0;
   display: flex;
@@ -48,7 +60,7 @@ export default defineComponent({
   align-items: center;
 
   background: var(--bg-body);
-  font-size: 32px;
+  font-size: 22px;
 
   z-index: 2;
 }
