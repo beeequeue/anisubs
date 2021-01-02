@@ -4,7 +4,13 @@ import { ExtractOptions, WebTorrent } from "@anisubs/shared"
 import { parse } from "anitomy-js"
 import { UserInputError } from "apollo-server-koa"
 import { Job as QueueJob } from "bullmq"
-import { IsMagnetURI, Matches, validate } from "class-validator"
+import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsMagnetURI,
+  Matches,
+  validate,
+} from "class-validator"
 import { ArgsType, Field, ID, Int, ObjectType } from "type-graphql"
 import { Index } from "typeorm"
 
@@ -27,6 +33,8 @@ export class JobCreationArgs {
   fileName!: string | null
 
   @Field(() => [Timestamp], { nullable: true })
+  @ArrayMinSize(5)
+  @ArrayMaxSize(15)
   timestamps!: string[] | null
 
   @Field(() => String, { nullable: true })
@@ -141,11 +149,18 @@ export class Job implements ExtractOptions {
     const group = await Group.findOrCreateByName(
       torrentInfo.release_group || customGroupName!,
     )
-    const existingTimestamps = await Entry.getTimestampsForAnime(animeId)
 
+    const existingTimestamps = await Entry.getTimestampsForAnime(animeId)
     if (existingTimestamps == null && timestamps == null) {
       throw new UserInputError("TODO")
     }
+
+    // Sort and fix mistakes in timestamps
+    timestamps =
+      timestamps
+        ?.sort()
+        ?.map((timestamp) => timestamp.replace(/(\.\d+?)0+$/, "$1")) ??
+      timestamps
 
     const options: ExtractOptions = {
       hash: hash,

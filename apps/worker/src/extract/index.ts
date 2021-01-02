@@ -29,5 +29,7 @@ export const startNewExtraction: Processor = async (
   }
 
   state.setState(WorkerState.Idle)
-  return urls
+
+  // Has to be returned in order of appearance - it is mapped to the input timestamps
+  return urls.sort()
 }

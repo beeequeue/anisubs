@@ -31,6 +31,9 @@ export class EntryFieldResolvers {
 
   @FieldResolver(() => [Image])
   async images(@Root() entry: Entry): Promise<Image[]> {
-    return await Image.find({ where: { entry: entry.id } })
+    return await Image.find({
+      where: { entry: entry.id },
+      order: { timestamp: "ASC" },
+    })
   }
 }
