@@ -1,5 +1,5 @@
 <template>
-  <div class="comparison" :class="{ single: entries.length === 1 }">
+  <div class="comparison" :class="classes">
     <column
       v-for="(entry, index) in entries"
       :key="entry.id"
@@ -24,13 +24,21 @@ export default defineComponent({
       required: true,
     },
   },
+  computed: {
+    classes(): unknown {
+      return {
+        single: this.entries.length === 1,
+        double: this.entries.length === 2,
+      }
+    },
+  },
 })
 </script>
 
 <style lang="scss" scoped>
 .comparison {
   display: grid;
-  grid-auto-columns: calc(50% - 4px);
+  grid-auto-columns: calc(33%);
   grid-template-rows: 60px 1fr;
   grid-column-gap: 8px;
 
@@ -40,6 +48,11 @@ export default defineComponent({
   &.single {
     grid-auto-columns: initial;
     grid-template-columns: 80%;
+    justify-content: center;
+  }
+
+  &.double {
+    grid-auto-columns: calc(50% - 4px);
     justify-content: center;
   }
 }

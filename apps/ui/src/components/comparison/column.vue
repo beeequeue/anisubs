@@ -75,7 +75,7 @@ export default defineComponent({
     flex-direction: column;
 
     & > .image {
-      min-height: calc(50vw * 0.55);
+      min-height: calc(33vw * 0.55);
       width: 100%;
       object-fit: contain;
     }
