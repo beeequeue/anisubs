@@ -39,7 +39,7 @@ const redisEnv = envsafe({
     devDefault: "localhost",
   }),
   REDIS_PORT: port({
-    default: 6379
+    default: 6379,
   }),
   REDIS_USER: str({
     default: "",

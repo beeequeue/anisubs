@@ -80,7 +80,7 @@ export const config: Config = {
 
   redis: {
     host: envVar("REDIS_HOST", "localhost"),
-    port: Number(envVar("REDIS_PORT", 6739)),
+    port: Number(envVar("REDIS_PORT", 6379)),
     username: envVar("REDIS_USER"),
     password: envVar("REDIS_PASS"),
   },
