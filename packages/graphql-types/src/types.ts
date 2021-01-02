@@ -7,6 +7,10 @@ export type Maybe<T> = T | null
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K]
 }
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> }
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> }
 export type ReactiveFunction<TParam> = () => TParam
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -150,6 +154,7 @@ export type MutationCreateJobArgs = {
   source: Scalars["String"]
   fileName: Maybe<Scalars["String"]>
   timestamps: Maybe<ReadonlyArray<Scalars["Timestamp"]>>
+  group: Maybe<Scalars["String"]>
 }
 
 export type MutationAddWorkerArgs = {

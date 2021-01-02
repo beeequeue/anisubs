@@ -4,7 +4,7 @@ documents:
   - ../../apps/**/*.graphql
 
 schema:
-  - http://localhost:3001/graphql
+  - http://localhost:3000/graphql
 
 hooks:
   afterOneFileWrite:
