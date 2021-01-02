@@ -85,6 +85,7 @@ export default defineComponent({
       bottom: 0;
       padding: 4px;
 
+      border-bottom: 4px solid var(--highlight-primary-primary);
       background: var(--bg-body);
       color: var(--text-secondary);
       font-size: 20px;
