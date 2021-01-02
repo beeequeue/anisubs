@@ -16,7 +16,7 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
-    "webtorrent": "0.110.1"
+    "webtorrent": "0.112.0"
   },
   "devDependencies": {
     "@types/webtorrent": "0.109.0"
