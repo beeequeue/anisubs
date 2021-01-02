@@ -28,6 +28,9 @@ export class JobCreationArgs {
 
   @Field(() => [Timestamp], { nullable: true })
   timestamps!: string[] | null
+
+  @Field(() => String, { nullable: true })
+  group!: string | null
 }
 
 @ObjectType()
@@ -92,6 +95,7 @@ export class Job implements ExtractOptions {
     source,
     fileName,
     timestamps,
+    group: customGroupName,
   }: JobCreationArgs): Promise<Job> {
     const torrent = await WebTorrent.getMetadata(source)
 
@@ -121,7 +125,7 @@ export class Job implements ExtractOptions {
     const torrentInfo = await parse(torrent.name)
     const fileInfo = await parse(fileName)
 
-    if (torrentInfo.release_group == null) {
+    if (torrentInfo.release_group == null && customGroupName == null) {
       throw new UserInputError(
         "Could not determine release group from torrent name.",
       )
@@ -134,7 +138,9 @@ export class Job implements ExtractOptions {
       )
     }
 
-    const group = await Group.findOrCreateByName(torrentInfo.release_group)
+    const group = await Group.findOrCreateByName(
+      torrentInfo.release_group || customGroupName!,
+    )
     const existingTimestamps = await Entry.getTimestampsForAnime(animeId)
 
     if (existingTimestamps == null && timestamps == null) {
