@@ -22,6 +22,7 @@
     "@mdi/js": "5.8.55",
     "@vue/apollo-composable": "4.0.0-alpha.12",
     "core-js": "3.7.0",
+    "envsafe": "C:\\\\dev\\\\js\\\\envsafe\\\\envsafe-v1.1.0.tgz",
     "graphql": "15.4.0",
     "modern-normalize": "1.0.0",
     "vue": "3.0.0",

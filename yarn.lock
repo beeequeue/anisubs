@@ -7380,6 +7380,10 @@ envsafe@1.1.0:
   resolved "https://registry.yarnpkg.com/envsafe/-/envsafe-1.1.0.tgz#9996b25fe5fe8f761d866ec165f5e8e476e2766d"
   integrity sha512-LSEXkkWOBXQBhCkKP5/PZWN3bwWWcDagrajJdM6sOHhEOZMmeQ0c0QALP16rb/zhwjMceITFdtFqwwnxBNCNhQ==
 
+"envsafe@file:../envsafe/envsafe-v1.1.0.tgz":
+  version "1.1.0"
+  resolved "file:../envsafe/envsafe-v1.1.0.tgz#93485c8d271fc7123b32b03d97f3d26a47652709"
+
 err-code@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/err-code/-/err-code-1.1.2.tgz#06e0116d3028f6aef4806849eb0ea6a748ae6960"
