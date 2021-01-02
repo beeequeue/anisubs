@@ -1,4 +1,3 @@
-import { IsUrl } from "class-validator"
 import { Field, ObjectType } from "type-graphql"
 import { Column, Entity, Index, ManyToOne, PrimaryColumn } from "typeorm"
 
@@ -14,14 +13,6 @@ export class Image extends ExtendedEntity {
   timestamp!: string
 
   @Column()
-  @IsUrl({
-    require_host: true,
-    require_protocol: true,
-    require_tld: true,
-    disallow_auth: true,
-    protocols: ["https"],
-    host_whitelist: ["cdn.anisubs.app"],
-  })
   @Field()
   url!: string
 

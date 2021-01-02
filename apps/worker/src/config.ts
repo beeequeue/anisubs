@@ -14,7 +14,7 @@ const baseEnv = envsafe({
       Environment.Test,
       Environment.Production,
     ],
-    default: Environment.Production,
+    default: Environment.Development,
   }),
   PORT: port({
     devDefault: 3100,

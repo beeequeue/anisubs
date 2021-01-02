@@ -1,5 +1,5 @@
 import { spawn } from "child_process"
-import { mkdirSync, readdirSync } from "fs"
+import { mkdirSync } from "fs"
 import { join, relative } from "path"
 
 import {
@@ -105,6 +105,8 @@ export class Ffmpeg {
   }
 
   static async extractScreenshots(job: ExtractOptions, file: TorrentFile) {
+    const outputFolder = join(SCREENSHOTS_PATH, job.animeId.toString())
+
     const command = FluentFfmpeg(join(DOWNLOADS_PATH, file.path), {
       logger: console,
     })
@@ -115,7 +117,9 @@ export class Ffmpeg {
 
     const probeData = await this.probeCommand(command)
     const videoInfo = this.getVideoStream(probeData)
-    const lastNonSubtitleStreamIndex = this.getLastNonSubtitleStreamIndex(probeData)
+    const lastNonSubtitleStreamIndex = this.getLastNonSubtitleStreamIndex(
+      probeData,
+    )
     const bestSubtitleStream = this.getBestSubtitleStream(probeData)
     const bestSubtitleStreamIndex =
       bestSubtitleStream.index - lastNonSubtitleStreamIndex
@@ -124,17 +128,11 @@ export class Ffmpeg {
       throw new Error(`Could not get height of video. ${job.source}`)
     }
 
-    const options = {
-      timestamps: job.timestamps,
-      filename: `${job.hash}-%s.webp`,
-      folder: join(SCREENSHOTS_PATH, job.hash),
-    }
-
+    const files: string[] = []
     const promises = job.timestamps.map(
       (timestamp) =>
         new Promise<void>((resolve, reject) => {
           const inputPath = join(DOWNLOADS_PATH, file.path)
-          const screenshotFolder = join(SCREENSHOTS_PATH, job.hash)
 
           // This can't be an absolute path since it would include `X:\` on Windows.
           // This breaks the subtitles options parsing since : is the option delimiter.
@@ -143,7 +141,10 @@ export class Ffmpeg {
             "\\\\\\\\",
           )
 
-          // prettier-ignore
+          const filename = `${job.hash}-${timestamp.replace(
+            /[:,.]/g,
+            "_",
+          )}.webp`
           const args = [
             "-y",
             "-hide_banner",
@@ -152,15 +153,15 @@ export class Ffmpeg {
             ["-ss", timestamp],
             ["-i", `${inputPath}`],
             ["-vframes", "1"],
-            ["-vf", `subtitles='${subtitleFilePath}':si=${bestSubtitleStreamIndex}`],
+            [
+              "-vf",
+              `subtitles='${subtitleFilePath}':si=${bestSubtitleStreamIndex}`,
+            ],
             ["-quality", "95"],
-            join(
-              screenshotFolder,
-              `${job.hash}-${timestamp.replace(/[:,.]/g, "_")}.webp`,
-            ),
+            join(outputFolder, filename),
           ].flat(2)
 
-          mkdirSync(screenshotFolder, { recursive: true })
+          mkdirSync(outputFolder, { recursive: true })
 
           const process = spawn("ffmpeg", args)
 
@@ -175,15 +176,18 @@ export class Ffmpeg {
             (buffer: Buffer) => (error += buffer.toString()),
           )
 
-          process.on("exit", (code) => (code === 0 ? resolve() : reject(error)))
+          process.on("exit", (code) => {
+            if (code !== 0) {
+              return reject(error)
+            }
+
+            files.push(filename)
+            resolve()
+          })
         }),
     )
 
     await Promise.all(promises)
-
-    const files = readdirSync(options.folder).filter((filename) =>
-      filename.endsWith(".webp"),
-    )
 
     return files
   }

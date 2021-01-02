@@ -1,4 +1,11 @@
-import { ExtractOptions, WebTorrent, WorkerState } from "@anisubs/shared"
+import { join } from "path"
+
+import {
+  ExtractOptions,
+  SCREENSHOTS_PATH,
+  WebTorrent,
+  WorkerState,
+} from "@anisubs/shared"
 import { Job as QueueJob, Processor } from "bullmq"
 
 import { Ffmpeg } from "@/lib/ffmpeg"
@@ -16,8 +23,20 @@ export const startNewExtraction: Processor = async (
   state.setState(WorkerState.Extracting)
   const screenshots = await Ffmpeg.extractScreenshots(job.data, file)
 
-  state.setState(WorkerState.Uploading)
-  const urls = await uploadFilesToSpace(job.data, screenshots)
+  let urls
+  if (process.env.NODE_ENV === "production") {
+    state.setState(WorkerState.Uploading)
+    urls = await uploadFilesToSpace(job.data, screenshots)
+  } else {
+    urls = screenshots.map(
+      (image) =>
+        `file:\\\\${join(
+          SCREENSHOTS_PATH,
+          job.data.animeId.toString(),
+          image,
+        )}`,
+    )
+  }
 
   state.setState(WorkerState.Idle)
   return urls

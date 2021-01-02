@@ -30,7 +30,9 @@ export const uploadFilesToSpace = async (
         ACL: "public-read",
         Bucket: "anisubs",
         Key: key,
-        Body: await fs.readFile(join(SCREENSHOTS_PATH, job.hash, filename)),
+        Body: await fs.readFile(
+          join(SCREENSHOTS_PATH, job.animeId.toString(), filename),
+        ),
         ContentType: "image/png",
       })
 

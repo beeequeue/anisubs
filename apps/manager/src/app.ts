@@ -1,4 +1,7 @@
+import { resolve } from "path"
+
 import Koa from "koa"
+import Serve from "koa-static-server"
 import { v4 as uuid } from "uuid"
 
 import { createRouter } from "@/rest"
@@ -18,6 +21,15 @@ export const createApp = async () => {
   app.use(router.routes()).use(router.allowedMethods())
 
   await registerApolloServer(app)
+
+  if (process.env.NODE_ENV === "development") {
+    app.use(
+      Serve({
+        rootPath: "/cdn",
+        rootDir: resolve(__dirname, "..", "..", "..", "output/screenshots"),
+      }),
+    )
+  }
 
   return app
 }
