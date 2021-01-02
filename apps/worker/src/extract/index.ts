@@ -1,11 +1,4 @@
-import { join } from "path"
-
-import {
-  ExtractOptions,
-  SCREENSHOTS_PATH,
-  WebTorrent,
-  WorkerState,
-} from "@anisubs/shared"
+import { ExtractOptions, WebTorrent, WorkerState } from "@anisubs/shared"
 import { Job as QueueJob, Processor } from "bullmq"
 
 import { Ffmpeg } from "@/lib/ffmpeg"
@@ -30,11 +23,8 @@ export const startNewExtraction: Processor = async (
   } else {
     urls = screenshots.map(
       (image) =>
-        `file:\\\\${join(
-          SCREENSHOTS_PATH,
-          job.data.animeId.toString(),
-          image,
-        )}`,
+        `${process.env
+          .MANAGER_URL!}/cdn/${job.data.animeId.toString()}/${image}`,
     )
   }
 
