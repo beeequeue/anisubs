@@ -1,5 +1,9 @@
 <template>
-  <span class="icon" :aria-label="label">
+  <span
+    class="icon"
+    :aria-label="label"
+    :style="{ height: sizeStr, width: sizeStr }"
+  >
     <svg viewBox="0 0 24 24">
       <path :d="icon" />
     </svg>
@@ -32,12 +36,10 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped vars="{ sizeStr }">
+<style lang="scss" scoped>
 .icon {
   position: relative;
   display: inline-block;
-  height: var(--sizeStr);
-  width: var(--sizeStr);
 
   & > svg {
     height: 100%;

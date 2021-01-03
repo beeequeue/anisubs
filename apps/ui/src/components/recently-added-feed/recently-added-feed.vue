@@ -14,8 +14,6 @@ import Entry from "../entry/entry.vue"
 
 const { result } = useRecentlyAddedFeedQuery()
 const entries = useResult(result, [], (data) => data.recentlyAdded)
-
-export { Entry, entries }
 </script>
 
 <style lang="scss" scoped>

@@ -13,8 +13,7 @@ import { DefaultApolloClient } from "@vue/apollo-composable"
 import { provide } from "vue"
 
 import { apolloClient } from "@/apollo"
-
-export { default as DarkTheme } from "@/themes/dark.vue"
+import DarkTheme from "@/themes/dark.vue"
 
 provide(DefaultApolloClient, apolloClient)
 </script>

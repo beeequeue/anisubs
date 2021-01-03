@@ -62,6 +62,20 @@ module.exports = {
     ],
     "import/no-default-export": "error",
 
+    // Disallow importin directly from `@apollo/client` since that's for react
+    "no-restricted-imports": [
+      "error",
+      {
+        paths: [
+          {
+            name: "@apollo/client",
+            message:
+              "Cannot import from `@apollo/client` as that's the react code - use `@apollo/client/core`",
+          },
+        ],
+      },
+    ],
+
     // Handles by TS
     "import/no-unresolved": "off",
     "import/no-named-as-default": "off",
