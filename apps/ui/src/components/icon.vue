@@ -1,9 +1,5 @@
 <template>
-  <span
-    class="icon"
-    :aria-label="label"
-    :style="{ height: sizeStr, width: sizeStr }"
-  >
+  <span class="icon" :aria-label="label">
     <svg viewBox="0 0 24 24">
       <path :d="icon" />
     </svg>
@@ -40,6 +36,8 @@ export default defineComponent({
 .icon {
   position: relative;
   display: inline-block;
+  height: v-bind(sizeStr);
+  width: v-bind(sizeStr);
 
   & > svg {
     height: 100%;
