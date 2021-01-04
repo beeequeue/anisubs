@@ -16,7 +16,7 @@
     <input v-model.number="animeId" type="number" placeholder="AniList ID" />
 
     <div>
-      <input v-model.trim="magnetURI" placeholder="Magnet URI" />
+      <input v-model.trim="magnetUri" placeholder="Magnet URI" />
 
       <input v-model.trim="groupName" placeholder="Group Name (Optional)" />
     </div>
@@ -53,7 +53,7 @@ const hasTimestamps = useResult(
   (data) => data.anime!.entries.length > 0,
 )
 
-const magnetURI = ref("")
+const magnetUri = ref("")
 
 const groupName = ref("")
 
