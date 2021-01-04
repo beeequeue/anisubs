@@ -101,6 +101,7 @@ export default defineComponent({
         height: calc(100% + 6px);
         z-index: 1;
         filter: blur(8px) opacity(0.25) brightness(0.5);
+        transform: scale(1.02); // Fix for weird corners in firefox
 
         will-change: filter;
         transition: filter 0.2s;

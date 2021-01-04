@@ -17,7 +17,7 @@ const baseEnv = envsafe({
     input: process.env.NODE_ENV,
   }),
   PORT: port({
-    devDefault: 3100,
+    default: 8080,
     input: process.env.PORT,
   }),
 
