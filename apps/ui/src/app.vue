@@ -58,4 +58,15 @@ a {
     text-decoration: underline;
   }
 }
+
+.fade-enter-active,
+.fade-leave-active {
+  will-change: opacity;
+  transition: opacity 0.5s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 </style>

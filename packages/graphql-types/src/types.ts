@@ -227,6 +227,47 @@ export type AnimePageQuery = { readonly __typename?: "Query" } & {
   >
 }
 
+export type CreateJobAnimeQueryVariables = Exact<{
+  id: Scalars["Int"]
+}>
+
+export type CreateJobAnimeQuery = { readonly __typename?: "Query" } & {
+  readonly anime: Maybe<
+    { readonly __typename?: "Anime" } & {
+      readonly anilist: Maybe<
+        { readonly __typename?: "Anilist" } & Pick<
+          Anilist,
+          "title" | "imageLarge" | "url"
+        >
+      >
+      readonly entries: ReadonlyArray<
+        { readonly __typename?: "Entry" } & Pick<Entry, "id">
+      >
+    }
+  >
+}
+
+export type CreateJobMutationVariables = Exact<{
+  animeId: Scalars["Int"]
+  source: Scalars["String"]
+  fileName: Maybe<Scalars["String"]>
+  timestamps: ReadonlyArray<Scalars["Timestamp"]> | Scalars["Timestamp"]
+  group: Maybe<Scalars["String"]>
+}>
+
+export type CreateJobMutation = { readonly __typename?: "Mutation" } & {
+  readonly createJob: { readonly __typename?: "Job" } & Pick<
+    Job,
+    "id" | "inProgress"
+  > & {
+      readonly anime: { readonly __typename?: "Anime" } & {
+        readonly anilist: Maybe<
+          { readonly __typename?: "Anilist" } & Pick<Anilist, "title">
+        >
+      }
+    }
+}
+
 export const EntryComponentFragmentDoc = /*#__PURE__*/ gql`
   fragment EntryComponent on Entry {
     id
@@ -370,4 +411,135 @@ export function useAnimePageQuery(
 export type AnimePageQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<
   AnimePageQuery,
   AnimePageQueryVariables
+>
+export const CreateJobAnimeDocument = /*#__PURE__*/ gql`
+  query CreateJobAnime($id: Int!) {
+    anime(id: $id) {
+      anilist {
+        title
+        imageLarge
+        url
+      }
+      entries {
+        id
+      }
+    }
+  }
+`
+
+/**
+ * __useCreateJobAnimeQuery__
+ *
+ * To run a query within a Vue component, call `useCreateJobAnimeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCreateJobAnimeQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCreateJobAnimeQuery({
+ *   id: // value for 'id'
+ * });
+ */
+export function useCreateJobAnimeQuery(
+  variables:
+    | CreateJobAnimeQueryVariables
+    | VueCompositionApi.Ref<CreateJobAnimeQueryVariables>
+    | ReactiveFunction<CreateJobAnimeQueryVariables>,
+  options:
+    | VueApolloComposable.UseQueryOptions<
+        CreateJobAnimeQuery,
+        CreateJobAnimeQueryVariables
+      >
+    | VueCompositionApi.Ref<
+        VueApolloComposable.UseQueryOptions<
+          CreateJobAnimeQuery,
+          CreateJobAnimeQueryVariables
+        >
+      >
+    | ReactiveFunction<
+        VueApolloComposable.UseQueryOptions<
+          CreateJobAnimeQuery,
+          CreateJobAnimeQueryVariables
+        >
+      > = {},
+) {
+  return VueApolloComposable.useQuery<
+    CreateJobAnimeQuery,
+    CreateJobAnimeQueryVariables
+  >(CreateJobAnimeDocument, variables, options)
+}
+export type CreateJobAnimeQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<
+  CreateJobAnimeQuery,
+  CreateJobAnimeQueryVariables
+>
+export const CreateJobDocument = /*#__PURE__*/ gql`
+  mutation CreateJob(
+    $animeId: Int!
+    $source: String!
+    $fileName: String
+    $timestamps: [Timestamp!]!
+    $group: String
+  ) {
+    createJob(
+      animeId: $animeId
+      source: $source
+      fileName: $fileName
+      timestamps: $timestamps
+      group: $group
+    ) {
+      id
+      anime {
+        anilist {
+          title
+        }
+      }
+      inProgress
+    }
+  }
+`
+
+/**
+ * __useCreateJobMutation__
+ *
+ * To run a mutation, you first call `useCreateJobMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCreateJobMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCreateJobMutation({
+ *   variables: {
+ *     animeId: // value for 'animeId'
+ *     source: // value for 'source'
+ *     fileName: // value for 'fileName'
+ *     timestamps: // value for 'timestamps'
+ *     group: // value for 'group'
+ *   },
+ * });
+ */
+export function useCreateJobMutation(
+  options:
+    | VueApolloComposable.UseMutationOptions<
+        CreateJobMutation,
+        CreateJobMutationVariables
+      >
+    | ReactiveFunction<
+        VueApolloComposable.UseMutationOptions<
+          CreateJobMutation,
+          CreateJobMutationVariables
+        >
+      >,
+) {
+  return VueApolloComposable.useMutation<
+    CreateJobMutation,
+    CreateJobMutationVariables
+  >(CreateJobDocument, options)
+}
+export type CreateJobMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<
+  CreateJobMutation,
+  CreateJobMutationVariables
 >

@@ -1,0 +1,37 @@
+query CreateJobAnime($id: Int!) {
+  anime(id: $id) {
+    anilist {
+      title
+      imageLarge
+      url
+    }
+
+    entries {
+      id
+    }
+  }
+}
+
+mutation CreateJob(
+  $animeId: Int!,
+  $source: String!,
+  $fileName: String,
+  $timestamps: [Timestamp!]!,
+  $group: String,
+) {
+  createJob(
+    animeId: $animeId,
+    source: $source,
+    fileName: $fileName,
+    timestamps: $timestamps,
+    group: $group,
+  ) {
+    id
+    anime {
+      anilist {
+        title
+      }
+    }
+    inProgress
+  }
+}

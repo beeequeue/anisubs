@@ -12,6 +12,12 @@ const routes: RouteRecordRaw[] = [
     component: () =>
       import(/* webpackChunkName: "anime" */ "./views/anime.vue"),
   },
+  {
+    path: "/create-job",
+    name: "Anime",
+    component: () =>
+      import(/* webpackChunkName: "create-job" */ "./views/create-job.vue"),
+  },
 ]
 
 export const router = createRouter({

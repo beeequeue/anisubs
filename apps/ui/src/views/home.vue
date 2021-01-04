@@ -2,6 +2,8 @@
   <div class="home">
     <Title class="big">Anime Fansub Comparisons</Title>
 
+    <router-link to="/create-job">Create new comparisons</router-link>
+
     Either...
 
     <input placeholder="Search for an anime" />
