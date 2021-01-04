@@ -8,7 +8,7 @@
     "jsx": "preserve",
     "lib": ["esnext", "dom"],
     "types": ["webpack-env"],
-    "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
+    //    "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
     "baseUrl": "./"
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]

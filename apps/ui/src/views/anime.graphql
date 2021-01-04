@@ -20,7 +20,7 @@ query AnimePage($id: Int!) {
 
       images {
         id
-        url
+        filename
         timestamp
       }
     }

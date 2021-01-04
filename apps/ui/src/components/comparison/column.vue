@@ -20,7 +20,7 @@
     class="images"
   >
     <div v-for="image in entry.images" :key="image.id" class="image-container">
-      <img :src="image.url" class="image" />
+      <img :src="getImageUrl(image)" class="image" />
 
       <div class="timestamp">{{ image.timestamp }}</div>
     </div>
@@ -28,12 +28,18 @@
 </template>
 
 <script lang="ts">
-import { Entry } from "@anisubs/graphql-types"
+import { Entry, Image } from "@anisubs/graphql-types"
 import { defineComponent, PropType } from "vue"
+
+import { CONFIG } from "@/config"
 
 export default defineComponent({
   name: "Column",
   props: {
+    animeId: {
+      type: Number,
+      required: true,
+    },
     entry: {
       type: Object as PropType<Entry>,
       required: true,
@@ -46,6 +52,11 @@ export default defineComponent({
   computed: {
     splitSource(): [string, string] {
       return this.entry.source.split(this.entry.group.name) as [string, string]
+    },
+  },
+  methods: {
+    getImageUrl(image: Image): string {
+      return `${CONFIG.VUE_APP_CDN_URL}/${this.animeId}/${image.filename}`
     },
   },
 })

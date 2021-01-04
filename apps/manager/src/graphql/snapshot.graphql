@@ -52,10 +52,10 @@ type Group {
 
 type Image {
   createdAt: DateTime!
+  filename: String!
   id: ID!
   timestamp: Timestamp!
   updatedAt: DateTime!
-  url: String!
 }
 
 type Job {

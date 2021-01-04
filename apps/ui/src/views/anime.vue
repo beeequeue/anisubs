@@ -2,7 +2,7 @@
   <div v-if="!loading && error == null" class="anime">
     <img :src="anilist.banner" class="banner" />
 
-    <comparison :entries="entries" />
+    <comparison :anime-id="animeId" :entries="entries" />
   </div>
 </template>
 
@@ -23,6 +23,7 @@ export default defineComponent({
     })
 
     return {
+      animeId: Number(params.id),
       loading,
       error,
       anilist: useResult(result, null, (data) => data.anime!.anilist),

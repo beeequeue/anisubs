@@ -3,6 +3,7 @@
     <column
       v-for="(entry, index) in entries"
       :key="entry.id"
+      :anime-id="animeId"
       :entry="entry"
       :index="index"
     />
@@ -19,6 +20,10 @@ export default defineComponent({
   name: "Comparison",
   components: { Column },
   props: {
+    animeId: {
+      type: Number,
+      required: true,
+    },
     entries: {
       type: Object as PropType<Entry[]>,
       required: true,
