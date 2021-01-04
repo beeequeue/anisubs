@@ -6,7 +6,7 @@
   "author": "BeeeQueue",
   "homepage": "",
   "engines": {
-    "node": ">=14"
+    "node": ">=12"
   },
   "lint-staged": {
     "*.{ts,js,vue,html,json,yml}": "prettier --write"
