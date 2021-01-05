@@ -95,11 +95,20 @@ type Query {
     offset: Int = 0
   ): JobPage!
   recentlyAdded: [Entry!]!
+  searchTorrents(query: String!): [Torrent!]!
   workers: [Worker!]!
 }
 
 """A timestamp in the format `[HH:]MM:SS[.xxxx]`"""
 scalar Timestamp
+
+type Torrent {
+  leechers: Int!
+  magnetUri: String!
+  name: String
+  seeders: Int!
+  sizeMb: Int!
+}
 
 type Worker {
   confirmed: Boolean!

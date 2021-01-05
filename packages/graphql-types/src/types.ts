@@ -99,6 +99,15 @@ export type Job = {
   readonly group: Group
 }
 
+export type Torrent = {
+  readonly __typename?: "Torrent"
+  readonly name: Maybe<Scalars["String"]>
+  readonly magnetUri: Scalars["String"]
+  readonly seeders: Scalars["Int"]
+  readonly leechers: Scalars["Int"]
+  readonly sizeMb: Scalars["Int"]
+}
+
 export type Worker = {
   readonly __typename?: "Worker"
   readonly id: Scalars["ID"]
@@ -126,6 +135,7 @@ export type Query = {
   readonly recentlyAdded: ReadonlyArray<Entry>
   readonly entries: ReadonlyArray<Entry>
   readonly jobQueue: JobPage
+  readonly searchTorrents: ReadonlyArray<Torrent>
   readonly workers: ReadonlyArray<Worker>
 }
 
@@ -140,6 +150,10 @@ export type QueryEntriesArgs = {
 export type QueryJobQueueArgs = {
   offset?: Maybe<Scalars["Int"]>
   limit?: Maybe<Scalars["Int"]>
+}
+
+export type QuerySearchTorrentsArgs = {
+  query: Scalars["String"]
 }
 
 export type Mutation = {

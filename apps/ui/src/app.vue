@@ -36,6 +36,10 @@ provide(DefaultApolloClient, apolloClient)
   transition: color 0.5s, background-color 0.5s;
 }
 
+input {
+  color: var(--text-primary);
+}
+
 #app {
   background: var(--bg-body);
   color: var(--text-primary);
