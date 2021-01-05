@@ -1,7 +1,7 @@
 import { Arg, Query, Resolver } from "type-graphql"
 
-import { Torrent } from "@/modules/torrent/torrent.model"
 import { NyaaService } from "@/lib/nyaa"
+import { Torrent } from "@/modules/torrent/torrent.model"
 
 @Resolver()
 export class TorrentResolvers {
@@ -11,6 +11,7 @@ export class TorrentResolvers {
   async searchTorrents(@Arg("query") query: string): Promise<Torrent[]> {
     const torrents = await this.nyaaService.fetchRating(query)
 
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     return torrents.map(Torrent.from)
   }
 }
