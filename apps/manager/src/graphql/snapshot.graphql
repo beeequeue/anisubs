@@ -96,6 +96,7 @@ type Query {
   ): JobPage!
   recentlyAdded: [Entry!]!
   searchTorrents(query: String!): [Torrent!]!
+  torrentFiles(magnetUri: String!): [String!]!
   workers: [Worker!]!
 }
 

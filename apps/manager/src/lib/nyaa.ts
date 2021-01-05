@@ -31,7 +31,8 @@ export class NyaaService {
         .search(query, 25, {
           c: ["3"],
           order: "false",
-          sort: "5",
+          sort: "4",
+          lang: "en",
         })
         .catch((err) => err as Error),
     )

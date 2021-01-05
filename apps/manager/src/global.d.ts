@@ -85,7 +85,7 @@ declare module "nyaapi" {
     sizeType?: "b" | "k" | "m" | "g"
     sort?: Sort
     order?: Order
-    lang?: Language[]
+    lang?: Language
     userID?: string
     fromID?: string
   }

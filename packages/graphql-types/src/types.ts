@@ -136,6 +136,7 @@ export type Query = {
   readonly entries: ReadonlyArray<Entry>
   readonly jobQueue: JobPage
   readonly searchTorrents: ReadonlyArray<Torrent>
+  readonly torrentFiles: ReadonlyArray<Scalars["String"]>
   readonly workers: ReadonlyArray<Worker>
 }
 
@@ -154,6 +155,10 @@ export type QueryJobQueueArgs = {
 
 export type QuerySearchTorrentsArgs = {
   query: Scalars["String"]
+}
+
+export type QueryTorrentFilesArgs = {
+  magnetUri: Scalars["String"]
 }
 
 export type Mutation = {

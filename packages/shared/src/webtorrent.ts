@@ -10,12 +10,27 @@ const TIMEOUT_MS = 1000 * 60 * 30
 export class WebTorrent {
   static client = new TorrentClient()
 
-  static async getMetadata(magnetUri: string) {
+  static async getMetadata(magnetUri: string, timeoutMs?: number) {
     return new Promise<Torrent>((resolve, reject) => {
       this.client.add(magnetUri, { path: DOWNLOADS_PATH }, (torrent) => {
         console.log(
           `Getting metadata for:\n${torrent.infoHash} "${torrent.name}"`,
         )
+
+        let timeout: NodeJS.Timeout | null = null
+        if (timeoutMs != null) {
+          timeout = setTimeout(() => {
+            torrent.destroy()
+
+            setTimeout(() => {
+              if (process.env.NODE_ENV === "production") {
+                remove(torrent.path)
+              }
+
+              reject(`[${torrent.name}]: Timed out.`)
+            }, 50)
+          }, timeoutMs)
+        }
 
         torrent.addListener("error", reject)
         torrent.addListener("noPeers", () =>
@@ -29,11 +44,15 @@ export class WebTorrent {
 
           resolve(torrent)
 
+          // If we destroy it immediately it breaks
           setTimeout(() => {
             torrent.destroy()
 
+            if (timeout != null) {
+              clearTimeout(timeout)
+            }
+
             if (process.env.NODE_ENV === "production") {
-              // If we destroy it immediately it breaks
               remove(torrent.path)
             }
           }, 0)
