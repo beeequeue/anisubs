@@ -266,6 +266,28 @@ export type CreateJobAnimeQuery = { readonly __typename?: "Query" } & {
   >
 }
 
+export type SearchTorrentsQueryVariables = Exact<{
+  query: Scalars["String"]
+}>
+
+export type SearchTorrentsQuery = { readonly __typename?: "Query" } & {
+  readonly searchTorrents: ReadonlyArray<
+    { readonly __typename?: "Torrent" } & Pick<
+      Torrent,
+      "name" | "sizeMb" | "seeders" | "leechers" | "magnetUri"
+    >
+  >
+}
+
+export type GetTorrentFilesQueryVariables = Exact<{
+  magnetUri: Scalars["String"]
+}>
+
+export type GetTorrentFilesQuery = { readonly __typename?: "Query" } & Pick<
+  Query,
+  "torrentFiles"
+>
+
 export type CreateJobMutationVariables = Exact<{
   animeId: Scalars["Int"]
   source: Scalars["String"]
@@ -492,6 +514,118 @@ export function useCreateJobAnimeQuery(
 export type CreateJobAnimeQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<
   CreateJobAnimeQuery,
   CreateJobAnimeQueryVariables
+>
+export const SearchTorrentsDocument = /*#__PURE__*/ gql`
+  query SearchTorrents($query: String!) {
+    searchTorrents(query: $query) {
+      name
+      sizeMb
+      seeders
+      leechers
+      magnetUri
+    }
+  }
+`
+
+/**
+ * __useSearchTorrentsQuery__
+ *
+ * To run a query within a Vue component, call `useSearchTorrentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchTorrentsQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useSearchTorrentsQuery({
+ *   query: // value for 'query'
+ * });
+ */
+export function useSearchTorrentsQuery(
+  variables:
+    | SearchTorrentsQueryVariables
+    | VueCompositionApi.Ref<SearchTorrentsQueryVariables>
+    | ReactiveFunction<SearchTorrentsQueryVariables>,
+  options:
+    | VueApolloComposable.UseQueryOptions<
+        SearchTorrentsQuery,
+        SearchTorrentsQueryVariables
+      >
+    | VueCompositionApi.Ref<
+        VueApolloComposable.UseQueryOptions<
+          SearchTorrentsQuery,
+          SearchTorrentsQueryVariables
+        >
+      >
+    | ReactiveFunction<
+        VueApolloComposable.UseQueryOptions<
+          SearchTorrentsQuery,
+          SearchTorrentsQueryVariables
+        >
+      > = {},
+) {
+  return VueApolloComposable.useQuery<
+    SearchTorrentsQuery,
+    SearchTorrentsQueryVariables
+  >(SearchTorrentsDocument, variables, options)
+}
+export type SearchTorrentsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<
+  SearchTorrentsQuery,
+  SearchTorrentsQueryVariables
+>
+export const GetTorrentFilesDocument = /*#__PURE__*/ gql`
+  query GetTorrentFiles($magnetUri: String!) {
+    torrentFiles(magnetUri: $magnetUri)
+  }
+`
+
+/**
+ * __useGetTorrentFilesQuery__
+ *
+ * To run a query within a Vue component, call `useGetTorrentFilesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTorrentFilesQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useGetTorrentFilesQuery({
+ *   magnetUri: // value for 'magnetUri'
+ * });
+ */
+export function useGetTorrentFilesQuery(
+  variables:
+    | GetTorrentFilesQueryVariables
+    | VueCompositionApi.Ref<GetTorrentFilesQueryVariables>
+    | ReactiveFunction<GetTorrentFilesQueryVariables>,
+  options:
+    | VueApolloComposable.UseQueryOptions<
+        GetTorrentFilesQuery,
+        GetTorrentFilesQueryVariables
+      >
+    | VueCompositionApi.Ref<
+        VueApolloComposable.UseQueryOptions<
+          GetTorrentFilesQuery,
+          GetTorrentFilesQueryVariables
+        >
+      >
+    | ReactiveFunction<
+        VueApolloComposable.UseQueryOptions<
+          GetTorrentFilesQuery,
+          GetTorrentFilesQueryVariables
+        >
+      > = {},
+) {
+  return VueApolloComposable.useQuery<
+    GetTorrentFilesQuery,
+    GetTorrentFilesQueryVariables
+  >(GetTorrentFilesDocument, variables, options)
+}
+export type GetTorrentFilesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<
+  GetTorrentFilesQuery,
+  GetTorrentFilesQueryVariables
 >
 export const CreateJobDocument = /*#__PURE__*/ gql`
   mutation CreateJob(

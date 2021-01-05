@@ -12,6 +12,20 @@ query CreateJobAnime($id: Int!) {
   }
 }
 
+query SearchTorrents($query: String!) {
+  searchTorrents(query: $query) {
+    name
+    sizeMb
+    seeders
+    leechers
+    magnetUri
+  }
+}
+
+query GetTorrentFiles($magnetUri: String!) {
+  torrentFiles(magnetUri: $magnetUri)
+}
+
 mutation CreateJob(
   $animeId: Int!,
   $source: String!,

@@ -1,4 +1,4 @@
-import { envsafe, port, str } from "envsafe"
+import { envsafe, str } from "envsafe"
 
 enum Environment {
   Development = "development",
@@ -15,10 +15,6 @@ const baseEnv = envsafe({
     ],
     default: Environment.Development,
     input: process.env.NODE_ENV,
-  }),
-  PORT: port({
-    default: 8080,
-    input: process.env.PORT,
   }),
 
   VUE_APP_CDN_URL: str({
