@@ -1,11 +1,13 @@
 <template>
   <div class="create-job">
-    <AnimeInput />
+    <div class="rest">
+      <AnimeInput />
+
+      <GroupInput />
+    </div>
 
     <div>
       <input v-model.trim="magnetUri" placeholder="Magnet URI" />
-
-      <input v-model.trim="groupName" placeholder="Group Name (Optional)" />
     </div>
   </div>
 </template>
@@ -20,6 +22,7 @@ import { ref } from "vue"
 import { useRoute } from "vue-router"
 
 import AnimeInput from "./components/anime-input.vue"
+import GroupInput from "./components/group-input.vue"
 import { useAnimeInput } from "./hooks/anime-input"
 
 const { params } = useRoute()
@@ -43,8 +46,6 @@ const hasTimestamps = useResult(
 
 const magnetUri = ref("")
 
-const groupName = ref("")
-
 const { mutate, loading, error } = useCreateJobMutation({})
 </script>
 
@@ -52,7 +53,15 @@ const { mutate, loading, error } = useCreateJobMutation({})
 .create-job {
   position: relative;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  padding: 0 50px;
+
+  & > .rest {
+    width: 133px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 </style>

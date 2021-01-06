@@ -1,28 +1,17 @@
 <template>
   <div class="anime-input">
-    <div class="cover">
-      <transition name="fade">
-        <img
-          v-if="
-            !animeLoading && animeError == null && anime?.imageLarge != null
-          "
-          class="cover"
-          :src="anime?.imageLarge"
-        />
-        <div v-else class="cover placeholder">
-          {{ animeLoading ? "Loading..." : "" }}
-        </div>
-      </transition>
-    </div>
-
-    <input v-model.number="animeId" type="number" placeholder="AniList ID" />
+    <input
+      v-model.trim="groupName"
+      placeholder="Group (Optional)"
+      :class="{ empty: groupName.length < 1 }"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useAnimeInput } from "@/views/create-job/hooks/anime-input"
+import { useGroupInput } from "../hooks/group-input"
 
-const { animeId, anime, animeLoading, animeError } = useAnimeInput()
+const { groupName } = useGroupInput()
 </script>
 
 <style lang="scss" scoped>
@@ -31,7 +20,12 @@ const { animeId, anime, animeLoading, animeError } = useAnimeInput()
 
   & > input {
     width: 100%;
+    height: 39px;
     text-align: center;
+
+    &.empty {
+      font-size: 0.75em;
+    }
   }
 
   & > .cover {

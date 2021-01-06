@@ -134,6 +134,7 @@ export type Query = {
   readonly anime: Maybe<Anime>
   readonly recentlyAdded: ReadonlyArray<Entry>
   readonly entries: ReadonlyArray<Entry>
+  readonly searchGroups: ReadonlyArray<Group>
   readonly jobQueue: JobPage
   readonly searchTorrents: ReadonlyArray<Torrent>
   readonly torrentFiles: ReadonlyArray<Scalars["String"]>
@@ -146,6 +147,10 @@ export type QueryAnimeArgs = {
 
 export type QueryEntriesArgs = {
   animeId: Scalars["Float"]
+}
+
+export type QuerySearchGroupsArgs = {
+  query: Maybe<Scalars["String"]>
 }
 
 export type QueryJobQueueArgs = {

@@ -95,6 +95,7 @@ type Query {
     offset: Int = 0
   ): JobPage!
   recentlyAdded: [Entry!]!
+  searchGroups(query: String): [Group!]!
   searchTorrents(query: String!): [Torrent!]!
   torrentFiles(magnetUri: String!): [String!]!
   workers: [Worker!]!

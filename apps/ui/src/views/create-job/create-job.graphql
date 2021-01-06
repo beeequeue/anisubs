@@ -1,3 +1,5 @@
+# Queries
+
 query CreateJobAnime($id: Int!) {
   anime(id: $id) {
     anilist {
@@ -29,6 +31,8 @@ query SearchTorrents($query: String!) {
 query GetTorrentFiles($magnetUri: String!) {
   torrentFiles(magnetUri: $magnetUri)
 }
+
+# Mutations
 
 mutation CreateJob(
   $animeId: Int!,
