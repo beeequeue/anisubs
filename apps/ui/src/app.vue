@@ -6,16 +6,23 @@
   </nav>
 
   <router-view />
+
+  <DarkTheme />
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
 import { DefaultApolloClient } from "@vue/apollo-composable"
 import { provide } from "vue"
 
 import { apolloClient } from "@/apollo"
 import DarkTheme from "@/themes/dark.vue"
 
-provide(DefaultApolloClient, apolloClient)
+export default {
+  components: { DarkTheme },
+  setup() {
+    provide(DefaultApolloClient, apolloClient)
+  },
+}
 </script>
 
 <style lang="scss">
