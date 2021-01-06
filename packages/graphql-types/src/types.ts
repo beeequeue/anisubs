@@ -259,6 +259,19 @@ export type CreateJobAnimeQuery = { readonly __typename?: "Query" } & {
           "title" | "imageLarge" | "url"
         >
       >
+    }
+  >
+}
+
+export type CreateJobExistingEntriesQueryVariables = Exact<{
+  id: Scalars["Int"]
+}>
+
+export type CreateJobExistingEntriesQuery = {
+  readonly __typename?: "Query"
+} & {
+  readonly anime: Maybe<
+    { readonly __typename?: "Anime" } & {
       readonly entries: ReadonlyArray<
         { readonly __typename?: "Entry" } & Pick<Entry, "id">
       >
@@ -461,9 +474,6 @@ export const CreateJobAnimeDocument = /*#__PURE__*/ gql`
         imageLarge
         url
       }
-      entries {
-        id
-      }
     }
   }
 `
@@ -514,6 +524,63 @@ export function useCreateJobAnimeQuery(
 export type CreateJobAnimeQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<
   CreateJobAnimeQuery,
   CreateJobAnimeQueryVariables
+>
+export const CreateJobExistingEntriesDocument = /*#__PURE__*/ gql`
+  query CreateJobExistingEntries($id: Int!) {
+    anime(id: $id) {
+      entries {
+        id
+      }
+    }
+  }
+`
+
+/**
+ * __useCreateJobExistingEntriesQuery__
+ *
+ * To run a query within a Vue component, call `useCreateJobExistingEntriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCreateJobExistingEntriesQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param variables that will be passed into the query
+ * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useCreateJobExistingEntriesQuery({
+ *   id: // value for 'id'
+ * });
+ */
+export function useCreateJobExistingEntriesQuery(
+  variables:
+    | CreateJobExistingEntriesQueryVariables
+    | VueCompositionApi.Ref<CreateJobExistingEntriesQueryVariables>
+    | ReactiveFunction<CreateJobExistingEntriesQueryVariables>,
+  options:
+    | VueApolloComposable.UseQueryOptions<
+        CreateJobExistingEntriesQuery,
+        CreateJobExistingEntriesQueryVariables
+      >
+    | VueCompositionApi.Ref<
+        VueApolloComposable.UseQueryOptions<
+          CreateJobExistingEntriesQuery,
+          CreateJobExistingEntriesQueryVariables
+        >
+      >
+    | ReactiveFunction<
+        VueApolloComposable.UseQueryOptions<
+          CreateJobExistingEntriesQuery,
+          CreateJobExistingEntriesQueryVariables
+        >
+      > = {},
+) {
+  return VueApolloComposable.useQuery<
+    CreateJobExistingEntriesQuery,
+    CreateJobExistingEntriesQueryVariables
+  >(CreateJobExistingEntriesDocument, variables, options)
+}
+export type CreateJobExistingEntriesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<
+  CreateJobExistingEntriesQuery,
+  CreateJobExistingEntriesQueryVariables
 >
 export const SearchTorrentsDocument = /*#__PURE__*/ gql`
   query SearchTorrents($query: String!) {

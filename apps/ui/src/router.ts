@@ -16,7 +16,9 @@ const routes: RouteRecordRaw[] = [
     path: "/create-job",
     name: "Create Job",
     component: () =>
-      import(/* webpackChunkName: "create-job" */ "./views/create-job.vue"),
+      import(
+        /* webpackChunkName: "create-job" */ "./views/create-job/create-job.vue"
+      ),
   },
 ]
 

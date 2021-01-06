@@ -5,7 +5,11 @@ query CreateJobAnime($id: Int!) {
       imageLarge
       url
     }
+  }
+}
 
+query CreateJobExistingEntries($id: Int!) {
+  anime(id: $id) {
     entries {
       id
     }

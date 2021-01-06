@@ -6,23 +6,22 @@
   </nav>
 
   <router-view />
-
-  <DarkTheme />
 </template>
 
 <script lang="ts">
-import { DefaultApolloClient } from "@vue/apollo-composable"
-import { provide } from "vue"
+import { provideApolloClient } from "@vue/apollo-composable"
+import { defineComponent } from "vue"
 
 import { apolloClient } from "@/apollo"
 import DarkTheme from "@/themes/dark.vue"
 
-export default {
+export default defineComponent({
+  // eslint-disable-next-line vue/no-unused-components
   components: { DarkTheme },
   setup() {
-    provide(DefaultApolloClient, apolloClient)
+    provideApolloClient(apolloClient)
   },
-}
+})
 </script>
 
 <style lang="scss">
@@ -67,6 +66,24 @@ a {
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+input {
+  padding: 10px 15px;
+
+  border-radius: 8px;
+  border: 0;
+  background: var(--bg-primary);
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type="number"] {
+    -moz-appearance: textfield;
   }
 }
 
