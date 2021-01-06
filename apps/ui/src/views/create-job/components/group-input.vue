@@ -16,7 +16,7 @@ const { groupName } = useGroupInput()
 
 <style lang="scss" scoped>
 .anime-input {
-  width: 133px;
+  width: var(--rest-width);
 
   & > input {
     width: 100%;
@@ -31,7 +31,7 @@ const { groupName } = useGroupInput()
   & > .cover {
     position: relative;
     height: 200px;
-    width: 133px;
+    width: var(--rest-width);
     margin-bottom: 10px;
 
     border-radius: 15px;

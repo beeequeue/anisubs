@@ -15,7 +15,12 @@
       </transition>
     </div>
 
-    <input v-model.number="animeId" type="number" placeholder="AniList ID" />
+    <input
+      v-model.number="animeId"
+      v-maska="'#######'"
+      type="number"
+      placeholder="AniList ID"
+    />
   </div>
 </template>
 
@@ -27,7 +32,7 @@ const { animeId, anime, animeLoading, animeError } = useAnimeInput()
 
 <style lang="scss" scoped>
 .anime-input {
-  width: 133px;
+  width: var(--rest-width);
 
   & > input {
     width: 100%;
@@ -36,8 +41,8 @@ const { animeId, anime, animeLoading, animeError } = useAnimeInput()
 
   & > .cover {
     position: relative;
-    height: 200px;
-    width: 133px;
+    height: 250px;
+    width: var(--rest-width);
     margin-bottom: 10px;
 
     border-radius: 15px;

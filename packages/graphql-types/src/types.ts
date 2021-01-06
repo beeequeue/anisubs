@@ -278,7 +278,11 @@ export type CreateJobExistingEntriesQuery = {
   readonly anime: Maybe<
     { readonly __typename?: "Anime" } & {
       readonly entries: ReadonlyArray<
-        { readonly __typename?: "Entry" } & Pick<Entry, "id">
+        { readonly __typename?: "Entry" } & Pick<Entry, "id"> & {
+            readonly images: ReadonlyArray<
+              { readonly __typename?: "Image" } & Pick<Image, "timestamp">
+            >
+          }
       >
     }
   >
@@ -535,6 +539,9 @@ export const CreateJobExistingEntriesDocument = /*#__PURE__*/ gql`
     anime(id: $id) {
       entries {
         id
+        images {
+          timestamp
+        }
       }
     }
   }

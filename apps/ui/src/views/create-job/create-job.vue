@@ -4,6 +4,8 @@
       <AnimeInput />
 
       <GroupInput />
+
+      <TimestampInput />
     </div>
 
     <div>
@@ -13,13 +15,12 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  useCreateJobExistingEntriesQuery,
-  useCreateJobMutation,
-} from "@anisubs/graphql-types"
-import { useResult } from "@vue/apollo-composable"
+import { useCreateJobMutation } from "@anisubs/graphql-types"
 import { ref } from "vue"
 import { useRoute } from "vue-router"
+
+import TimestampInput from "@/views/create-job/components/timestamp-input.vue"
+import { useTimestampInput } from "@/views/create-job/hooks/timestamp-input"
 
 import AnimeInput from "./components/anime-input.vue"
 import GroupInput from "./components/group-input.vue"
@@ -27,22 +28,8 @@ import { useAnimeInput } from "./hooks/anime-input"
 
 const { params } = useRoute()
 
-const { animeId } = useAnimeInput(params.id)
-
-const { result } = useCreateJobExistingEntriesQuery(
-  () => ({
-    id: Number(animeId.value),
-  }),
-  () => ({
-    enabled: isNaN(animeId.value),
-  }),
-)
-
-const hasTimestamps = useResult(
-  result,
-  false,
-  (data) => data.anime!.entries.length > 0,
-)
+const { animeId, anime } = useAnimeInput(params.id as string)
+const { timestamps } = useTimestampInput()
 
 const magnetUri = ref("")
 
@@ -57,8 +44,10 @@ const { mutate, loading, error } = useCreateJobMutation({})
   align-items: center;
   padding: 0 50px;
 
+  --rest-width: 175px;
+
   & > .rest {
-    width: 133px;
+    width: var(--rest-width);
     display: flex;
     flex-direction: column;
     gap: 10px;
