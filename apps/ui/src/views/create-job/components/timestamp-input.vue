@@ -24,7 +24,7 @@
         v-model="timestamp.value"
         v-maska="'##:##.###'"
         placeholder="00:00.000"
-        @blur="sortTimestamps"
+        @blur="handleTimestampBlur(i)"
       />
 
       <button @click="removeTimestamp(i)">
@@ -40,6 +40,9 @@ import { ref } from "vue"
 
 import { useTimestampInput } from "../hooks/timestamp-input"
 
+const validTimestamp = (str: string) =>
+  str === "" || str.length < 5 || str.length === 6
+
 const { timestamps } = useTimestampInput()
 
 const id = ref(0)
@@ -50,8 +53,16 @@ const sortTimestamps = () => {
   )
 }
 
+const handleTimestampBlur = (index: number) => {
+  if (timestamps.value[index].value.length < 1) {
+    removeTimestamp(index)
+  }
+
+  sortTimestamps()
+}
+
 const addTimestamp = (value: string) => {
-  if (value === "" || value.length < 5 || value.length === 6) return
+  if (!validTimestamp(value)) return
 
   timestamps.value.push({ value, id: id.value.toString() })
   sortTimestamps()
