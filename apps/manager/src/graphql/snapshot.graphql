@@ -105,6 +105,7 @@ type Query {
 scalar Timestamp
 
 type Torrent {
+  id: ID!
   leechers: Int!
   magnetUri: String!
   name: String

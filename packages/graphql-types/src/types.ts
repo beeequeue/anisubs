@@ -101,6 +101,7 @@ export type Job = {
 
 export type Torrent = {
   readonly __typename?: "Torrent"
+  readonly id: Scalars["ID"]
   readonly name: Maybe<Scalars["String"]>
   readonly magnetUri: Scalars["String"]
   readonly seeders: Scalars["Int"]
@@ -280,7 +281,10 @@ export type CreateJobExistingEntriesQuery = {
       readonly entries: ReadonlyArray<
         { readonly __typename?: "Entry" } & Pick<Entry, "id"> & {
             readonly images: ReadonlyArray<
-              { readonly __typename?: "Image" } & Pick<Image, "timestamp">
+              { readonly __typename?: "Image" } & Pick<
+                Image,
+                "id" | "timestamp"
+              >
             >
           }
       >
@@ -296,7 +300,7 @@ export type SearchTorrentsQuery = { readonly __typename?: "Query" } & {
   readonly searchTorrents: ReadonlyArray<
     { readonly __typename?: "Torrent" } & Pick<
       Torrent,
-      "name" | "sizeMb" | "seeders" | "leechers" | "magnetUri"
+      "id" | "name" | "sizeMb" | "seeders" | "leechers" | "magnetUri"
     >
   >
 }
@@ -540,6 +544,7 @@ export const CreateJobExistingEntriesDocument = /*#__PURE__*/ gql`
       entries {
         id
         images {
+          id
           timestamp
         }
       }
@@ -597,6 +602,7 @@ export type CreateJobExistingEntriesQueryCompositionFunctionResult = VueApolloCo
 export const SearchTorrentsDocument = /*#__PURE__*/ gql`
   query SearchTorrents($query: String!) {
     searchTorrents(query: $query) {
+      id
       name
       sizeMb
       seeders

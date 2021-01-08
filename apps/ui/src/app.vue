@@ -42,10 +42,6 @@ export default defineComponent({
   transition: color 0.5s, background-color 0.5s;
 }
 
-input {
-  color: var(--text-primary);
-}
-
 #app {
   background: var(--bg-body);
   color: var(--text-primary);
@@ -75,6 +71,7 @@ input {
   border-radius: 8px;
   border: 0;
   background: var(--bg-primary);
+  color: var(--text-primary);
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {

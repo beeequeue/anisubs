@@ -7,7 +7,7 @@ const getNumber = (str: string) =>
   !isNaN(str as any) ? Number(str) : undefined
 
 const id = ref<number>()
-const timestamps = ref<string[]>([])
+const timestamps = ref<Array<{ id: string; value: string }>>([])
 
 const { onResult } = useCreateJobExistingEntriesQuery(
   () => ({
@@ -29,7 +29,10 @@ export const useTimestampInput = () => {
 
   onResult(({ data }) => {
     timestamps.value =
-      data.anime?.entries?.[0]?.images.map((image) => image.timestamp) ?? []
+      data.anime?.entries?.[0]?.images.map((image) => ({
+        id: image.id,
+        value: image.timestamp,
+      })) ?? []
   })
 
   return {

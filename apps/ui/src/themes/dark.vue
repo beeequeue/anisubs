@@ -1,7 +1,10 @@
 <style lang="scss">
 body {
   --bg-body: #101516;
+
   --bg-primary: #182225;
+  --bg-primary-hover: #1d292d;
+
   --bg-secondary: #1e2b2e;
 
   --text-primary: #eee;

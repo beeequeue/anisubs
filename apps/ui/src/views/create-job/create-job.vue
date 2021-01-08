@@ -44,7 +44,7 @@ const { mutate, loading, error } = useCreateJobMutation({})
   align-items: center;
   padding: 0 50px;
 
-  --rest-width: 175px;
+  --rest-width: 150px;
 
   & > .rest {
     width: var(--rest-width);

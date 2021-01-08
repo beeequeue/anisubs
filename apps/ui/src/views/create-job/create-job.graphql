@@ -16,6 +16,7 @@ query CreateJobExistingEntries($id: Int!) {
       id
 
       images {
+        id
         timestamp
       }
     }
@@ -24,6 +25,7 @@ query CreateJobExistingEntries($id: Int!) {
 
 query SearchTorrents($query: String!) {
   searchTorrents(query: $query) {
+    id
     name
     sizeMb
     seeders
