@@ -27,22 +27,21 @@
 
 <script lang="ts" setup>
 import { useCreateJobMutation } from "@anisubs/graphql-types"
-import { ref } from "vue"
+import { ref, watch } from "vue"
 import { useRoute } from "vue-router"
-
-import TimestampInput from "@/views/create-job/components/timestamp-input.vue"
-import { useGroupInput } from "@/views/create-job/hooks/group-input"
-import { useTimestampInput } from "@/views/create-job/hooks/timestamp-input"
 
 import AnimeInput from "./components/anime-input.vue"
 import GroupInput from "./components/group-input.vue"
+import TimestampInput from "./components/timestamp-input.vue"
 import { useAnimeInput } from "./hooks/anime-input"
+import { useGroupInput } from "./hooks/group-input"
+import { useTimestampInput } from "./hooks/timestamp-input"
 
 const { params } = useRoute()
 
-const { animeId, anime } = useAnimeInput(params.id as string)
-const { groupName } = useGroupInput()
-const { timestamps } = useTimestampInput()
+const { animeId, anime, reset: resetAnime } = useAnimeInput(params.id as string)
+const { groupName, reset: resetGroup } = useGroupInput()
+const { timestamps, reset: resetTimestamps } = useTimestampInput()
 
 const magnetUri = ref("")
 const fileName = ref("")
@@ -57,7 +56,20 @@ const { mutate, loading, error, onDone } = useCreateJobMutation(() => ({
   },
 }))
 
-// onDone(() => {})
+const resetRest = () => {
+  magnetUri.value = ""
+  fileName.value = ""
+}
+
+onDone(() => {
+  resetGroup()
+  resetRest()
+})
+
+watch(anime, () => {
+  resetGroup()
+  resetRest()
+})
 </script>
 
 <style lang="scss" scoped>

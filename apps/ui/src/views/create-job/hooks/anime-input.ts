@@ -27,5 +27,8 @@ export const useAnimeInput = (initialId?: string) => {
     anime: useResult(result, null, (data) => data.anime?.anilist),
     animeLoading: loading,
     animeError: error,
+    reset: () => {
+      animeId.value = ""
+    },
   }
 }

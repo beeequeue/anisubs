@@ -4,13 +4,13 @@
     class="timestamp-input"
     :class="{ disabled: hasPreviousTimestamps || anime == null }"
   >
-    <div class="input">
+    <div class="input" key="input">
       <input
-        key="input"
         v-model="input"
         v-maska="['##:##', '##:##.###']"
         placeholder="00:00.000"
         :style="{ zIndex: 100 }"
+        @keydown.enter="addTimestamp(input)"
       />
 
       <button @click="addTimestamp(input)">
@@ -28,6 +28,7 @@
         v-model="timestamp.value"
         v-maska="'##:##.###'"
         placeholder="00:00.000"
+        @keydown.enter="handleTimestampBlur(i)"
         @blur="handleTimestampBlur(i)"
       />
 
@@ -46,7 +47,7 @@ import { useAnimeInput } from "../hooks/anime-input"
 import { useTimestampInput } from "../hooks/timestamp-input"
 
 const validTimestamp = (str: string) =>
-  str === "" || str.length < 5 || str.length === 6
+  str !== "" && str.length > 4 && str.length !== 6
 
 const { anime } = useAnimeInput()
 const { timestamps, hasPreviousTimestamps } = useTimestampInput()

@@ -42,5 +42,8 @@ export const useTimestampInput = () => {
   return {
     timestamps,
     hasPreviousTimestamps,
+    reset: () => {
+      timestamps.value = []
+    },
   }
 }

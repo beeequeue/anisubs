@@ -12,7 +12,9 @@ import { useResult } from "@vue/apollo-composable"
 // @ts-ignore: Component import
 import Entry from "../entry/entry.vue"
 
-const { result } = useRecentlyAddedFeedQuery()
+const { result } = useRecentlyAddedFeedQuery({
+  fetchPolicy: "cache-and-network",
+})
 const entries = useResult(result, [], (data) => data.recentlyAdded)
 </script>
 

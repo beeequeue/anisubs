@@ -14,7 +14,7 @@
     SEASONS HERE
 
     <Title>Recently added</Title>
-    <recently-added-feed />
+    <RecentlyAddedFeed />
   </div>
 </template>
 

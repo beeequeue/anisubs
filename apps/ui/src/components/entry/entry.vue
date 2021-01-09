@@ -40,7 +40,7 @@ const dateOptions = {
 }
 
 const dateFormatter = (date: Date | number | string) =>
-  Intl.DateTimeFormat(undefined, dateOptions).format(
+  Intl.DateTimeFormat([...window.navigator.languages], dateOptions).format(
     typeof date === "string" ? new Date(date) : date,
   )
 
