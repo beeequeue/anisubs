@@ -14,6 +14,13 @@
         class="magnet-uri"
         placeholder="Magnet URI"
       />
+      <input
+        v-model.trim="fileName"
+        class="magnet-uri"
+        placeholder="File Name"
+      />
+
+      <button type="submit" @click.prevent="mutate">Submit</button>
     </div>
   </div>
 </template>
@@ -24,6 +31,7 @@ import { ref } from "vue"
 import { useRoute } from "vue-router"
 
 import TimestampInput from "@/views/create-job/components/timestamp-input.vue"
+import { useGroupInput } from "@/views/create-job/hooks/group-input"
 import { useTimestampInput } from "@/views/create-job/hooks/timestamp-input"
 
 import AnimeInput from "./components/anime-input.vue"
@@ -33,11 +41,23 @@ import { useAnimeInput } from "./hooks/anime-input"
 const { params } = useRoute()
 
 const { animeId, anime } = useAnimeInput(params.id as string)
+const { groupName } = useGroupInput()
 const { timestamps } = useTimestampInput()
 
 const magnetUri = ref("")
+const fileName = ref("")
 
-const { mutate, loading, error } = useCreateJobMutation({})
+const { mutate, loading, error, onDone } = useCreateJobMutation(() => ({
+  variables: {
+    animeId: Number(animeId.value),
+    source: magnetUri.value,
+    fileName: fileName.value.length > 1 ? fileName.value : null,
+    group: groupName.value.length > 1 ? groupName.value : null,
+    timestamps: timestamps.value.map((timestamp) => timestamp.value),
+  },
+}))
+
+// onDone(() => {})
 </script>
 
 <style lang="scss" scoped>

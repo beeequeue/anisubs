@@ -60,12 +60,19 @@ const query = gql`
 
 const fetchIdData = async (ids: number[]): Promise<AnilistData[]> =>
   anilistLimiter.schedule(async () => {
-    const result = await graphql.request<
+    const response = await graphql.rawRequest<
       { data: { anime: AnilistData[] } },
       { ids: number[] }
     >(query, { ids })
 
-    return result.data.anime
+    const remaining = Number(
+      response.headers.get("x-ratelimit-remaining") ?? "0",
+    )
+    const current = (await anilistLimiter.currentReservoir()) as number
+
+    await anilistLimiter.incrementReservoir(remaining - current)
+
+    return response.data?.data.anime ?? []
   })
 
 const SIX_HOURS_IN_SECONDS = 6 * 3600
