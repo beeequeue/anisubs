@@ -1,3 +1,4 @@
+import { possibleTypes } from "@anisubs/graphql-types"
 import {
   ApolloClient,
   createHttpLink,
@@ -10,14 +11,13 @@ const httpLink = createHttpLink({
   uri: CONFIG.VUE_APP_GRAPHQL_URL,
 })
 
-const cache = new InMemoryCache()
+const cache = new InMemoryCache({
+  ...possibleTypes.possibleTypes,
+  resultCaching: true,
+})
 
 export const apolloClient = new ApolloClient({
   link: httpLink,
   cache,
-  defaultOptions: {
-    query: { fetchPolicy: "cache-first" },
-    mutate: { fetchPolicy: "no-cache" },
-  },
   assumeImmutableResults: true,
 })

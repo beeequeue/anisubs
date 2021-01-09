@@ -1,2 +1,2 @@
 export * from "./types"
-export * from "./introspection-result"
+export { default as possibleTypes } from "./introspection-result"
