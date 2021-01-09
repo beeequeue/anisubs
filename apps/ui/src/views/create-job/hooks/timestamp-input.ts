@@ -20,6 +20,7 @@ const { onResult } = useCreateJobExistingEntriesQuery(
 
 export const useTimestampInput = () => {
   const { animeId } = useAnimeInput()
+  const hasPreviousTimestamps = ref(false)
 
   id.value = getNumber(animeId.value)
 
@@ -28,14 +29,18 @@ export const useTimestampInput = () => {
   })
 
   onResult(({ data }) => {
-    timestamps.value =
+    const newTimestamps =
       data.anime?.entries?.[0]?.images.map((image) => ({
         id: image.id,
         value: image.timestamp,
       })) ?? []
+
+    timestamps.value = newTimestamps
+    hasPreviousTimestamps.value = newTimestamps.length > 0
   })
 
   return {
     timestamps,
+    hasPreviousTimestamps,
   }
 }

@@ -1,5 +1,9 @@
 <template>
-  <transition-group tag="div" class="timestamp-input">
+  <transition-group
+    tag="div"
+    class="timestamp-input"
+    :class="{ disabled: hasPreviousTimestamps || anime == null }"
+  >
     <div class="input">
       <input
         key="input"
@@ -38,12 +42,14 @@
 import { mdiPlus, mdiMinus } from "@mdi/js"
 import { ref } from "vue"
 
+import { useAnimeInput } from "../hooks/anime-input"
 import { useTimestampInput } from "../hooks/timestamp-input"
 
 const validTimestamp = (str: string) =>
   str === "" || str.length < 5 || str.length === 6
 
-const { timestamps } = useTimestampInput()
+const { anime } = useAnimeInput()
+const { timestamps, hasPreviousTimestamps } = useTimestampInput()
 
 const id = ref(0)
 
@@ -89,6 +95,13 @@ const input = ref("")
   display: grid;
   grid-template-columns: auto;
   grid-auto-rows: auto;
+
+  transition: opacity 0.5s;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.25;
+  }
 
   & > .input {
     position: relative;
