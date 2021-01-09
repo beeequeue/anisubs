@@ -43,6 +43,9 @@ export default defineComponent({
 }
 
 #app {
+  display: flex;
+  flex-direction: column;
+
   background: var(--bg-body);
   color: var(--text-primary);
   fill: var(--text-primary);

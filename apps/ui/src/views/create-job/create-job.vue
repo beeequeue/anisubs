@@ -1,6 +1,6 @@
 <template>
   <div class="create-job">
-    <div class="rest">
+    <div class="left">
       <AnimeInput />
 
       <GroupInput />
@@ -8,8 +8,12 @@
       <TimestampInput />
     </div>
 
-    <div>
-      <input v-model.trim="magnetUri" placeholder="Magnet URI" />
+    <div class="right">
+      <input
+        v-model.trim="magnetUri"
+        class="magnet-uri"
+        placeholder="Magnet URI"
+      />
     </div>
   </div>
 </template>
@@ -43,14 +47,29 @@ const { mutate, loading, error } = useCreateJobMutation({})
   justify-content: center;
   align-items: center;
   padding: 0 50px;
+  gap: 10px;
 
   --rest-width: 150px;
 
-  & > .rest {
+  & > .left {
     width: var(--rest-width);
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+
+  & > .right {
+    height: 100%;
+    width: 100%;
+    max-width: 750px;
+    display: flex;
+
+    align-items: flex-start;
+    flex-direction: column;
+
+    & > .magnet-uri {
+      width: 100%;
+    }
   }
 }
 </style>
