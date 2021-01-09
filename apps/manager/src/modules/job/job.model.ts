@@ -1,7 +1,7 @@
 import { createHash } from "crypto"
 
 import { ExtractOptions, WebTorrent } from "@anisubs/shared"
-import { parse } from "anitomy-js"
+import { parse, parseSync } from "anitomy-js"
 import { UserInputError } from "apollo-server-koa"
 import { Job as QueueJob } from "bullmq"
 import {
@@ -120,9 +120,19 @@ export class Job implements ExtractOptions {
       if (torrent.files.length === 1) {
         fileName = torrent.files[0].name
       } else {
-        throw new UserInputError(
-          `Torrent has multiple files, need to specify which one to analyze with \`filename\`.`,
-        )
+        const episodeOne = torrent.files.find((file) => {
+          const parsed = parseSync(file.name)
+
+          return Number(parsed.episode_number) === 1
+        })
+
+        if (episodeOne == null) {
+          throw new UserInputError(
+            `Torrent has multiple files, need to specify which one to analyze with \`filename\`.`,
+          )
+        }
+
+        fileName = episodeOne.name
       }
     }
 
