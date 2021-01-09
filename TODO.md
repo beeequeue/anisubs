@@ -4,9 +4,10 @@
 
 - [x] Anime
 - [x] Names
-- [ ] Comparison Entry
-  - [ ] download time
-  - [ ] extraction time
+- [x] Comparison Entry
+  - [ ] Future
+    - [ ] download time
+    - [ ] extraction time
 - [ ] Group
   - [ ] Urls
 
@@ -20,25 +21,33 @@
 
 ## Worker
 
-- [ ] Toggleable `active` state
-- [x] Receive new job
-- [ ] Get Torrent Metadata
 - [x] Extract screenshots
   - [x] Get file
   - [x] Support specific file in torrents
   - [x] Extract screenshot of timestamp
+  - [ ] Generate timestamps based on subtitle tracks
+    - 5-20 st.
+    - OP, ED
+    - More than 2 subtitles at once
+- [x] Receive new job
+- [ ] Refactor to use `nats` for microservice communication
+- [ ] Get Torrent Metadata for manager
+- [ ] Toggleable `active` state
 
 ## Web
 
 - [ ] Comparison/Anime page
-  - [ ] Anime info
   - [x] Comparisons
-  - [ ] Handle more than two entries
+  - [ ] Image features
+    - [ ] Zoom
+    - [ ] Swap between corresponding other entries' images
+  - [ ] Handle more than three entries
+    - [ ] List of toggleable entries
 - [ ] Group page
 - [ ] Admin pages
   - [ ] Queue Management Page
   - [ ] Fix mistakes in data
      - [ ] Wrong `animeId`
-     - [ ] Wrong `animeId`
-  - [ ] Create job
+     - [ ] Wrong group
+  - [x] Create job
     - [ ] Torrent search
