@@ -1,9 +1,7 @@
 import { ExtractOptions, WebTorrent, WorkerState } from "@anisubs/shared"
 import { Job as QueueJob, Processor } from "bullmq"
 
-import { CONFIG } from "@/config"
 import { Ffmpeg } from "@/lib/ffmpeg"
-import { uploadFilesToSpace } from "@/lib/upload"
 import { useState } from "@/state"
 
 export const startNewExtraction: Processor = async (
@@ -16,11 +14,6 @@ export const startNewExtraction: Processor = async (
 
   state.setState(WorkerState.Extracting)
   const screenshots = await Ffmpeg.extractScreenshots(job.data, file)
-
-  if (CONFIG.NODE_ENV === "production") {
-    state.setState(WorkerState.Uploading)
-    await uploadFilesToSpace(job.data, screenshots)
-  }
 
   state.setState(WorkerState.Idle)
 

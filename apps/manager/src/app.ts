@@ -7,6 +7,9 @@ import { v4 as uuid } from "uuid"
 import { createRouter } from "@/rest"
 
 import { registerApolloServer } from "./graphql"
+import { config } from "@/config"
+
+const SEVEN_DAYS = 1000 * 60 * 60 * 24 * 7
 
 export const createApp = async () => {
   const app = new Koa<KoaContext>()
@@ -22,14 +25,13 @@ export const createApp = async () => {
 
   await registerApolloServer(app)
 
-  if (process.env.NODE_ENV === "development") {
-    app.use(
-      Serve({
-        rootPath: "/cdn",
-        rootDir: resolve(__dirname, "..", "..", "..", "output/screenshots"),
-      }),
-    )
-  }
+  app.use(
+    Serve({
+      rootPath: "/cdn",
+      rootDir: resolve(__dirname, "..", "..", "..", "output/screenshots"),
+      maxage: config.nodeEnv === "development" ? 0 : SEVEN_DAYS,
+    }),
+  )
 
   return app
 }
