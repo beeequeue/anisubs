@@ -161,9 +161,6 @@ export class Job implements ExtractOptions {
     )
 
     const existingTimestamps = await Entry.getTimestampsForAnime(animeId)
-    if (existingTimestamps == null && timestamps == null) {
-      throw new UserInputError("TODO")
-    }
 
     // Sort and fix mistakes in timestamps
     timestamps =

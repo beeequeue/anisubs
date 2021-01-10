@@ -21,6 +21,13 @@
       />
 
       <button type="submit" @click.prevent="mutate">Submit</button>
+
+      <br />
+      <br />
+
+      <pre v-if="error != null">
+        {{ JSON.stringify(error, null, 2).trim() }}
+      </pre>
     </div>
   </div>
 </template>
@@ -41,7 +48,11 @@ const { params } = useRoute()
 
 const { animeId, anime, reset: resetAnime } = useAnimeInput(params.id as string)
 const { groupName, reset: resetGroup } = useGroupInput()
-const { timestamps, reset: resetTimestamps } = useTimestampInput()
+const {
+  timestamps,
+  timestampsVariable,
+  reset: resetTimestamps,
+} = useTimestampInput()
 
 const magnetUri = ref("")
 const fileName = ref("")
@@ -52,7 +63,7 @@ const { mutate, loading, error, onDone } = useCreateJobMutation(() => ({
     source: magnetUri.value,
     fileName: fileName.value.length > 1 ? fileName.value : null,
     group: groupName.value.length > 1 ? groupName.value : null,
-    timestamps: timestamps.value.map((timestamp) => timestamp.value),
+    timestamps: timestampsVariable.value,
   },
 }))
 
@@ -66,7 +77,9 @@ onDone(() => {
   resetRest()
 })
 
-watch(anime, () => {
+watch(anime, (newValue, oldValue) => {
+  if (newValue == null || oldValue == null) return
+
   resetGroup()
   resetRest()
 })
@@ -101,6 +114,11 @@ watch(anime, () => {
 
     & > .magnet-uri {
       width: 100%;
+    }
+
+    & > pre {
+      width: 100%;
+      text-align: left;
     }
   }
 }

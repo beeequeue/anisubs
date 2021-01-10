@@ -50,7 +50,7 @@ events.on("completed", async ({ jobId, returnvalue }) => {
 
       image.entry = entry
       image.filename = url
-      image.timestamp = job.data.timestamps[i]
+      image.timestamp = job.data.timestamps![i]
 
       return image
     })

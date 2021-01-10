@@ -16,3 +16,11 @@ export const SCREENSHOTS_PATH = resolve(
   "output",
   "screenshots",
 )
+export const SUBTITLES_PATH = resolve(
+  __dirname,
+  "..",
+  "..",
+  "..",
+  "output",
+  "subtitles",
+)

@@ -6,6 +6,7 @@ import {
   DOWNLOADS_PATH,
   ExtractOptions,
   SCREENSHOTS_PATH,
+  SUBTITLES_PATH,
 } from "@anisubs/shared"
 import FluentFfmpeg, {
   FfmpegCommand,
@@ -13,6 +14,7 @@ import FluentFfmpeg, {
   FfprobeStream,
 } from "fluent-ffmpeg"
 import { TorrentFile } from "webtorrent"
+import { DeepNonNullable } from "utility-types"
 
 declare module "fluent-ffmpeg" {
   interface FfprobeStream {
@@ -104,7 +106,10 @@ export class Ffmpeg {
     return streamScores[0].stream
   }
 
-  static async extractScreenshots(job: ExtractOptions, file: TorrentFile) {
+  static async extractScreenshots(
+    job: DeepNonNullable<ExtractOptions>,
+    file: TorrentFile,
+  ) {
     const outputFolder = join(SCREENSHOTS_PATH, job.animeId.toString())
 
     const command = FluentFfmpeg(join(DOWNLOADS_PATH, file.path), {
@@ -190,5 +195,60 @@ export class Ffmpeg {
     await Promise.all(promises)
 
     return files
+  }
+
+  static async extractSubtitles(
+    job: ExtractOptions,
+    file: TorrentFile,
+  ): Promise<string> {
+    const inputPath = join(DOWNLOADS_PATH, file.path)
+    const outputPath = join(
+      SUBTITLES_PATH,
+      `${job.animeId.toString()}-${job.hash}.ass`,
+    )
+
+    const command = FluentFfmpeg(join(DOWNLOADS_PATH, file.path), {
+      logger: console,
+    })
+
+    const probeData = await this.probeCommand(command)
+    const lastNonSubtitleStreamIndex = this.getLastNonSubtitleStreamIndex(
+      probeData,
+    )
+    const bestSubtitleStream = this.getBestSubtitleStream(probeData)
+    const bestSubtitleStreamIndex =
+      bestSubtitleStream.index - lastNonSubtitleStreamIndex
+
+    const args = [
+      "-y",
+      "-hide_banner",
+      ["-loglevel", "error"],
+      ["-i", `${inputPath}`],
+      ["-map", `0:s:${bestSubtitleStreamIndex}`],
+      outputPath,
+    ].flat(2)
+
+    return await new Promise((resolve, reject) => {
+      const process = spawn("ffmpeg", args)
+
+      let error: string | null = null
+
+      process.stderr.on(
+        "data",
+        (buffer: Buffer) => (error += buffer.toString()),
+      )
+      process.stdout.on(
+        "data",
+        (buffer: Buffer) => (error += buffer.toString()),
+      )
+
+      process.on("exit", (code) => {
+        if (code !== 0) {
+          return reject(error)
+        }
+
+        resolve(outputPath)
+      })
+    })
   }
 }

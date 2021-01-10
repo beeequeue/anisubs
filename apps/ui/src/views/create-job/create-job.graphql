@@ -44,7 +44,7 @@ mutation CreateJob(
   $animeId: Int!,
   $source: String!,
   $fileName: String,
-  $timestamps: [Timestamp!]!,
+  $timestamps: [Timestamp!],
   $group: String,
 ) {
   createJob(

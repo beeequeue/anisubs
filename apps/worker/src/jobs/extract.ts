@@ -3,6 +3,7 @@ import { Job as QueueJob, Processor } from "bullmq"
 
 import { Ffmpeg } from "@/lib/ffmpeg"
 import { useState } from "@/state"
+import { DeepNonNullable } from "utility-types"
 
 export const startNewExtraction: Processor = async (
   job: QueueJob<ExtractOptions>,
@@ -12,8 +13,22 @@ export const startNewExtraction: Processor = async (
   state.setState(WorkerState.Downloading, job)
   const file = await WebTorrent.download(job.data)
 
+  if (job.data.timestamps == null) {
+    state.setState(WorkerState.FindingTimestamps)
+    // @ts-ignore
+    const subtitlesPath = await Ffmpeg.extractSubtitles(job.data, file)
+    // job.data.timestamps = await findTimestamps(subtitlesPath)
+  }
+
+  if (job.data.timestamps == null) {
+    throw new Error("Could not automatically find good timestamps")
+  }
+
   state.setState(WorkerState.Extracting)
-  const screenshots = await Ffmpeg.extractScreenshots(job.data, file)
+  const screenshots = await Ffmpeg.extractScreenshots(
+    job.data as DeepNonNullable<ExtractOptions>,
+    file,
+  )
 
   state.setState(WorkerState.Idle)
 

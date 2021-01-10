@@ -318,7 +318,7 @@ export type CreateJobMutationVariables = Exact<{
   animeId: Scalars["Int"]
   source: Scalars["String"]
   fileName: Maybe<Scalars["String"]>
-  timestamps: ReadonlyArray<Scalars["Timestamp"]> | Scalars["Timestamp"]
+  timestamps: Maybe<ReadonlyArray<Scalars["Timestamp"]> | Scalars["Timestamp"]>
   group: Maybe<Scalars["String"]>
 }>
 
@@ -717,7 +717,7 @@ export const CreateJobDocument = /*#__PURE__*/ gql`
     $animeId: Int!
     $source: String!
     $fileName: String
-    $timestamps: [Timestamp!]!
+    $timestamps: [Timestamp!]
     $group: String
   ) {
     createJob(

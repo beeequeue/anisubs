@@ -4,7 +4,7 @@ export type ExtractOptions = {
   id: string
   hash: string
   episode: number
-  timestamps: string[]
+  timestamps: string[] | null
   source: string
   sourceUri: string
   fileName: string
@@ -16,8 +16,7 @@ export enum WorkerState {
   Idle = "Idle",
   Downloading = "Downloading",
   Extracting = "Extracting",
-  Uploading = "Uploading",
-  Confirming = "Confirming",
+  FindingTimestamps = "FindingTimestamps",
 }
 
 export type WorkerStatusResponse = {

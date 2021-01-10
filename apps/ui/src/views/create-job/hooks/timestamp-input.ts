@@ -1,5 +1,5 @@
 import { useCreateJobExistingEntriesQuery } from "@anisubs/graphql-types"
-import { ref, watch } from "vue"
+import { computed, ref, watch } from "vue"
 
 import { useAnimeInput } from "./anime-input"
 
@@ -41,6 +41,11 @@ export const useTimestampInput = () => {
 
   return {
     timestamps,
+    timestampsVariable: computed(() =>
+      timestamps.value.length < 1
+        ? null
+        : timestamps.value.map((timestamp) => timestamp.value),
+    ),
     hasPreviousTimestamps,
     reset: () => {
       timestamps.value = []
