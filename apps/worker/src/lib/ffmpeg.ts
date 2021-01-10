@@ -34,6 +34,7 @@ const anyIncludes = (arr: Array<string | undefined>, checks: string[]) =>
 const modifiers = {
   english: 100,
   forcedSubtitles: 10,
+  fullSubtitles: 25,
   signsOnly: -100,
 }
 
@@ -46,7 +47,16 @@ const scoreSubtitleStream = (
 
   if (stream.tags.language === "eng") score += modifiers.english
 
-  if (stream.disposition?.forced === 1) score += modifiers.forcedSubtitles
+  if (
+    stream.disposition?.forced === 1 ||
+    stream.tags.title?.toLowerCase()?.includes("forced")
+  ) {
+    score += modifiers.forcedSubtitles
+  }
+
+  if (stream.tags.title?.toLowerCase()?.includes("full")) {
+    score += modifiers.fullSubtitles
+  }
 
   if (
     stream.tags.title?.toLowerCase()?.includes("signs") &&
