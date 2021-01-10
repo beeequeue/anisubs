@@ -2,7 +2,7 @@ import { ExtractOptions } from "@anisubs/shared"
 import { Job, Worker } from "bullmq"
 
 import { CONFIG } from "@/config"
-import { startNewExtraction } from "@/extract"
+import { startNewExtraction } from "@/jobs/extract"
 
 const connection = {
   ...CONFIG.redis,
