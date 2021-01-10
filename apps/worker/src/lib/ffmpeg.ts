@@ -214,7 +214,7 @@ export class Ffmpeg {
     const inputPath = join(DOWNLOADS_PATH, file.path)
     const outputPath = join(
       SUBTITLES_PATH,
-      `${job.animeId.toString()}-${job.hash}.ass`,
+      `${job.animeId.toString()}-${job.hash}.srt`,
     )
 
     const command = FluentFfmpeg(join(DOWNLOADS_PATH, file.path), {

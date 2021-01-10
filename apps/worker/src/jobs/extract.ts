@@ -1,9 +1,10 @@
 import { ExtractOptions, WebTorrent, WorkerState } from "@anisubs/shared"
 import { Job as QueueJob, Processor } from "bullmq"
+import { DeepNonNullable } from "utility-types"
 
 import { Ffmpeg } from "@/lib/ffmpeg"
+import { findTimestamps } from "@/lib/subtitles"
 import { useState } from "@/state"
-import { DeepNonNullable } from "utility-types"
 
 export const startNewExtraction: Processor = async (
   job: QueueJob<ExtractOptions>,
@@ -15,9 +16,9 @@ export const startNewExtraction: Processor = async (
 
   if (job.data.timestamps == null) {
     state.setState(WorkerState.FindingTimestamps)
-    // @ts-ignore
+
     const subtitlesPath = await Ffmpeg.extractSubtitles(job.data, file)
-    // job.data.timestamps = await findTimestamps(subtitlesPath)
+    job.data.timestamps = await findTimestamps(subtitlesPath)
   }
 
   if (job.data.timestamps == null) {

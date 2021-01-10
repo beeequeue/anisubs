@@ -73,8 +73,8 @@ const resetRest = () => {
 }
 
 onDone(() => {
-  resetGroup()
-  resetRest()
+  // resetGroup()
+  // resetRest()
 })
 
 watch(anime, (newValue, oldValue) => {
