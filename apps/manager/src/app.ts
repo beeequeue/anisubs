@@ -4,10 +4,10 @@ import Koa from "koa"
 import Serve from "koa-static-server"
 import { v4 as uuid } from "uuid"
 
+import { config } from "@/config"
 import { createRouter } from "@/rest"
 
 import { registerApolloServer } from "./graphql"
-import { config } from "@/config"
 
 const SEVEN_DAYS = 1000 * 60 * 60 * 24 * 7
 

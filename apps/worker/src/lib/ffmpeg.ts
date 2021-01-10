@@ -13,8 +13,8 @@ import FluentFfmpeg, {
   FfprobeData,
   FfprobeStream,
 } from "fluent-ffmpeg"
-import { TorrentFile } from "webtorrent"
 import { DeepNonNullable } from "utility-types"
+import { TorrentFile } from "webtorrent"
 
 declare module "fluent-ffmpeg" {
   interface FfprobeStream {

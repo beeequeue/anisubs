@@ -1,4 +1,5 @@
 import { createReadStream } from "fs"
+
 import { parse, Cue } from "subtitle"
 
 export const createJobs = (nodes: Cue[]) => {

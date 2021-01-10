@@ -1,6 +1,7 @@
-import { createJobs } from "@/lib/subtitles"
 import { random } from "faker"
 import { Cue } from "subtitle"
+
+import { createJobs } from "@/lib/subtitles"
 
 const randomWords = () => random.words(Math.ceil(Math.random() * 12))
 

@@ -4,7 +4,7 @@
     class="timestamp-input"
     :class="{ disabled: hasPreviousTimestamps || anime == null }"
   >
-    <div class="input" key="input">
+    <div key="input" class="input">
       <input
         v-model="input"
         v-maska="['##:##', '##:##.###']"
