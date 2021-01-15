@@ -1,10 +1,21 @@
 import { createReadStream } from "fs"
 
-import { parse, Cue } from "subtitle"
+import { cleanTimestamp } from "@anisubs/shared"
+import { parse, Cue, formatTimestamp } from "subtitle"
 import { v4 as uuid } from "uuid"
 
 export type Node = Cue & {
   uuid: string
+}
+
+export type Timestamp = {
+  node: Node
+  timestamp: string
+  conditions: {
+    op: boolean
+    ed: boolean
+    amount: number
+  }
 }
 
 const ONE_MINUTE = 1000 * 60
@@ -80,7 +91,57 @@ export const findEd = (nodes: Node[]): Node[] => {
   return edNodes
 }
 
-const parseSubtitles = async (filePath: string) =>
+const inside = (num: number, min: number, max: number) =>
+  min <= num && max > num
+
+export const getTimestamp = (nodes: Node[]): Timestamp => {
+  const innerTimes = {
+    start: nodes[nodes.length - 1].start,
+    end: nodes[0].end,
+  }
+
+  const duration = innerTimes.start - innerTimes.end
+  const middle = innerTimes.start + Math.round(duration / 2)
+
+  // Try to round to closest half second
+  const niceMiddle = Math.floor(middle / 500) * 500
+  // Use it if it shows all the subtitles
+  const middleToUse = inside(niceMiddle, innerTimes.start, innerTimes.end)
+    ? niceMiddle
+    : middle
+
+  const node = nodes.find(({ start, end }) => inside(middleToUse, start, end))!
+
+  return {
+    node,
+    timestamp: cleanTimestamp(formatTimestamp(middle, { format: "WebVTT" })),
+    conditions: {
+      amount: nodes.length,
+      ed: false,
+      op: false,
+    },
+  }
+}
+
+// const findGoodTimestamps = (nodes: Node[]): Timestamp[] => {
+//   const simultaneous = findSimultaneous(nodes)
+//   let scoredNodes: Array<Timestamp> = [...simultaneous]
+//
+//   const op = findOp(nodes)
+//   const ed = findEd(nodes)
+//
+//   for (let node of op) {
+//
+//   }
+// }
+
+const isEqualNode = (one: Node) => (two: Node) =>
+  one.text === two.text && one.start === two.start && one.end === two.end
+
+const isBadNode = (node: Node) =>
+  /> *([\w]? ?(?:-?\d+\.?)+ ?)+</.test(node.text)
+
+export const parseSubtitles = async (filePath: string) =>
   new Promise<Node[]>((resolve) => {
     const nodes: Node[] = []
 
@@ -91,14 +152,22 @@ const parseSubtitles = async (filePath: string) =>
         resolve([])
       })
       .on("data", ({ type, data }) => {
-        if (type !== "cue") return
+        if (
+          type !== "cue" ||
+          nodes.some(isEqualNode(data)) ||
+          isBadNode(data)
+        ) {
+          return
+        }
 
         nodes.push({
           uuid: uuid(),
           ...data,
         })
       })
-      .on("finish", () => resolve(nodes))
+      .on("finish", () => {
+        resolve(nodes)
+      })
   })
 
 export const findTimestamps = async (
@@ -106,6 +175,7 @@ export const findTimestamps = async (
 ): Promise<string[] | null> => {
   // @ts-ignore
   const nodes = await parseSubtitles(filePath)
+
   // const timestamps: string[] = []
 
   return null

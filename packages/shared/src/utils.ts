@@ -19,3 +19,20 @@ export const throttle = <Fn extends (...params: unknown[]) => void>(
 
 export const formatBytes = (bytes: number) =>
   `${(bytes / 1_000_000).toFixed(0)}MB`
+
+export const cleanTimestamp = (str: string) => {
+  // eslint-disable-next-line prefer-const
+  let [rest, ms] = str.split(".")
+
+  rest = rest.replace(/^(?:00:)?(\d{2}:\d{2})/, "$1")
+
+  if (ms != null) {
+    ms = ms.replace(/0+$/, "")
+
+    if (ms === "") return rest
+
+    return `${rest}.${ms}`
+  }
+
+  return rest
+}

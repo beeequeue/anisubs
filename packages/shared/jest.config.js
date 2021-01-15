@@ -6,8 +6,8 @@ const rootDir = resolve(__dirname)
 /** @type {import('@jest/types').Config.InitialOptions} */
 module.exports = {
   rootDir: "../../",
-  name: "worker",
-  displayName: "worker",
+  name: "shared",
+  displayName: "shared",
   testEnvironment: "node",
   transform: {
     ".(js|jsx|ts|tsx)": "@sucrase/jest-plugin",

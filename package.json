@@ -12,7 +12,8 @@
     "dev": "lerna run dev --parallel",
     "lint": "yarn lint:nocache --cache --cache-location ./node_modules/.cache/eslint",
     "lint:nocache": "eslint apps/*/src/**/*.{ts,vue}",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "test": "cross-env NODE_ENV=test jest"
   },
   "resolutions": {
     "@types/node": "14.14.19",
