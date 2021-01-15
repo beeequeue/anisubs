@@ -163,11 +163,7 @@ export class Job implements ExtractOptions {
     const existingTimestamps = await Entry.getTimestampsForAnime(animeId)
 
     // Sort and fix mistakes in timestamps
-    timestamps =
-      timestamps
-        ?.sort()
-        ?.map((timestamp) => timestamp.replace(/(\.\d+?)0+$/, "$1")) ??
-      timestamps
+    timestamps = timestamps?.sort() ?? timestamps
 
     const options: ExtractOptions = {
       hash: hash,
