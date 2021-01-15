@@ -1,5 +1,6 @@
 import { sync as remove } from "rimraf"
-import { default as TorrentClient, Torrent, TorrentFile } from "webtorrent"
+import TorrentClient from "webtorrent"
+import type { Instance, Torrent, TorrentFile } from "webtorrent"
 
 import { DOWNLOADS_PATH } from "./constants"
 import { ExtractOptions } from "./types"
@@ -8,7 +9,9 @@ import { formatBytes, throttle } from "./utils"
 const TIMEOUT_MS = 1000 * 60 * 30
 
 export class WebTorrent {
-  static client = new TorrentClient()
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  static client: Instance =
+    process.env.NODE_ENV !== "test" ? new TorrentClient() : (null as any)
 
   static async getMetadata(magnetUri: string, timeoutMs?: number) {
     return new Promise<Torrent>((resolve, reject) => {
@@ -115,7 +118,7 @@ export class WebTorrent {
 
 const throttledLogger = throttle(console.log, 2500)
 
-WebTorrent.client.on("torrent", (torrent) => {
+WebTorrent.client?.on("torrent", (torrent) => {
   const prefix = `[${torrent.name}]:`
 
   torrent.on("done", () => {
