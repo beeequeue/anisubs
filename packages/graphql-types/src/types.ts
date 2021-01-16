@@ -117,9 +117,6 @@ export type Worker = {
   readonly name: Scalars["String"]
   readonly token: Scalars["String"]
   readonly confirmed: Scalars["Boolean"]
-  readonly enabled: Scalars["Boolean"]
-  readonly online: Scalars["Boolean"]
-  readonly currentJob: Maybe<Job>
 }
 
 export type JobPage = {

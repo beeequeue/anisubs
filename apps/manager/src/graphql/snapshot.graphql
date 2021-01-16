@@ -117,11 +117,8 @@ type Torrent {
 type Worker {
   confirmed: Boolean!
   createdAt: DateTime!
-  currentJob: Job
-  enabled: Boolean!
   id: ID!
   name: String!
-  online: Boolean!
   token: String!
   updatedAt: DateTime!
 }
