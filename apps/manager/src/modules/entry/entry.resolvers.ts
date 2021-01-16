@@ -1,4 +1,14 @@
-import { Arg, FieldResolver, Query, Resolver, Root } from "type-graphql"
+import { UserInputError } from "apollo-server-koa"
+import {
+  Arg,
+  FieldResolver,
+  ID,
+  Mutation,
+  Query,
+  Resolver,
+  Root,
+} from "type-graphql"
+import { getManager } from "typeorm"
 
 import { IdsService } from "@/lib/arm"
 import { MyAnimeListService } from "@/lib/myanimelist"
@@ -11,6 +21,27 @@ export class EntryResolvers {
   @Query(() => [Entry])
   async entries(@Arg("animeId") animeId: number): Promise<Entry[]> {
     return Entry.find({ where: { animeId } })
+  }
+
+  @Mutation(() => Boolean)
+  async deleteEntry(@Arg("id", () => ID) id: string) {
+    const entry = (await Entry.findByIds([id], { select: ["id"] }))[0]
+
+    if (entry == null) {
+      throw new UserInputError(`Entry:${id} does not exist.`)
+    }
+
+    try {
+      await getManager().transaction(async (transaction) => {
+        await transaction.delete(Image, await entry.images)
+        await transaction.delete(Entry, entry.id)
+      })
+    } catch (e) {
+      console.error(e)
+      throw new Error(`Could not delete Entry:${id}!`)
+    }
+
+    return true
   }
 }
 

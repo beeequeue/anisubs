@@ -51,7 +51,7 @@ export class Entry extends ExtendedEntity implements ExtractOptions {
   timestamps!: string[]
 
   @OneToMany(() => Image, (image) => image.entry)
-  images!: Image[]
+  images!: Promise<Image[]>
 
   static async getTimestampsForAnime(
     animeId: number,

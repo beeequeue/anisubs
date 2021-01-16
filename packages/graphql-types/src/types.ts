@@ -169,9 +169,14 @@ export type QueryTorrentFilesArgs = {
 
 export type Mutation = {
   readonly __typename?: "Mutation"
+  readonly deleteEntry: Scalars["Boolean"]
   readonly createJob: Job
   readonly addWorker: Worker
   readonly confirmWorker: Scalars["Boolean"]
+}
+
+export type MutationDeleteEntryArgs = {
+  id: Scalars["ID"]
 }
 
 export type MutationCreateJobArgs = {
