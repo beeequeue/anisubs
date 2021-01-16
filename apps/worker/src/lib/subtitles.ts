@@ -94,13 +94,16 @@ export const findEd = (nodes: Node[]): Node[] => {
 const inside = (num: number, min: number, max: number) =>
   min <= num && max > num
 
-export const getTimestamp = (nodes: Node[]): Timestamp => {
+export const getTimestamp = (
+  nodes: Node[],
+  special?: "op" | "ed",
+): Timestamp => {
   const innerTimes = {
     start: nodes[nodes.length - 1].start,
     end: nodes[0].end,
   }
 
-  const duration = innerTimes.start - innerTimes.end
+  const duration = innerTimes.end - innerTimes.start
   const middle = innerTimes.start + Math.round(duration / 2)
 
   // Try to round to closest half second
@@ -117,23 +120,85 @@ export const getTimestamp = (nodes: Node[]): Timestamp => {
     timestamp: cleanTimestamp(formatTimestamp(middle, { format: "WebVTT" })),
     conditions: {
       amount: nodes.length,
-      ed: false,
-      op: false,
+      ed: special === "ed",
+      op: special === "op",
     },
   }
 }
 
-// const findGoodTimestamps = (nodes: Node[]): Timestamp[] => {
-//   const simultaneous = findSimultaneous(nodes)
-//   let scoredNodes: Array<Timestamp> = [...simultaneous]
-//
-//   const op = findOp(nodes)
-//   const ed = findEd(nodes)
-//
-//   for (let node of op) {
-//
-//   }
-// }
+export const findGoodTimestamps = (nodes: Node[]): Timestamp[] => {
+  const timestamps: Timestamp[] = []
+
+  const addTimestampIfNotAdded = (
+    nodes: Node[],
+    special?: Parameters<typeof getTimestamp>[1],
+  ) => {
+    const newTimestamp = getTimestamp(nodes, special)
+
+    if (
+      timestamps.some(
+        (timestamp) => timestamp.node.uuid === newTimestamp.node.uuid,
+      )
+    ) {
+      return
+    }
+
+    timestamps.push(newTimestamp)
+  }
+
+  const opNodes = findOp(nodes)
+  const edNodes = findEd(nodes)
+
+  const simultaneous = findSimultaneous(nodes)
+
+  for (const node of opNodes) {
+    if (timestamps.length > 4) break
+
+    const simulOpNodes = simultaneous.find((nodes) =>
+      nodes.some((simulNode) => simulNode.uuid === node.uuid),
+    )
+
+    addTimestampIfNotAdded(simulOpNodes ? simulOpNodes : [node], "op")
+  }
+
+  for (const node of edNodes) {
+    if (timestamps.length > 8) break
+
+    const simulEdNodes = simultaneous.find((nodes) =>
+      nodes.some((simulNode) => simulNode.uuid === node.uuid),
+    )
+
+    addTimestampIfNotAdded(simulEdNodes ? simulEdNodes : [node], "ed")
+  }
+
+  for (const nodes of simultaneous) {
+    if (timestamps.length > 12) break
+
+    addTimestampIfNotAdded(nodes)
+  }
+
+  let remainingNodes = nodes.filter(
+    (node) =>
+      !opNodes.some((opNode) => node.uuid === opNode.uuid) &&
+      !edNodes.some((edNode) => node.uuid === edNode.uuid) &&
+      timestamps.some((timestamp) => overlaps(node, timestamp.node)),
+  )
+
+  while (timestamps.length <= 12 && remainingNodes.length > 0) {
+    const index = Math.round(Math.random() * remainingNodes.length)
+
+    addTimestampIfNotAdded([remainingNodes[index]])
+
+    remainingNodes = [
+      ...remainingNodes.slice(0, index),
+      ...remainingNodes.slice(index + 1),
+    ]
+  }
+
+  timestamps.sort((a, b) => a.timestamp.localeCompare(b.timestamp))
+
+  return timestamps
+}
 
 const isEqualNode = (one: Node) => (two: Node) =>
   one.text === two.text && one.start === two.start && one.end === two.end

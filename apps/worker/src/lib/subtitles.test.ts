@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid"
 
 import {
   findEd,
+  findGoodTimestamps,
   findOp,
   findSimultaneous,
   getTimestamp,
@@ -110,6 +111,21 @@ describe("extractors", () => {
         nodes[4],
       ])
     })
+  })
+})
+
+describe("findGoodTimestamps", () => {
+  test("real-life test", async () => {
+    const nodes = await parseSubtitles(join(TEST_DATA_PATH, "tonikawa.srt"))
+
+    expect(
+      findGoodTimestamps(nodes).map((timestamp) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore: Testing
+        delete timestamp.node.uuid
+        return timestamp
+      }),
+    ).toMatchSnapshot()
   })
 })
 
