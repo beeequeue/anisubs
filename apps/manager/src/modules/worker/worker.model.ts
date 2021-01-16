@@ -11,7 +11,6 @@ export class Worker extends ExtendedEntity {
   name!: string
 
   @Column()
-  @Field()
   token!: string
 
   @Column()

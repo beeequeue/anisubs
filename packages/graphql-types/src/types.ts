@@ -115,7 +115,6 @@ export type Worker = {
   readonly createdAt: Scalars["DateTime"]
   readonly updatedAt: Scalars["DateTime"]
   readonly name: Scalars["String"]
-  readonly token: Scalars["String"]
   readonly confirmed: Scalars["Boolean"]
 }
 

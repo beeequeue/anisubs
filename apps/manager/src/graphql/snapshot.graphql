@@ -119,6 +119,5 @@ type Worker {
   createdAt: DateTime!
   id: ID!
   name: String!
-  token: String!
   updatedAt: DateTime!
 }
