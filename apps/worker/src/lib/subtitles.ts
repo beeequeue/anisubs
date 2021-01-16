@@ -107,7 +107,7 @@ export const getTimestamp = (
   const middle = innerTimes.start + Math.round(duration / 2)
 
   // Try to round to closest half second
-  const niceMiddle = Math.floor(middle / 500) * 500
+  const niceMiddle = Math.round(middle / 500) * 500
   // Use it if it shows all the subtitles
   const middleToUse = inside(niceMiddle, innerTimes.start, innerTimes.end)
     ? niceMiddle
@@ -117,7 +117,9 @@ export const getTimestamp = (
 
   return {
     node,
-    timestamp: cleanTimestamp(formatTimestamp(middle, { format: "WebVTT" })),
+    timestamp: cleanTimestamp(
+      formatTimestamp(middleToUse, { format: "WebVTT" }),
+    ),
     conditions: {
       amount: nodes.length,
       ed: special === "ed",
@@ -135,6 +137,7 @@ export const findGoodTimestamps = (nodes: Node[]): Timestamp[] => {
   ) => {
     const newTimestamp = getTimestamp(nodes, special)
 
+    console.log(timestamps)
     if (
       timestamps.some(
         (timestamp) => timestamp.node.uuid === newTimestamp.node.uuid,

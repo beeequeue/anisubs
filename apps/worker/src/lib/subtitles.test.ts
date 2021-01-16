@@ -138,9 +138,9 @@ describe("misc", () => {
         [7_500, 15_000],
       ]),
       generateNodes([
-        [1_000, 7_500],
-        [5_000, 10_000],
-        [7_500, 15_000],
+        [83_567, 105_957],
+        [91_227, 105_957],
+        [93_007, 105_957],
       ]),
     ]
     const cases: Array<[index: number, nodes: Node[], result: Timestamp]> = [
@@ -161,8 +161,8 @@ describe("misc", () => {
         2,
         nodes[1],
         {
-          timestamp: "00:07.5",
-          node: nodes[1][1],
+          timestamp: "01:39.5",
+          node: nodes[1][0],
           conditions: {
             op: false,
             ed: false,
