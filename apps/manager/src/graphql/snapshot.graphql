@@ -81,8 +81,8 @@ type JobPage {
 }
 
 type Mutation {
-  addWorker(host: String!, name: String!): Worker!
-  confirmWorker(port: Int!, token: String!): Boolean!
+  addWorker(name: String!): Worker!
+  confirmWorker(token: String!): Boolean!
   createJob(animeId: Int!, fileName: String, group: String, source: String!, timestamps: [Timestamp!]): Job!
   deleteEntry(id: ID!): Boolean!
 }
@@ -119,7 +119,6 @@ type Worker {
   createdAt: DateTime!
   currentJob: Job
   enabled: Boolean!
-  host: String!
   id: ID!
   name: String!
   online: Boolean!

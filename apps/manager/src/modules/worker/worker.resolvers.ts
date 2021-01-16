@@ -3,9 +3,7 @@ import { randomBytes } from "crypto"
 import { UserInputError } from "apollo-server-koa"
 import {
   Arg,
-  Ctx,
   FieldResolver,
-  Int,
   Mutation,
   Query,
   Resolver,
@@ -27,14 +25,10 @@ export class WorkerResolvers {
 
   // TODO: Secure
   @Mutation(() => Worker)
-  async addWorker(
-    @Arg("name") name: string,
-    @Arg("host") host: string,
-  ): Promise<Worker> {
+  async addWorker(@Arg("name") name: string): Promise<Worker> {
     const worker = new Worker()
 
     worker.name = name
-    worker.host = host
     worker.confirmed = false
     worker.token = randomBytes(64).toString("hex")
 
@@ -42,21 +36,11 @@ export class WorkerResolvers {
   }
 
   @Mutation(() => Boolean)
-  async confirmWorker(
-    @Ctx() ctx: Context,
-    @Arg("token") token: string,
-    @Arg("port", () => Int) port: number,
-  ): Promise<boolean> {
-    let ip = ctx.req.connection.localAddress
-
-    if (ip === "::ffff:127.0.0.1") {
-      ip = "127.0.0.1"
-    }
-
-    console.log(`A worker is trying to confirm ${ip}:${port}`)
+  async confirmWorker(@Arg("token") token: string): Promise<boolean> {
+    console.log("A worker is trying to confirm...")
 
     const worker = await Worker.findOne({
-      where: { host: `${ip}:${port}`, token },
+      where: { token },
     })
 
     if (worker == null) {

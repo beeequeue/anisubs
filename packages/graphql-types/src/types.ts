@@ -115,7 +115,6 @@ export type Worker = {
   readonly createdAt: Scalars["DateTime"]
   readonly updatedAt: Scalars["DateTime"]
   readonly name: Scalars["String"]
-  readonly host: Scalars["String"]
   readonly token: Scalars["String"]
   readonly confirmed: Scalars["Boolean"]
   readonly enabled: Scalars["Boolean"]
@@ -188,12 +187,10 @@ export type MutationCreateJobArgs = {
 }
 
 export type MutationAddWorkerArgs = {
-  host: Scalars["String"]
   name: Scalars["String"]
 }
 
 export type MutationConfirmWorkerArgs = {
-  port: Scalars["Int"]
   token: Scalars["String"]
 }
 
