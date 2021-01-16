@@ -1,27 +1,6 @@
-import { RedisOptions } from "ioredis"
+import { getRedisConfig } from "@anisubs/shared"
+import { bool, envsafe, port, str, url } from "envsafe"
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions"
-
-const errors: string[] = []
-
-const envVar = <T extends string, D extends T | undefined = T>(
-  key: string,
-  defaultValue?: D,
-): D extends undefined ? T | undefined : T => {
-  const value = process.env[key] as T | undefined
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return (value || defaultValue) as never
-}
-
-// const requiredEnvVar = <T extends string = string>(key: string) => {
-//   const value = envVar(key)
-//
-//   if (value == null || value.length < 1) {
-//     errors.push(`Env variable \`${key}\` is required but was not found.`)
-//   }
-//
-//   return value as T
-// }
 
 enum Environment {
   Development = "development",
@@ -29,42 +8,57 @@ enum Environment {
   Production = "production",
 }
 
-type Config = {
-  nodeEnv: Environment
-  appEnv: Environment.Development | Environment.Production
-  port: number
-  userAgent: string
+const baseEnv = envsafe({
+  NODE_ENV: str({
+    choices: [
+      Environment.Development,
+      Environment.Test,
+      Environment.Production,
+    ],
+    default: Environment.Development,
+  }),
+  PORT: port({
+    devDefault: 3000,
+  }),
+  USER_AGENT: str({
+    default: "@anisubs/manager",
+  }),
+})
 
-  anilist: {
-    url: string
-    token?: string
-  }
+const anilistEnv = envsafe({
+  ANILIST_URL: url({
+    default: "https://graphql.anilist.co",
+  }),
+  ANILIST_TOKEN: str({
+    default: "",
+    allowEmpty: true,
+  }),
+})
 
-  db: PostgresConnectionOptions
+const redisEnv = envsafe({
+  REDIS_URL: url({
+    devDefault: "redis://localhost:6379/0",
+  }),
+})
 
-  redis: RedisOptions
-}
+const postgresEnv = envsafe({
+  DATABASE_URL: url({
+    devDefault: "postgresql://postgres:password@localhost:5432/postgres",
+  }),
+  DATABASE_SSL: bool({
+    default: true,
+    devDefault: false,
+  }),
+})
 
-export const config: Config = {
-  nodeEnv: envVar("NODE_ENV", Environment.Production),
-  appEnv: envVar("APP_ENV", Environment.Production),
-  port: Number(envVar("PORT", 3000)),
-  userAgent: "@anisubs/manager",
-
-  anilist: {
-    url: "https://graphql.anilist.co",
-    token: envVar("ANILIST_TOKEN"),
-  },
+export const config = {
+  ...baseEnv,
+  ...anilistEnv,
 
   db: {
     type: "postgres",
-    host: envVar("DATABASE_HOST", "localhost"),
-    port: Number(envVar("DATABASE_PORT", 5432)),
-    username: envVar("DATABASE_USER", "postgres"),
-    password: envVar("DATABASE_PASS"),
-    url: envVar("DATABASE_URL"),
-    ssl: envVar("DATABASE_SSL") === "true",
-    database: envVar("DATABASE_DB", envVar("DATABASE_DATABASE", "postgres")),
+    url: postgresEnv.DATABASE_URL,
+    ssl: postgresEnv.DATABASE_SSL,
 
     migrationsRun: true,
 
@@ -74,16 +68,7 @@ export const config: Config = {
       entitiesDir: "src/modules",
       migrationsDir: "migrations",
     },
-  },
+  } as PostgresConnectionOptions,
 
-  redis: {
-    host: envVar("REDIS_HOST", "localhost"),
-    port: Number(envVar("REDIS_PORT", 6379)),
-    username: envVar("REDIS_USER"),
-    password: envVar("REDIS_PASS"),
-  },
-}
-
-if (config.nodeEnv !== "test" && errors.length > 0) {
-  throw new Error(`Invalid config!\n  • ${errors.join("\n  • ")}`)
+  redis: getRedisConfig(redisEnv.REDIS_URL),
 }

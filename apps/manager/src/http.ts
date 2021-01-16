@@ -5,6 +5,6 @@ import { config } from "@/config"
 export const HttpClient = got.extend({
   responseType: "json",
   headers: {
-    "User-Agent": config.userAgent,
+    "User-Agent": config.USER_AGENT,
   },
 })

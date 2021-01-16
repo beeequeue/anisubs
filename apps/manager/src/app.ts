@@ -29,7 +29,7 @@ export const createApp = async () => {
     Serve({
       rootPath: "/cdn",
       rootDir: resolve(__dirname, "..", "..", "..", "output/screenshots"),
-      maxage: config.nodeEnv === "development" ? 0 : SEVEN_DAYS,
+      maxage: config.NODE_ENV === "development" ? 0 : SEVEN_DAYS,
     }),
   )
 

@@ -9,8 +9,8 @@ const run = async () => {
 
   const app = await createApp()
 
-  app.listen(config.port, () => {
-    console.log(`Listening on ${config.port}...`)
+  app.listen(config.PORT, () => {
+    console.log(`Listening on ${config.PORT}...`)
   })
 }
 

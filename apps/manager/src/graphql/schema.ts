@@ -8,7 +8,7 @@ import { config } from "@/config"
 export const createSchema = async (generateSnapshot = true) =>
   buildSchema({
     emitSchemaFile:
-      !generateSnapshot || config.nodeEnv === "test"
+      !generateSnapshot || config.NODE_ENV === "test"
         ? false
         : { path: resolve(__dirname, "snapshot.graphql") },
     dateScalarMode: "isoDate",

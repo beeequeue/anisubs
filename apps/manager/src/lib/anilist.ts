@@ -15,13 +15,12 @@ const anilistLimiter = new Bottleneck({
   reservoirIncreaseMaximum: 90,
 })
 
-const graphql = new GraphQLClient(config.anilist.url, {
-  headers:
-    config.anilist.token != null
-      ? {
-          Authorization: `Bearer ${config.anilist.token}`,
-        }
-      : undefined,
+const graphql = new GraphQLClient(config.ANILIST_URL, {
+  headers: config.ANILIST_TOKEN
+    ? {
+        Authorization: `Bearer ${config.ANILIST_TOKEN}`,
+      }
+    : undefined,
 })
 
 type AnilistData = null | {

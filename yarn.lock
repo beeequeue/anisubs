@@ -7183,10 +7183,10 @@ envinfo@^7.3.1:
   resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.7.3.tgz#4b2d8622e3e7366afb8091b23ed95569ea0208cc"
   integrity sha512-46+j5QxbPWza0PB1i15nZx0xQ4I/EfQxg9J8Had3b408SV63nEtor2e+oiY63amTo9KTuh2a3XLObNwduxYwwA==
 
-envsafe@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/envsafe/-/envsafe-2.0.0.tgz#b37280c4bc1d621b74fe30e9b8fcb1a79200bc4d"
-  integrity sha512-6KM3Z1xdY9PlvTpXUakR/Dq94Kf8LJsoynMDUupt3Lpf+FyuhHGydBRpdT2PVPpvEkC7TrJyKkCmSIvdLeYvpA==
+envsafe@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/envsafe/-/envsafe-2.0.2.tgz#9cfca3335d17040ab1eadd5980b840872e6972d6"
+  integrity sha512-iVebNAEH1M1yh9zTBszwJBrdp1vobjB2ZlUDmhd14Y0RgRtFVZyEjyQm9o08ftQ3OdXNOGO0r5+cj59yjBBsdQ==
 
 err-code@^1.0.0:
   version "1.1.2"
