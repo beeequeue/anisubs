@@ -1,6 +1,6 @@
 import { createReadStream } from "fs"
 
-import { cleanTimestamp } from "@anisubs/shared"
+import { cleanTimestamp, compareTimestamps } from "@anisubs/shared"
 import { parse, Cue, formatTimestamp } from "subtitle"
 import { v4 as uuid } from "uuid"
 
@@ -137,7 +137,6 @@ export const findGoodTimestamps = (nodes: Node[]): Timestamp[] => {
   ) => {
     const newTimestamp = getTimestamp(nodes, special)
 
-    console.log(timestamps)
     if (
       timestamps.some(
         (timestamp) => timestamp.node.uuid === newTimestamp.node.uuid,
@@ -198,7 +197,7 @@ export const findGoodTimestamps = (nodes: Node[]): Timestamp[] => {
     ]
   }
 
-  timestamps.sort((a, b) => a.timestamp.localeCompare(b.timestamp))
+  timestamps.sort(compareTimestamps)
 
   return timestamps
 }
@@ -241,10 +240,7 @@ export const parseSubtitles = async (filePath: string) =>
 export const findTimestamps = async (
   filePath: string,
 ): Promise<string[] | null> => {
-  // @ts-ignore
   const nodes = await parseSubtitles(filePath)
 
-  // const timestamps: string[] = []
-
-  return null
+  return findGoodTimestamps(nodes).map(({ timestamp }) => timestamp)
 }

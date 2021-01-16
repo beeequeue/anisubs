@@ -12,6 +12,8 @@ export type ExtractOptions = {
   animeId: number
 }
 
+export type ExtractResult = { fileName: string; timestamp: string }
+
 export enum WorkerState {
   Idle = "Idle",
   Downloading = "Downloading",

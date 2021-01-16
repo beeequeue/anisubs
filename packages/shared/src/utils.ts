@@ -36,3 +36,8 @@ export const cleanTimestamp = (str: string) => {
 
   return rest
 }
+
+export const compareTimestamps = <T extends { timestamp: string }>(
+  one: T,
+  two: T,
+) => one.timestamp.localeCompare(two.timestamp)

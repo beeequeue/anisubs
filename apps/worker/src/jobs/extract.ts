@@ -1,4 +1,10 @@
-import { ExtractOptions, WebTorrent, WorkerState } from "@anisubs/shared"
+import {
+  compareTimestamps,
+  ExtractOptions,
+  ExtractResult,
+  WebTorrent,
+  WorkerState,
+} from "@anisubs/shared"
 import { Job as QueueJob, Processor } from "bullmq"
 import { DeepNonNullable } from "utility-types"
 
@@ -8,7 +14,7 @@ import { useState } from "@/state"
 
 export const startNewExtraction: Processor = async (
   job: QueueJob<ExtractOptions>,
-): Promise<unknown> => {
+): Promise<ExtractResult[]> => {
   const state = useState()
 
   state.setState(WorkerState.Downloading, job)
@@ -34,5 +40,5 @@ export const startNewExtraction: Processor = async (
   state.setState(WorkerState.Idle)
 
   // Has to be returned in order of appearance - it is mapped to the input timestamps
-  return screenshots.sort()
+  return screenshots.sort(compareTimestamps)
 }

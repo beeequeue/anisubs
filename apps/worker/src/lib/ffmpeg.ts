@@ -5,6 +5,7 @@ import { join, relative } from "path"
 import {
   DOWNLOADS_PATH,
   ExtractOptions,
+  ExtractResult,
   SCREENSHOTS_PATH,
   SUBTITLES_PATH,
 } from "@anisubs/shared"
@@ -143,7 +144,7 @@ export class Ffmpeg {
       throw new Error(`Could not get height of video. ${job.source}`)
     }
 
-    const files: string[] = []
+    const results: Array<ExtractResult> = []
     const promises = job.timestamps.map(
       (timestamp) =>
         new Promise<void>((resolve, reject) => {
@@ -156,7 +157,7 @@ export class Ffmpeg {
             "\\\\\\\\",
           )
 
-          const filename = `${job.hash}-${timestamp.replace(
+          const fileName = `${job.hash}-${timestamp.replace(
             /[:,.]/g,
             "_",
           )}.webp`
@@ -173,7 +174,7 @@ export class Ffmpeg {
               `subtitles='${subtitleFilePath}':si=${bestSubtitleStreamIndex}`,
             ],
             ["-quality", "95"],
-            join(outputFolder, filename),
+            join(outputFolder, fileName),
           ].flat(2)
 
           mkdirSync(outputFolder, { recursive: true })
@@ -196,7 +197,7 @@ export class Ffmpeg {
               return reject(error)
             }
 
-            files.push(filename)
+            results.push({ fileName, timestamp })
             resolve()
           })
         }),
@@ -204,7 +205,7 @@ export class Ffmpeg {
 
     await Promise.all(promises)
 
-    return files
+    return results
   }
 
   static async extractSubtitles(

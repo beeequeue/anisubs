@@ -1,5 +1,5 @@
-import { ExtractOptions } from "@anisubs/shared"
-import { Queue, QueueEvents, Job as QueueJob } from "bullmq"
+import { ExtractOptions, ExtractResult } from "@anisubs/shared"
+import { Job as QueueJob, Queue, QueueEvents } from "bullmq"
 import { getManager } from "typeorm"
 
 import { config } from "@/config"
@@ -36,7 +36,7 @@ export const getJobCount = async () => {
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 events.on("completed", async ({ jobId, returnvalue }) => {
-  const screenshots = (returnvalue as unknown) as string[]
+  const screenshots = (returnvalue as unknown) as ExtractResult[]
 
   const job = (await jobQueue.getJob(jobId)) as QueueJob<ExtractOptions>
 
@@ -45,12 +45,12 @@ events.on("completed", async ({ jobId, returnvalue }) => {
   await getManager().transaction(async (manager) => {
     await manager.save(entry)
 
-    const images = screenshots.map((url, i) => {
+    const images = screenshots.map(({ fileName, timestamp }) => {
       const image = new Image()
 
       image.entry = entry
-      image.filename = url
-      image.timestamp = job.data.timestamps![i]
+      image.filename = fileName
+      image.timestamp = timestamp
 
       return image
     })
