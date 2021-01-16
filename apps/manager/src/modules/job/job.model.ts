@@ -28,7 +28,7 @@ export class JobCreationArgs {
   @Field()
   source!: string
 
-  @Matches(/.*\.[a-zA-Z\d]{2,}/, { message: "Not a filename." })
+  @Matches(/.*\.[a-zA-Z\d]{2,}/, { message: "Not a file name." })
   @Field(() => String, { nullable: true })
   fileName!: string | null
 
@@ -70,7 +70,7 @@ export class Job implements ExtractOptions {
   // TODO: make private
   sourceUri!: string
 
-  @Matches(/.*\.[a-zA-Z\d]{2,}/, { message: "Not a filename." })
+  @Matches(/.*\.[a-zA-Z\d]{2,}/, { message: "Not a file name." })
   @Field()
   fileName!: string
 
@@ -128,7 +128,7 @@ export class Job implements ExtractOptions {
 
         if (episodeOne == null) {
           throw new UserInputError(
-            `Torrent has multiple files, need to specify which one to analyze with \`filename\`.`,
+            `Torrent has multiple files, need to specify which one to analyze with \`fileName\`.`,
           )
         }
 

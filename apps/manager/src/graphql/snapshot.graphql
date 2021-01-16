@@ -52,7 +52,7 @@ type Group {
 
 type Image {
   createdAt: DateTime!
-  filename: String!
+  fileName: String!
   id: ID!
   timestamp: Timestamp!
   updatedAt: DateTime!

@@ -49,7 +49,7 @@ events.on("completed", async ({ jobId, returnvalue }) => {
       const image = new Image()
 
       image.entry = entry
-      image.filename = fileName
+      image.fileName = fileName
       image.timestamp = timestamp
 
       return image

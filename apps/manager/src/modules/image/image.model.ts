@@ -14,7 +14,7 @@ export class Image extends ExtendedEntity {
 
   @Column()
   @Field()
-  filename!: string
+  fileName!: string
 
   @ManyToOne(() => Entry, (entry) => entry.images)
   @Index()

@@ -56,7 +56,7 @@ export default defineComponent({
   },
   methods: {
     getImageUrl(image: Image): string {
-      return `${CONFIG.VUE_APP_CDN_URL}/${this.animeId}/${image.filename}`
+      return `${CONFIG.VUE_APP_CDN_URL}/${this.animeId}/${image.fileName}`
     },
   },
 })

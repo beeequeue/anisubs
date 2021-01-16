@@ -31,7 +31,7 @@ export class Entry extends ExtendedEntity implements ExtractOptions {
   sourceUri!: string
 
   @Column()
-  @Matches(/.*\.[a-zA-Z\d]{2,}/, { message: "Not a filename." })
+  @Matches(/.*\.[a-zA-Z\d]{2,}/, { message: "Not a file name." })
   @Field()
   fileName!: string
 

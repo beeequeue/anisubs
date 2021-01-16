@@ -49,7 +49,7 @@ export type Image = {
   readonly createdAt: Scalars["DateTime"]
   readonly updatedAt: Scalars["DateTime"]
   readonly timestamp: Scalars["Timestamp"]
-  readonly filename: Scalars["String"]
+  readonly fileName: Scalars["String"]
 }
 
 export type Entry = {
@@ -243,7 +243,7 @@ export type AnimePageQuery = { readonly __typename?: "Query" } & {
               readonly images: ReadonlyArray<
                 { readonly __typename?: "Image" } & Pick<
                   Image,
-                  "id" | "filename" | "timestamp"
+                  "id" | "fileName" | "timestamp"
                 >
               >
             }
@@ -423,7 +423,7 @@ export const AnimePageDocument = /*#__PURE__*/ gql`
         }
         images {
           id
-          filename
+          fileName
           timestamp
         }
       }
