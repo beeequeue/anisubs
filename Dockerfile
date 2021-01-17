@@ -8,3 +8,5 @@ COPY . /project
 RUN npx lerna bootstrap
 
 EXPOSE 5000
+
+ENTRYPOINT ["yarn"]
