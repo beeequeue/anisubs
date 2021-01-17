@@ -12,6 +12,8 @@
     "dev": "lerna run dev --parallel",
     "lint": "yarn lint:nocache --cache --cache-location ./node_modules/.cache/eslint",
     "lint:nocache": "eslint apps/*/src/**/*.{ts,vue}",
+    "start:manager": "cd apps/manager && yarn start",
+    "start:worker": "cd apps/worker && yarn start",
     "test": "cross-env NODE_ENV=test jest"
   },
   "husky": {
