@@ -1,0 +1,28 @@
+name: Deploy
+
+on:
+  - status
+
+jobs:
+  deploy-manager:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cancel previous deployments
+        uses: styfle/cancel-workflow-action@0.4.0
+        with:
+          access_token: ${{ github.token }}
+      - name: Wait for status checks
+        id: checks
+        uses: WyriHaximus/github-action-wait-for-status@v2
+        with:
+          ignoreActions: deploy
+          checkInterval: 30
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Deploy
+        if: steps.checks.outputs.status == 'success'
+        uses: dokku/github-action@v1
+        with:
+          git_remote_url: 'ssh://dokku@media.ejdre.se:22/anisubs-manager'
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
