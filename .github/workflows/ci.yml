@@ -1,0 +1,68 @@
+name: CI
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+        with:
+          install-command: npx lerna bootstrap
+
+      - name: Build
+        env:
+          NODE_ENV: production
+        run: yarn build
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+        with:
+          install-command: npx lerna bootstrap
+
+      - name: Lint
+        run: yarn lint
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+        with:
+          install-command: npx lerna bootstrap
+
+      - name: Test
+        env:
+          NODE_ENV: test
+        run: yarn test
