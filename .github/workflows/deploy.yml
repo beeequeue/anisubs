@@ -5,6 +5,8 @@ on:
 
 jobs:
   deploy-manager:
+    if: ${{ github.actor != 'vercel' }}
+
     runs-on: ubuntu-latest
 
     steps:
