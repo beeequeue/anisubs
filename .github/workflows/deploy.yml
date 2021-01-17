@@ -1,7 +1,9 @@
 name: Deploy
 
 on:
-  - status
+  push:
+    branches:
+      - master
 
 jobs:
   deploy-manager:
