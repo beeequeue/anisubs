@@ -20,7 +20,7 @@ jobs:
         id: checks
         uses: WyriHaximus/github-action-wait-for-status@v1.3
         with:
-          ignoreActions: deploy
+          ignoreActions: deploy-manager
           checkInterval: 30
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
