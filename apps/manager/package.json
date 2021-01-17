@@ -12,10 +12,11 @@
     "*.{ts,js,vue,html,json,yml}": "prettier --write"
   },
   "scripts": {
-    "precommit": "lint-staged",
+    "build": "tsc",
     "dev": "ts-node-dev --respawn --no-deps -r dotenv-flow/config -r tsconfig-paths/register --files --inspect=3009 -- src/index.ts",
     "migrate": "yarn typeorm migration:run",
     "migrate:create": "yarn typeorm migration:create --name",
+    "precommit": "lint-staged",
     "start": "yarn ts-node -T -r dotenv-flow/config -r tsconfig-paths/register src/index.ts",
     "test": "echo \"Error: run tests from root\" && exit 1",
     "typeorm": "ts-node -T -r dotenv-flow/config -r tsconfig-paths/register ../../node_modules/typeorm/cli.js"

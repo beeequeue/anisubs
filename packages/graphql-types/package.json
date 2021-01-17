@@ -13,7 +13,7 @@
     "*.{ts,js,vue,html,json,yml}": "prettier --write"
   },
   "scripts": {
-    "build": "gql-gen --config codegen.yml",
+    "update": "gql-gen --config codegen.yml",
     "dev": "gql-gen --config codegen.yml --watch \"../../apps/**/*.graphql\"",
     "precommit": "lint-staged"
   },

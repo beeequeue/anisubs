@@ -2,6 +2,7 @@ import { randomBytes } from "crypto"
 
 import { UserInputError } from "apollo-server-koa"
 import { Arg, Mutation, Query, Resolver } from "type-graphql"
+
 import { Worker } from "@/modules/worker/worker.model"
 
 @Resolver()

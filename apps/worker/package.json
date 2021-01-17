@@ -13,6 +13,7 @@
   },
   "scripts": {
     "precommit": "lint-staged",
+    "build": "tsc",
     "dev": "ts-node-dev --respawn --no-deps -r dotenv-flow/config -r tsconfig-paths/register --files --inspect=3109 -- src/index.ts",
     "start": "yarn ts-node -T -r dotenv-flow/config -r tsconfig-paths/register src/index.ts",
     "test": "echo \"Error: run tests from root\" && exit 1",

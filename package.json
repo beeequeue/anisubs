@@ -9,6 +9,7 @@
     "apps/*"
   ],
   "scripts": {
+    "build": "lerna run --stream --exclude-dependents build",
     "dev": "lerna run dev --parallel",
     "lint": "yarn lint:nocache --cache --cache-location ./node_modules/.cache/eslint",
     "lint:nocache": "eslint apps/*/src/**/*.{ts,vue}",
@@ -35,6 +36,7 @@
     "@types/prettier": "2.1.6",
     "@typescript-eslint/eslint-plugin": "4.11.1",
     "@typescript-eslint/parser": "4.11.1",
+    "cross-env": "7.0.3",
     "dotenv-flow": "3.2.0",
     "eslint": "7.17.0",
     "eslint-config-prettier": "7.1.0",
