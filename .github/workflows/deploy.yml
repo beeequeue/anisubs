@@ -12,10 +12,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
       - name: Cancel previous deployments
         uses: styfle/cancel-workflow-action@0.4.0
         with:
           access_token: ${{ github.token }}
+
       - name: Wait for status checks
         id: checks
         uses: WyriHaximus/github-action-wait-for-status@v1.3
@@ -24,6 +28,7 @@ jobs:
           checkInterval: 30
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
       - name: Deploy
         if: steps.checks.outputs.status == 'success'
         uses: dokku/github-action@v1.0.1
