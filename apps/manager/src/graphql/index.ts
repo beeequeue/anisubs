@@ -33,8 +33,6 @@ export const registerApolloServer = async (app: Koa<KoaContext>) => {
 
   server.applyMiddleware({
     app: app as Koa,
-    cors: {
-      origin: "anisubs.app",
-    },
+    cors: false,
   })
 }

@@ -4,6 +4,7 @@ module.exports = {
     host: "localhost",
     clientLogLevel: "warn",
     progress: false,
+    disableHostCheck: true,
   },
   // prettier-ignore
   chainWebpack: chain => {

@@ -1,6 +1,8 @@
 import { resolve } from "path"
 
+import Cors from "@koa/cors"
 import Koa from "koa"
+import Helmet from "koa-helmet"
 import Serve from "koa-static-server"
 import { v4 as uuid } from "uuid"
 
@@ -13,6 +15,13 @@ const SEVEN_DAYS = 1000 * 60 * 60 * 24 * 7
 
 export const createApp = async () => {
   const app = new Koa<KoaContext>()
+
+  app.use(
+    Cors({
+      origin: config.NODE_ENV === "production" ? "https://anisubs.app" : "*",
+    }),
+  )
+  app.use(Helmet())
 
   app.use(async (ctx, next) => {
     ctx.state.requestId = uuid()
