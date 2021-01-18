@@ -1,0 +1,1 @@
+{{ var "DOKKU_CHECK_ENDPOINT" }}
