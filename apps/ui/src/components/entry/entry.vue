@@ -7,7 +7,9 @@
     </div>
 
     <div class="info">
-      <div class="title">{{ entry.anime.anilist.title }}</div>
+      <div class="title">
+        {{ entry.anime.anilist.title }}
+      </div>
 
       <router-link :to="`/group/${entry.group.id}`" class="group">
         <icon :icon="mdiAccountMultiple" />
@@ -40,7 +42,7 @@ const dateOptions = {
 }
 
 const dateFormatter = (date: Date | number | string) =>
-  Intl.DateTimeFormat([...window.navigator.languages], dateOptions).format(
+  Intl.DateTimeFormat(["sv-SE"], dateOptions).format(
     typeof date === "string" ? new Date(date) : date,
   )
 
@@ -119,6 +121,8 @@ export default defineComponent({
 
     & > .title {
       margin-bottom: 4px;
+      padding-right: 25px;
+      text-align: left;
     }
 
     & > .group {
