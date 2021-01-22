@@ -10,7 +10,11 @@
   "main": "src/index.ts",
   "types": "src/index.ts",
   "lint-staged": {
-    "*.{ts,js,vue,html,json,yml}": "prettier --write"
+    "*.{ts,js,vue,html,json,yml}": "prettier --write",
+    "*.{ts,js,vue}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "scripts": {
     "update": "gql-gen --config codegen.yml",

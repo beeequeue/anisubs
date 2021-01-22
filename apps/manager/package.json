@@ -9,7 +9,11 @@
     "node": ">=12"
   },
   "lint-staged": {
-    "*.{ts,js,vue,html,json,yml}": "prettier --write"
+    "*.{ts,js,vue,html,json,yml}": "prettier --write",
+    "*.{ts,js,vue}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "scripts": {
     "build": "tsc",
