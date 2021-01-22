@@ -14,11 +14,12 @@ import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 
 import { apolloClient } from "@/apollo"
-import DarkTheme from "@/themes/dark.vue"
 import { CONFIG } from "@/config"
+import DarkTheme from "@/themes/dark.vue"
 
 provideApolloClient(apolloClient)
 
+// eslint-disable-next-line @typescript-eslint/unbound-method
 const { replace } = useRouter()
 
 const checkAuth = ref(false)
