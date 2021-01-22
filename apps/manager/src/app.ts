@@ -18,7 +18,12 @@ export const createApp = async () => {
 
   app.use(
     Cors({
-      origin: config.NODE_ENV === "production" ? "https://anisubs.app" : "*",
+      origin:
+        config.NODE_ENV === "production"
+          ? "https://anisubs.app"
+          : // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
+            (ctx) => ctx.request.header.origin,
+      credentials: true,
     }),
   )
   app.use(Helmet())

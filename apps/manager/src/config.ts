@@ -23,6 +23,14 @@ const baseEnv = envsafe({
   USER_AGENT: str({
     default: "@anisubs/manager",
   }),
+
+  TOKEN_SECRET: str({
+    devDefault: "kitten",
+  }),
+  COOKIE_DOMAIN: str({
+    default: ".anisubs.app",
+    devDefault: "localhost",
+  }),
 })
 
 const anilistEnv = envsafe({
@@ -32,6 +40,23 @@ const anilistEnv = envsafe({
   ANILIST_TOKEN: str({
     default: "",
     allowEmpty: true,
+  }),
+})
+
+const discordEnv = envsafe({
+  DISCORD_CLIENT_ID: str(),
+  DISCORD_SECRET: str(),
+  DISCORD_CALLBACK_URL: url({
+    default: "https://api.anisubs.app/auth/discord/callback",
+    devDefault: "http://localhost:3000/auth/discord/callback",
+  }),
+  DISCORD_SUCCESS_REDIRECT: url({
+    default: "https://api.anisubs.app",
+    devDefault: "http://localhost:8080",
+  }),
+  DISCORD_ERROR_REDIRECT: url({
+    default: "https://api.anisubs.app/login",
+    devDefault: "http://localhost:8080/login",
   }),
 })
 
@@ -54,6 +79,7 @@ const postgresEnv = envsafe({
 export const config = {
   ...baseEnv,
   ...anilistEnv,
+  ...discordEnv,
 
   db: {
     type: "postgres",
