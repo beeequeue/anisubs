@@ -60,9 +60,7 @@ const discordEnv = envsafe({
 })
 
 const redisEnv = envsafe({
-  REDIS_URL: url({
-    devDefault: "redis://localhost:6379/0",
-  }),
+  REDIS_URL: url(),
 })
 
 const postgresEnv = envsafe({
