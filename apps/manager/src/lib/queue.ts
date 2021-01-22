@@ -5,17 +5,16 @@ import { getManager } from "typeorm"
 import { config } from "@/config"
 import { Entry } from "@/modules/entry/entry.model"
 import { Image } from "@/modules/image/image.model"
+import Redis from "ioredis"
+
+const client = new Redis(config.REDIS_URL)
 
 const jobQueue = new Queue<ExtractOptions>("extraction", {
-  connection: {
-    ...config.redis,
-  },
+  client,
 })
 
 const events = new QueueEvents("extraction", {
-  connection: {
-    ...config.redis,
-  },
+  client,
 })
 
 enum Job {

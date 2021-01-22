@@ -1,7 +1,3 @@
-import { URL } from "url"
-
-import { RedisOptions } from "ioredis"
-
 export const throttle = <Fn extends (...params: unknown[]) => void>(
   fn: Fn,
   ms: number,
@@ -45,14 +41,3 @@ export const compareTimestamps = <T extends { timestamp: string }>(
   one: T,
   two: T,
 ) => one.timestamp.localeCompare(two.timestamp)
-
-export const getRedisConfig = (redisUrl: string): RedisOptions => {
-  const { hostname, port, username, password } = new URL(redisUrl)
-
-  return {
-    host: hostname,
-    port: Number(port),
-    username,
-    password,
-  }
-}

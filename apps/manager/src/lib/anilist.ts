@@ -76,8 +76,7 @@ const fetchIdData = async (ids: number[]): Promise<AnilistData[]> =>
 
 const SIX_HOURS_IN_SECONDS = 6 * 3600
 
-const redis = new Redis({
-  ...config.redis,
+const redis = new Redis(config.REDIS_URL, {
   keyPrefix: "anilist-cache-v1-",
 })
 
