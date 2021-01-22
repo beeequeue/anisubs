@@ -21,7 +21,12 @@ export const JWT = {
 }
 
 export const TokenMiddleware = (): Middleware => async (ctx, next) => {
-  if (ctx.path.startsWith("/auth")) return next()
+  if (
+    ctx.path.startsWith("/auth") ||
+    ctx.path === "/.well-known/apollo/server-health"
+  ) {
+    return next()
+  }
 
   const token = ctx.cookies.get("anisubs:token")
 
