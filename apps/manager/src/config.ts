@@ -1,4 +1,4 @@
-import { bool, envsafe, port, str, url } from "envsafe"
+import { envsafe, port, str, url } from "envsafe"
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions"
 
 enum Environment {
@@ -69,10 +69,6 @@ const postgresEnv = envsafe({
   DATABASE_URL: url({
     devDefault: "postgresql://postgres:password@localhost:5432/postgres",
   }),
-  DATABASE_SSL: bool({
-    default: true,
-    devDefault: false,
-  }),
 })
 
 export const config = {
@@ -84,7 +80,6 @@ export const config = {
   db: {
     type: "postgres",
     url: postgresEnv.DATABASE_URL,
-    ssl: postgresEnv.DATABASE_SSL,
 
     migrationsRun: true,
 
