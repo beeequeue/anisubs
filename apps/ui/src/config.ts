@@ -22,10 +22,10 @@ const baseEnv = envsafe({
     devDefault: "http://localhost:3000/cdn",
     input: process.env.VUE_APP_CDN_URL,
   }),
-  VUE_APP_GRAPHQL_URL: str({
-    default: "https://api.anisubs.com/graphql",
-    devDefault: "http://localhost:3000/graphql",
-    input: process.env.VUE_APP_GRAPHQL_URL,
+  VUE_APP_API_URL: str({
+    default: "https://api.anisubs.com",
+    devDefault: "http://localhost:3000",
+    input: process.env.VUE_APP_API_URL,
   }),
 })
 

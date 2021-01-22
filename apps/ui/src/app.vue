@@ -5,22 +5,36 @@
     </router-link>
   </nav>
 
-  <router-view />
+  <router-view v-if="checkAuth" />
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { provideApolloClient } from "@vue/apollo-composable"
-import { defineComponent } from "vue"
+import { onMounted, ref } from "vue"
+import { useRouter } from "vue-router"
 
 import { apolloClient } from "@/apollo"
 import DarkTheme from "@/themes/dark.vue"
+import { CONFIG } from "@/config"
 
-export default defineComponent({
-  // eslint-disable-next-line vue/no-unused-components
-  components: { DarkTheme },
-  setup() {
-    provideApolloClient(apolloClient)
-  },
+provideApolloClient(apolloClient)
+
+const { replace } = useRouter()
+
+const checkAuth = ref(false)
+
+onMounted(async () => {
+  const response = await fetch(`${CONFIG.VUE_APP_API_URL}/me`, {
+    method: "GET",
+    credentials: "include",
+    cache: "no-cache",
+  })
+
+  if (response.status >= 401 && response.status < 500) {
+    await replace("login")
+  }
+
+  checkAuth.value = true
 })
 </script>
 

@@ -8,7 +8,8 @@ import {
 import { CONFIG } from "@/config"
 
 const httpLink = createHttpLink({
-  uri: CONFIG.VUE_APP_GRAPHQL_URL,
+  uri: `${CONFIG.VUE_APP_API_URL}/graphql`,
+  credentials: "include",
 })
 
 const cache = new InMemoryCache({
