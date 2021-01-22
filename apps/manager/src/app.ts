@@ -7,9 +7,9 @@ import Serve from "koa-static-server"
 import { v4 as uuid } from "uuid"
 
 import { config } from "@/config"
+import { registerApolloServer } from "@/graphql"
+import { TokenMiddleware } from "@/lib/jwt"
 import { createRouter } from "@/rest"
-
-import { registerApolloServer } from "./graphql"
 
 const SEVEN_DAYS = 1000 * 60 * 60 * 24 * 7
 
@@ -27,6 +27,8 @@ export const createApp = async () => {
     }),
   )
   app.use(Helmet())
+
+  app.use(TokenMiddleware())
 
   app.use(async (ctx, next) => {
     ctx.state.requestId = uuid()

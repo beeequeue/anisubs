@@ -1,10 +1,10 @@
 import { URL, URLSearchParams } from "url"
 
 import Router from "koa-router"
-import { sign } from "jsonwebtoken"
 
 import { config } from "@/config"
 import { HttpClient } from "@/http"
+import { JWT } from "@/lib/jwt"
 import { responseIsError } from "@/lib/utils"
 
 const discordBaseUrl = "https://discord.com/api"
@@ -80,19 +80,8 @@ discordRouter.get("/callback", async (ctx) => {
   }
 
   const expiryDate = new Date(new Date().setDate(new Date().getDate() + 30))
-  const token = sign(
-    {
-      discord: userResponse.body.id,
-    },
-    config.TOKEN_SECRET,
-    {
-      issuer: "anisubs",
-      audience: "you♥",
-      expiresIn: Math.round(expiryDate.getTime() / 1000),
-    },
-  )
+  const token = JWT.sign(userResponse.body.id, expiryDate)
 
-  console.log(token)
   ctx.cookies.set("anisubs:token", token, {
     domain: config.COOKIE_DOMAIN,
     httpOnly: true,
