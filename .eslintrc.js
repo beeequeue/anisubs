@@ -49,15 +49,12 @@ module.exports = {
         ],
         pathGroups: [
           {
-            pattern: "@*/**",
-            group: "external",
+            pattern: "@/**/*",
+            group: "internal",
             position: "after",
           },
-          {
-            pattern: "@/**",
-            group: "parent",
-          },
         ],
+        pathGroupsExcludedImportTypes: ["builtin"],
         "newlines-between": "always",
       },
     ],
