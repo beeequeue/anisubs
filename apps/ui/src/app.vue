@@ -15,7 +15,7 @@ import { watch } from "vue"
 import { useRouter } from "vue-router"
 
 import { apolloClient } from "@/apollo"
-import { useAuth } from "@/hooks/useAuth"
+import { useAuth } from "@/hooks/use-auth"
 import DarkTheme from "@/themes/dark.vue"
 
 provideApolloClient(apolloClient)
