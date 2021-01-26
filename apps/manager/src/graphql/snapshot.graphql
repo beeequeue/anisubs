@@ -81,10 +81,10 @@ type JobPage {
 }
 
 type Mutation {
-  addWorker(name: String!): Worker!
   confirmWorker(token: String!): Boolean!
   createJob(animeId: Int!, fileName: String, group: String, source: String!, timestamps: [Timestamp!]): Job!
   deleteEntry(id: ID!): Boolean!
+  registerWorker(name: String!): String!
 }
 
 type Query {
