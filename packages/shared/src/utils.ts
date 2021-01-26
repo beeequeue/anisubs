@@ -49,14 +49,14 @@ export const compareTimestamps = <T extends { timestamp: string }>(
 export const getRedisConfig = (redisUrl: string) => (
   name: string,
 ): RedisOptions => {
-  const { hostname, port, username, password } = new URL(redisUrl)
+  const { hostname, port, /*username,*/ password } = new URL(redisUrl)
 
   const c = {
     name,
     connectionName: name,
     host: hostname,
     port: Number(port),
-    username: username || undefined,
+    // username: username || undefined,
     password: password || undefined,
   }
   console.log(c)
