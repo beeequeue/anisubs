@@ -51,7 +51,7 @@ export const getRedisConfig = (redisUrl: string) => (
 ): RedisOptions => {
   const { hostname, port, /*username,*/ password } = new URL(redisUrl)
 
-  const c = {
+  return {
     name,
     connectionName: name,
     host: hostname,
@@ -59,6 +59,4 @@ export const getRedisConfig = (redisUrl: string) => (
     // username: username || undefined,
     password: password || undefined,
   }
-  console.log(c)
-  return c
 }
