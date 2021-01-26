@@ -1,3 +1,4 @@
+import { getRedisConfig } from "@anisubs/shared"
 import { envsafe, port, str, url } from "envsafe"
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions"
 
@@ -60,7 +61,9 @@ const discordEnv = envsafe({
 })
 
 const redisEnv = envsafe({
-  REDIS_URL: url(),
+  REDIS_URL: url({
+    devDefault: "redis://localhost:6379/0",
+  }),
 })
 
 const postgresEnv = envsafe({
@@ -73,7 +76,6 @@ export const config = {
   ...baseEnv,
   ...anilistEnv,
   ...discordEnv,
-  ...redisEnv,
 
   db: {
     type: "postgres",
@@ -88,4 +90,6 @@ export const config = {
       migrationsDir: "migrations",
     },
   } as PostgresConnectionOptions,
+
+  redis: getRedisConfig(redisEnv.REDIS_URL),
 }

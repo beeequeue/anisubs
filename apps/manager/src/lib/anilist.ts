@@ -1,11 +1,10 @@
+import { config } from "@/config"
+import { Anime } from "@/modules/anime/anime.model"
 import Bottleneck from "bottleneck"
 import DataLoader from "dataloader"
 import { GraphQLClient, gql } from "graphql-request"
 import Redis from "ioredis"
 import { Field, ObjectType, Root } from "type-graphql"
-
-import { config } from "@/config"
-import { Anime } from "@/modules/anime/anime.model"
 
 const anilistLimiter = new Bottleneck({
   maxConcurrent: 2,
@@ -76,7 +75,8 @@ const fetchIdData = async (ids: number[]): Promise<AnilistData[]> =>
 
 const SIX_HOURS_IN_SECONDS = 6 * 3600
 
-const redis = new Redis(config.REDIS_URL, {
+const redis = new Redis({
+  ...config.redis("anilist"),
   keyPrefix: "anilist-cache-v1-",
 })
 

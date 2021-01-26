@@ -1,20 +1,19 @@
+import { config } from "@/config"
+import { Entry } from "@/modules/entry/entry.model"
+import { Image } from "@/modules/image/image.model"
 import { ExtractOptions, ExtractResult } from "@anisubs/shared"
 import { Job as QueueJob, Queue, QueueEvents } from "bullmq"
 import Redis from "ioredis"
 import { getManager } from "typeorm"
 
-import { config } from "@/config"
-import { Entry } from "@/modules/entry/entry.model"
-import { Image } from "@/modules/image/image.model"
-
-const client = new Redis(config.REDIS_URL)
+const redis = new Redis(config.redis("manager-queue"))
 
 const jobQueue = new Queue<ExtractOptions>("extraction", {
-  client,
+  connection: redis,
 })
 
 const events = new QueueEvents("extraction", {
-  client,
+  connection: redis,
 })
 
 enum Job {

@@ -1,3 +1,4 @@
+import { getRedisConfig } from "@anisubs/shared"
 import { envsafe, port, str, url } from "envsafe"
 
 enum Environment {
@@ -36,5 +37,6 @@ const redisEnv = envsafe({
 
 export const CONFIG = {
   ...baseEnv,
-  ...redisEnv,
+
+  redis: getRedisConfig(redisEnv.REDIS_URL),
 }
