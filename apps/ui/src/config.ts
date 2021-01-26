@@ -18,12 +18,12 @@ const baseEnv = envsafe({
   }),
 
   VUE_APP_CDN_URL: str({
-    default: "https://cdn.anisubs.com/",
+    default: "https://api.anisubs.app/cdn",
     devDefault: "http://localhost:3000/cdn",
     input: process.env.VUE_APP_CDN_URL,
   }),
   VUE_APP_API_URL: str({
-    default: "https://api.anisubs.com",
+    default: "https://api.anisubs.app",
     devDefault: "http://localhost:3000",
     input: process.env.VUE_APP_API_URL,
   }),
