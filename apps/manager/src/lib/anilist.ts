@@ -1,10 +1,11 @@
-import { config } from "@/config"
-import { Anime } from "@/modules/anime/anime.model"
 import Bottleneck from "bottleneck"
 import DataLoader from "dataloader"
 import { GraphQLClient, gql } from "graphql-request"
 import Redis from "ioredis"
 import { Field, ObjectType, Root } from "type-graphql"
+
+import { config } from "@/config"
+import { Anime } from "@/modules/anime/anime.model"
 
 const anilistLimiter = new Bottleneck({
   maxConcurrent: 2,

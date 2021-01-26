@@ -1,10 +1,11 @@
-import { config } from "@/config"
-import { Entry } from "@/modules/entry/entry.model"
-import { Image } from "@/modules/image/image.model"
 import { ExtractOptions, ExtractResult } from "@anisubs/shared"
 import { Job as QueueJob, Queue, QueueEvents } from "bullmq"
 import Redis from "ioredis"
 import { getManager } from "typeorm"
+
+import { config } from "@/config"
+import { Entry } from "@/modules/entry/entry.model"
+import { Image } from "@/modules/image/image.model"
 
 const redis = new Redis(config.redis("manager-queue"))
 

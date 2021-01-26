@@ -1,14 +1,15 @@
 import { resolve } from "path"
 
-import { config } from "@/config"
-import { registerApolloServer } from "@/graphql"
-import { TokenMiddleware } from "@/lib/jwt"
-import { createRouter } from "@/rest"
 import Cors from "@koa/cors"
 import Koa from "koa"
 import Helmet from "koa-helmet"
 import Serve from "koa-static-server"
 import { v4 as uuid } from "uuid"
+
+import { config } from "@/config"
+import { registerApolloServer } from "@/graphql"
+import { TokenMiddleware } from "@/lib/jwt"
+import { createRouter } from "@/rest"
 
 const SEVEN_DAYS = 1000 * 60 * 60 * 24 * 7
 

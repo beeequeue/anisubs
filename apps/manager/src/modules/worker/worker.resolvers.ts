@@ -1,8 +1,9 @@
 import { randomBytes } from "crypto"
 
-import { Worker } from "@/modules/worker/worker.model"
 import { UserInputError } from "apollo-server-koa"
 import { Arg, Mutation, Query, Resolver } from "type-graphql"
+
+import { Worker } from "@/modules/worker/worker.model"
 
 @Resolver()
 export class WorkerResolvers {

@@ -1,8 +1,9 @@
-import { CONFIG } from "@/config"
-import { startNewExtraction } from "@/jobs/extract"
 import { ExtractOptions } from "@anisubs/shared"
 import { Job, Worker } from "bullmq"
 import Redis from "ioredis"
+
+import { CONFIG } from "@/config"
+import { startNewExtraction } from "@/jobs/extract"
 
 const redis = new Redis(CONFIG.redis("worker-queue"))
 

@@ -1,6 +1,7 @@
-import { discordRouter } from "@/rest/discord"
 import { decode } from "jsonwebtoken"
 import Router from "koa-router"
+
+import { discordRouter } from "@/rest/discord"
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export const createRouter = async () => {
