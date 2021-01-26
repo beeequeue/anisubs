@@ -3,18 +3,18 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    name: "home",
+    name: "Home",
     component: () => import(/* webpackChunkName: "home" */ "./views/home.vue"),
   },
   {
     path: "/anime/:id",
-    name: "anime",
+    name: "Anime - :id",
     component: () =>
       import(/* webpackChunkName: "anime" */ "./views/anime.vue"),
   },
   {
     path: "/create-job",
-    name: "create-job",
+    name: "Create Comparison",
     component: () =>
       import(
         /* webpackChunkName: "create-job" */ "./views/create-job/create-job.vue"
@@ -22,7 +22,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/login",
-    name: "login",
+    name: "Login",
     component: () =>
       import(/* webpackChunkName: "login" */ "./views/login.vue"),
   },

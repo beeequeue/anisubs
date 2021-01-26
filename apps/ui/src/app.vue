@@ -5,38 +5,34 @@
     </router-link>
   </nav>
 
-  <router-view v-if="checkAuth" />
+  <router-view v-if="checkedAuth" />
 </template>
 
 <script lang="ts" setup>
 import { provideApolloClient } from "@vue/apollo-composable"
-import { onMounted, ref } from "vue"
+import { useTitle } from "@vueuse/core"
+import { watch } from "vue"
 import { useRouter } from "vue-router"
 
 import { apolloClient } from "@/apollo"
-import { CONFIG } from "@/config"
+import { useAuth } from "@/hooks/useAuth"
 import DarkTheme from "@/themes/dark.vue"
 
 provideApolloClient(apolloClient)
 
-// eslint-disable-next-line @typescript-eslint/unbound-method
-const { replace } = useRouter()
+const router = useRouter()
+const title = useTitle()
 
-const checkAuth = ref(false)
-
-onMounted(async () => {
-  const response = await fetch(`${CONFIG.VUE_APP_API_URL}/me`, {
-    method: "GET",
-    credentials: "include",
-    cache: "no-cache",
-  })
-
-  if (response.status >= 401 && response.status < 500) {
-    await replace("login")
+watch(router.currentRoute, (route) => {
+  if (route == null) {
+    title.value = "AniSubs - Anime Fansub Comparisons"
+    return
   }
 
-  checkAuth.value = true
+  title.value = `${route.name as string} - AniSubs`
 })
+
+const { checkedAuth } = useAuth()
 </script>
 
 <style lang="scss">
