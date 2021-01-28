@@ -20,6 +20,10 @@ const baseEnv = envsafe({
   PORT: port({
     devDefault: 3000,
   }),
+  LOG_LEVEL: str({
+    default: "info",
+    choices: ["fatal", "error", "warn", "info", "debug", "trace"],
+  }),
   USER_AGENT: str({
     default: "@anisubs/manager",
   }),

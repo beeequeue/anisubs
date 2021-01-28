@@ -15,6 +15,7 @@ import { ArgsType, Field, ID, Int, ObjectType } from "type-graphql"
 import { Index } from "typeorm"
 
 import { Timestamp } from "@/graphql/scalars"
+import { Logger } from "@/lib/logger"
 import { addJob } from "@/lib/queue"
 import { Entry } from "@/modules/entry/entry.model"
 import { Group } from "@/modules/group/group.model"
@@ -179,7 +180,7 @@ export class Job implements ExtractOptions {
 
     const errors = await validate(options)
     if (errors.length > 0) {
-      console.error(
+      Logger.error(
         `Failed to save Job.\n${errors
           .map((e) => e.toString())
           .join("\n")}\n${JSON.stringify(options, null, 2)}`,

@@ -5,6 +5,7 @@ import Router from "koa-router"
 import { config } from "@/config"
 import { HttpClient } from "@/http"
 import { JWT } from "@/lib/jwt"
+import { Logger } from "@/lib/logger"
 import { responseIsError } from "@/lib/utils"
 
 const discordBaseUrl = "https://discord.com/api"
@@ -60,7 +61,7 @@ discordRouter.get("/callback", async (ctx) => {
   )
 
   if (responseIsError(tokenResponse)) {
-    console.error(tokenResponse.body)
+    Logger.error(tokenResponse.body)
     return ctx.redirect(config.DISCORD_ERROR_REDIRECT)
   }
 
@@ -75,7 +76,7 @@ discordRouter.get("/callback", async (ctx) => {
   )
 
   if (responseIsError(userResponse)) {
-    console.error(userResponse.body)
+    Logger.error(userResponse.body)
     return ctx.redirect(config.DISCORD_ERROR_REDIRECT)
   }
 

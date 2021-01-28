@@ -27,8 +27,6 @@ export class WorkerResolvers {
 
   @Mutation(() => Boolean)
   async confirmWorker(@Arg("token") token: string): Promise<boolean> {
-    console.log("A worker is trying to confirm...")
-
     const worker = await Worker.findOne({
       where: { token },
     })
