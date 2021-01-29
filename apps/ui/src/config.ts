@@ -16,6 +16,10 @@ const baseEnv = envsafe({
     default: Environment.Development,
     input: process.env.NODE_ENV,
   }),
+  BASE_URL: str({
+    default: "/",
+    input: process.env.BASE_URL,
+  }),
 
   VUE_APP_CDN_URL: str({
     default: "https://api.anisubs.app/cdn",
