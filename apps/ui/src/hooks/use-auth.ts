@@ -9,6 +9,8 @@ const loggedIn = ref(false)
 export const useAuth = () => {
   const router = useRouter()
 
+  console.log("useAuth init")
+
   watch(router.currentRoute, () => {
     if (!loggedIn.value) {
       void router.replace("/login")
@@ -21,6 +23,8 @@ export const useAuth = () => {
       credentials: "include",
       cache: "no-cache",
     }).then((response) => {
+      console.log({ response })
+
       if (response.status >= 401 && response.status < 500) {
         void router.replace("/login")
       } else {
@@ -30,6 +34,17 @@ export const useAuth = () => {
       return true
     }),
     false,
+  )
+
+  watch(
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    () => `${loggedIn.value}${checkedAuth.value}`,
+    () => {
+      console.log({
+        loggedIn: loggedIn.value,
+        checkedAuth: checkedAuth.value,
+      })
+    },
   )
 
   return {
