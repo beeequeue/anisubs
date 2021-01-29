@@ -1,6 +1,7 @@
 import { createReadStream } from "fs"
 
 import { cleanTimestamp, compareTimestamps } from "@anisubs/shared"
+import { create } from "random-seed"
 import { parse, Cue, formatTimestamp } from "subtitle"
 import { v4 as uuid } from "uuid"
 
@@ -129,6 +130,9 @@ export const getTimestamp = (
 }
 
 export const findGoodTimestamps = (nodes: Node[]): Timestamp[] => {
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { random } = create("not-random-at-all")
+
   const timestamps: Timestamp[] = []
 
   const addTimestampIfNotAdded = (
@@ -151,10 +155,10 @@ export const findGoodTimestamps = (nodes: Node[]): Timestamp[] => {
   const opNodes = findOp(nodes)
   const edNodes = findEd(nodes)
 
-  const simultaneous = findSimultaneous(nodes)
+  let simultaneous = findSimultaneous(nodes)
 
   for (const node of opNodes) {
-    if (timestamps.length > 4) break
+    if (timestamps.length > 3) break
 
     const simulOpNodes = simultaneous.find((nodes) =>
       nodes.some((simulNode) => simulNode.uuid === node.uuid),
@@ -164,7 +168,7 @@ export const findGoodTimestamps = (nodes: Node[]): Timestamp[] => {
   }
 
   for (const node of edNodes) {
-    if (timestamps.length > 8) break
+    if (timestamps.length > 6) break
 
     const simulEdNodes = simultaneous.find((nodes) =>
       nodes.some((simulNode) => simulNode.uuid === node.uuid),
@@ -173,10 +177,16 @@ export const findGoodTimestamps = (nodes: Node[]): Timestamp[] => {
     addTimestampIfNotAdded(simulEdNodes ? simulEdNodes : [node], "ed")
   }
 
-  for (const nodes of simultaneous) {
-    if (timestamps.length > 12) break
+  while (timestamps.length < 10) {
+    if (simultaneous.length < 1) break
 
-    addTimestampIfNotAdded(nodes)
+    const index = Math.round(random() * simultaneous.length)
+    addTimestampIfNotAdded(simultaneous[index])
+
+    simultaneous = [
+      ...simultaneous.slice(0, index),
+      ...simultaneous.slice(index + 1),
+    ]
   }
 
   let remainingNodes = nodes.filter(
@@ -187,7 +197,7 @@ export const findGoodTimestamps = (nodes: Node[]): Timestamp[] => {
   )
 
   while (timestamps.length <= 12 && remainingNodes.length > 0) {
-    const index = Math.round(Math.random() * remainingNodes.length)
+    const index = Math.round(random() * remainingNodes.length)
 
     addTimestampIfNotAdded([remainingNodes[index]])
 

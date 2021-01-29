@@ -8675,19 +8675,6 @@ Array [
     "conditions": Object {
       "amount": 2,
       "ed": false,
-      "op": false,
-    },
-    "node": Object {
-      "end": 63907,
-      "start": 57997,
-      "text": "<font face=\\"BLACKPLOTAN\\" size=\\"65\\">{\\\\an8}ato dore kurai no kyori wo tsuki e aruitara</font>",
-    },
-    "timestamp": "01:01",
-  },
-  Object {
-    "conditions": Object {
-      "amount": 2,
-      "ed": false,
       "op": true,
     },
     "node": Object {
@@ -8740,66 +8727,80 @@ Array [
     "conditions": Object {
       "amount": 2,
       "ed": false,
-      "op": true,
-    },
-    "node": Object {
-      "end": 88227,
-      "start": 85427,
-      "text": "<font face=\\"BLACKPLOTAN\\" size=\\"65\\">{\\\\an8}sou omotteta kuudou wo</font>",
-    },
-    "timestamp": "01:27",
-  },
-  Object {
-    "conditions": Object {
-      "amount": 2,
-      "ed": false,
       "op": false,
     },
     "node": Object {
-      "end": 91957,
-      "start": 88227,
-      "text": "<font face=\\"BLACKPLOTAN\\" size=\\"65\\">{\\\\an8}mitashite afurete shimau hodo no</font>",
+      "end": 133517,
+      "start": 130427,
+      "text": "<font face=\\"BLACKPLOTAN\\" size=\\"65\\">{\\\\an8}sen nen mae no tooka ni nobashita ni pon no yubi ga</font>",
     },
-    "timestamp": "01:30",
-  },
-  Object {
-    "conditions": Object {
-      "amount": 2,
-      "ed": false,
-      "op": false,
-    },
-    "node": Object {
-      "end": 94447,
-      "start": 91957,
-      "text": "<font face=\\"BLACKPLOTAN\\" size=\\"65\\">{\\\\an8}kono kimochi wa nan da?</font>",
-    },
-    "timestamp": "01:33",
-  },
-  Object {
-    "conditions": Object {
-      "amount": 2,
-      "ed": false,
-      "op": false,
-    },
-    "node": Object {
-      "end": 96077,
-      "start": 94447,
-      "text": "<font face=\\"BLACKPLOTAN\\" size=\\"65\\">{\\\\an8}tanjun da yo maiasa no ‘ohayou’</font>",
-    },
-    "timestamp": "01:35.5",
+    "timestamp": "02:12",
   },
   Object {
     "conditions": Object {
       "amount": 1,
-      "ed": true,
+      "ed": false,
       "op": false,
     },
     "node": Object {
-      "end": 1341697,
-      "start": 1340067,
-      "text": "<font face=\\"Gandhi Sans\\" size=\\"72\\"><b>Y-Yeah.</b></font>",
+      "end": 314707,
+      "start": 314667,
+      "text": "<font face=\\"Titillium Web SemiBold\\" size=\\"48\\" color=\\"#dbddf1\\"><b>{\\\\an7}{=118}National
+\\\\hRanking</b></font>",
     },
-    "timestamp": "22:21",
+    "timestamp": "05:14.687",
+  },
+  Object {
+    "conditions": Object {
+      "amount": 1,
+      "ed": false,
+      "op": false,
+    },
+    "node": Object {
+      "end": 315997,
+      "start": 315957,
+      "text": "<font face=\\"Titillium Web SemiBold\\" size=\\"48\\" color=\\"#dbddf1\\"><b>{\\\\an7}{=120}Name</b></font>",
+    },
+    "timestamp": "05:15.977",
+  },
+  Object {
+    "conditions": Object {
+      "amount": 1,
+      "ed": false,
+      "op": false,
+    },
+    "node": Object {
+      "end": 639787,
+      "start": 637867,
+      "text": "<font face=\\"Gandhi Sans\\" size=\\"72\\"><b>Look after yourself.</b></font>",
+    },
+    "timestamp": "10:39",
+  },
+  Object {
+    "conditions": Object {
+      "amount": 4,
+      "ed": false,
+      "op": false,
+    },
+    "node": Object {
+      "end": 989037,
+      "start": 988997,
+      "text": "<font face=\\"Comic Sans MS\\" size=\\"120\\" color=\\"#050505\\">{=84}<font face=\\"DavesHand\\">Tsukuyomi Tokiko</font></font>",
+    },
+    "timestamp": "16:29",
+  },
+  Object {
+    "conditions": Object {
+      "amount": 4,
+      "ed": false,
+      "op": false,
+    },
+    "node": Object {
+      "end": 989667,
+      "start": 989617,
+      "text": "<font face=\\"Comic Sans MS\\" size=\\"120\\" color=\\"#050505\\">{=84}<font face=\\"DavesHand\\">Tsukuyomi Tokiko</font></font>",
+    },
+    "timestamp": "16:29.642",
   },
   Object {
     "conditions": Object {
