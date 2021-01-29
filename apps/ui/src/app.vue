@@ -5,36 +5,44 @@
     </router-link>
   </nav>
 
-  ??????????????
-
   <router-view v-if="checkedAuth" />
 </template>
 
-<script lang="ts" setup>
+<script lang="ts">
 import { provideApolloClient } from "@vue/apollo-composable"
 import { useTitle } from "@vueuse/core"
-import { watch } from "vue"
+import { defineComponent, watch } from "vue"
 import { useRouter } from "vue-router"
 
 import { apolloClient } from "@/apollo"
 import { useAuth } from "@/hooks/use-auth"
 import DarkTheme from "@/themes/dark.vue"
 
-provideApolloClient(apolloClient)
+export default defineComponent({
+  // eslint-disable-next-line vue/no-unused-components
+  components: { DarkTheme },
+  setup() {
+    provideApolloClient(apolloClient)
 
-const router = useRouter()
-const title = useTitle()
+    const router = useRouter()
+    const title = useTitle()
 
-watch(router.currentRoute, (route) => {
-  if (route == null) {
-    title.value = "AniSubs - Anime Fansub Comparisons"
-    return
-  }
+    watch(router.currentRoute, (route) => {
+      if (route == null) {
+        title.value = "AniSubs - Anime Fansub Comparisons"
+        return
+      }
 
-  title.value = `${route.name as string} - AniSubs`
+      title.value = `${route.name as string} - AniSubs`
+    })
+
+    const { checkedAuth } = useAuth()
+
+    return {
+      checkedAuth,
+    }
+  },
 })
-
-const { checkedAuth } = useAuth()
 </script>
 
 <style lang="scss">
