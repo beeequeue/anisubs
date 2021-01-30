@@ -5,7 +5,7 @@
     </router-link>
   </nav>
 
-  <router-view v-if="checkedAuth" />
+  <router-view />
 </template>
 
 <script lang="ts">
@@ -36,13 +36,7 @@ export default defineComponent({
       title.value = `${route.name as string} - AniSubs`
     })
 
-    const { checkedAuth } = useAuth()
-
-    watch(checkedAuth, (v) => console.log(v))
-
-    return {
-      checkedAuth,
-    }
+    useAuth()
   },
 })
 </script>
