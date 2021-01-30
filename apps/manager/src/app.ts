@@ -10,7 +10,6 @@ import { v4 as uuid } from "uuid"
 import { config } from "@/config"
 import { registerApolloServer } from "@/graphql"
 import { TokenMiddleware } from "@/lib/jwt"
-import { Logger } from "@/lib/logger"
 import { createRouter } from "@/rest"
 
 const SEVEN_DAYS = 1000 * 60 * 60 * 24 * 7
@@ -18,7 +17,11 @@ const SEVEN_DAYS = 1000 * 60 * 60 * 24 * 7
 export const createApp = async () => {
   const app = new Koa<KoaContext>()
 
-  app.use(RequestLogger({ logger: Logger }))
+  app.use(
+    RequestLogger({
+      enabled: config.NODE_ENV === "production",
+    }),
+  )
 
   app.use(
     Cors({

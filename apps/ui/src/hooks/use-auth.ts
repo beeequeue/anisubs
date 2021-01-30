@@ -21,8 +21,6 @@ export const useAuth = () => {
       credentials: "include",
       cache: "no-cache",
     }).then((response) => {
-      console.log({ response })
-
       if (response.status >= 401 && response.status < 500) {
         void router.replace("/login")
       } else {
