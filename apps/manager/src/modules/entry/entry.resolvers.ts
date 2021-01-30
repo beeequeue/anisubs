@@ -20,7 +20,7 @@ import { Image } from "@/modules/image/image.model"
 @Resolver()
 export class EntryResolvers {
   @Query(() => [Entry])
-  async entries(@Arg("animeId") animeId: number): Promise<Entry[]> {
+  async entries(@Arg("animeId") animeId: number): Promise<Iterable<Entry>> {
     return Entry.getDistinctEntries(animeId)
   }
 
