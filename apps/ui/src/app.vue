@@ -38,6 +38,8 @@ export default defineComponent({
 
     const { checkedAuth } = useAuth()
 
+    watch(checkedAuth, (v) => console.log(v))
+
     return {
       checkedAuth,
     }
