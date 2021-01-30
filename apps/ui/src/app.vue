@@ -33,8 +33,6 @@ export default defineComponent({
         return
       }
 
-      console.log(router.currentRoute.value)
-
       title.value = `${route.name as string} - AniSubs`
     })
 

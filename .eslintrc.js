@@ -74,6 +74,18 @@ module.exports = {
       },
     ],
 
+    // Require explanations for @ts-ignore
+    "@typescript-eslint/ban-ts-comment": [
+      "error",
+      {
+        "ts-expect-error": false,
+        "ts-ignore": "allow-with-description",
+        "ts-check": true,
+        "ts-nocheck": true,
+        minimumDescriptionLength: 6,
+      },
+    ],
+
     // Handles by TS
     "import/no-unresolved": "off",
     "import/no-named-as-default": "off",

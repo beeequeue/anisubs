@@ -9,6 +9,9 @@ import "modern-normalize"
 
 const app = createApp(App)
 
+// @ts-ignore: Missing type
+app.config.devtools = true
+
 app.use(router)
 
 app.directive("maska", mask as any)
