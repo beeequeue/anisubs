@@ -44,7 +44,7 @@ export default defineComponent({
 .comparison {
   display: grid;
   grid-auto-columns: calc(33%);
-  grid-template-rows: 60px 1fr;
+  grid-template-rows: auto 1fr;
   grid-column-gap: 8px;
 
   width: 100%;

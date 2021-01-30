@@ -9,12 +9,6 @@ const loggedIn = ref(false)
 export const useAuth = () => {
   const router = useRouter()
 
-  watch(router.currentRoute, () => {
-    if (!loggedIn.value) {
-      void router.replace("/login")
-    }
-  })
-
   const { state: checkedAuth } = useAsyncState(
     fetch(`${CONFIG.VUE_APP_API_URL}/me`, {
       method: "GET",
@@ -31,6 +25,12 @@ export const useAuth = () => {
     }),
     false,
   )
+
+  watch(router.currentRoute, () => {
+    if (checkedAuth.value && !loggedIn.value) {
+      void router.replace("/login")
+    }
+  })
 
   return {
     loggedIn,

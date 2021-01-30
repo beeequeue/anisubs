@@ -74,6 +74,10 @@ export default defineComponent({
   font-size: 22px;
 
   z-index: 2;
+
+  & > .source {
+    padding: 10px 0;
+  }
 }
 
 .images {
