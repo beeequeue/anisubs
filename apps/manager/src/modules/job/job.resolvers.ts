@@ -59,9 +59,12 @@ export class JobRootResolvers {
     const group = await entry.group
 
     return Job.createJob({
-      ...entry,
+      animeId: entry.animeId,
+      fileName: entry.fileName,
+      source: entry.sourceUri,
       group: group.id,
       timestamps: null,
+      useExistingTimestamps: false,
     })
   }
 }

@@ -43,25 +43,8 @@ export class Anime {
   async entries(
     @Arg("all", () => Boolean, { nullable: true })
     all: boolean | null,
-  ): Promise<Entry[]> {
-    const entries = await Entry.find({
-      where: { animeId: this.id },
-      relations: ["group"],
-    })
-
-    if (all) return entries
-
-    const distinctEntries: Record<string, Entry> = {}
-
-    for (const entry of entries) {
-      const group = await entry.group
-
-      if (Object.keys(distinctEntries).includes(group.id)) continue
-
-      distinctEntries[group.id] = entry
-    }
-
-    return Object.values(distinctEntries)
+  ): Promise<Iterable<Entry>> {
+    return Entry.getDistinctEntries(this.id, all)
   }
 
   @Field(() => Anilist, { nullable: true })

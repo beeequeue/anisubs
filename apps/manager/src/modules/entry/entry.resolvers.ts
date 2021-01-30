@@ -11,6 +11,7 @@ import {
 import { getManager } from "typeorm"
 
 import { IdsService } from "@/lib/arm"
+import { Logger } from "@/lib/logger"
 import { MyAnimeListService } from "@/lib/myanimelist"
 import { Anime } from "@/modules/anime/anime.model"
 import { Entry } from "@/modules/entry/entry.model"
@@ -20,7 +21,7 @@ import { Image } from "@/modules/image/image.model"
 export class EntryResolvers {
   @Query(() => [Entry])
   async entries(@Arg("animeId") animeId: number): Promise<Entry[]> {
-    return Entry.find({ where: { animeId } })
+    return Entry.getDistinctEntries(animeId)
   }
 
   @Mutation(() => Boolean)
@@ -37,7 +38,7 @@ export class EntryResolvers {
         await transaction.delete(Entry, entry.id)
       })
     } catch (e) {
-      console.error(e)
+      Logger.error(e)
       throw new Error(`Could not delete Entry:${id}!`)
     }
 

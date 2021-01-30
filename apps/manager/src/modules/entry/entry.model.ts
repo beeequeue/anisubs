@@ -73,4 +73,28 @@ export class Entry extends ExtendedEntity implements ExtractOptions {
 
     return entry
   }
+
+  static async getDistinctEntries(animeId: number, all?: boolean | null) {
+    const entries = await Entry.find({
+      where: { animeId },
+      relations: ["group"],
+      order: {
+        createdAt: "DESC",
+      },
+    })
+
+    if (all) return entries
+
+    const distinctEntries = new Map<string, Entry>()
+
+    for (const entry of entries) {
+      const group = await entry.group
+
+      if (distinctEntries.has(group.id)) continue
+
+      distinctEntries.set(group.id, entry)
+    }
+
+    return distinctEntries.values()
+  }
 }

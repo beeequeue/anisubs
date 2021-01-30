@@ -105,7 +105,10 @@ export class Job implements ExtractOptions {
     fileName,
     timestamps,
     group: customGroupName,
-  }: JobCreationArgs): Promise<Job> {
+    useExistingTimestamps = true,
+  }: JobCreationArgs & {
+    useExistingTimestamps?: boolean
+  }): Promise<Job> {
     const torrent = await WebTorrent.getMetadata(source)
 
     if (
@@ -171,7 +174,10 @@ export class Job implements ExtractOptions {
       id: hash,
       fileName: fileName,
       episode: Number(episodeNumber),
-      timestamps: existingTimestamps ?? timestamps!, //  TS doesn't realize one of the vars will not be null
+      timestamps:
+        useExistingTimestamps && existingTimestamps != null
+          ? existingTimestamps
+          : timestamps,
       source: torrent.name,
       sourceUri: source,
       animeId: animeId,
