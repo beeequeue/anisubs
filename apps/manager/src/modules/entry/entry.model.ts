@@ -56,7 +56,10 @@ export class Entry extends ExtendedEntity implements ExtractOptions {
   static async getTimestampsForAnime(
     animeId: number,
   ): Promise<string[] | null> {
-    return (await Entry.findOne({ animeId }))?.timestamps ?? null
+    return (
+      (await Entry.findOne({ animeId }, { order: { createdAt: "DESC" } }))
+        ?.timestamps ?? null
+    )
   }
 
   static fromQueueJob(queueJob: QueueJob<ExtractOptions, unknown>): Entry {
