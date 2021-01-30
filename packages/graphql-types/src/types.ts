@@ -166,6 +166,7 @@ export type Mutation = {
   readonly __typename?: "Mutation"
   readonly deleteEntry: Scalars["Boolean"]
   readonly createJob: Job
+  readonly redoEntry: Job
   readonly registerWorker: Scalars["String"]
   readonly confirmWorker: Scalars["Boolean"]
 }
@@ -180,6 +181,10 @@ export type MutationCreateJobArgs = {
   fileName: Maybe<Scalars["String"]>
   timestamps: Maybe<ReadonlyArray<Scalars["Timestamp"]>>
   group: Maybe<Scalars["String"]>
+}
+
+export type MutationRedoEntryArgs = {
+  entryUuid: Scalars["String"]
 }
 
 export type MutationRegisterWorkerArgs = {

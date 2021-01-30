@@ -84,6 +84,7 @@ type Mutation {
   confirmWorker(token: String!): Boolean!
   createJob(animeId: Int!, fileName: String, group: String, source: String!, timestamps: [Timestamp!]): Job!
   deleteEntry(id: ID!): Boolean!
+  redoEntry(entryUuid: String!): Job!
   registerWorker(name: String!): String!
 }
 

@@ -1,4 +1,6 @@
+import { UserInputError } from "apollo-server-koa"
 import {
+  Arg,
   Args,
   FieldResolver,
   Mutation,
@@ -15,6 +17,7 @@ import { Anime } from "@/modules/anime/anime.model"
 import { Group } from "@/modules/group/group.model"
 import { Job, JobCreationArgs } from "@/modules/job/job.model"
 
+import { Entry } from "../entry/entry.model"
 import { PaginatedResponse, PaginationArgs } from "../pagination"
 
 @ObjectType()
@@ -43,6 +46,23 @@ export class JobRootResolvers {
   @Mutation(() => Job)
   async createJob(@Args() options: JobCreationArgs): Promise<Job> {
     return Job.createJob(options)
+  }
+
+  @Mutation(() => Job)
+  async redoEntry(@Arg("entryUuid") entryUuid: string): Promise<Job> {
+    const entry = await Entry.findOne(entryUuid)
+
+    if (entry == null) {
+      throw new UserInputError("Entry does not exist.")
+    }
+
+    const group = await entry.group
+
+    return Job.createJob({
+      ...entry,
+      group: group.id,
+      timestamps: null,
+    })
   }
 }
 
