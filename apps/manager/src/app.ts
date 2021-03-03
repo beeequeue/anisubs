@@ -33,6 +33,7 @@ export const createApp = async () => {
   app.use(Helmet())
 
   if (config.NODE_ENV === "production") {
+    app.proxy = true
     app.use(TokenMiddleware())
   }
 
