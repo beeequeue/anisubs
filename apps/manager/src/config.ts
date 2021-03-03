@@ -22,6 +22,7 @@ const baseEnv = envsafe({
   }),
   LOG_LEVEL: str({
     default: "info",
+    devDefault: "debug",
     choices: ["fatal", "error", "warn", "info", "debug", "trace"],
   }),
   USER_AGENT: str({
