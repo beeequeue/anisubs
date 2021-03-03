@@ -29,6 +29,7 @@ export type Scalars = {
 export type Anilist = {
   readonly __typename?: "Anilist"
   readonly title: Scalars["String"]
+  readonly format: Scalars["String"]
   readonly imageMedium: Scalars["String"]
   readonly imageLarge: Scalars["String"]
   readonly banner: Maybe<Scalars["String"]>

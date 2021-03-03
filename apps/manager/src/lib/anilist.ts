@@ -25,6 +25,8 @@ const graphql = new GraphQLClient(config.ANILIST_URL, {
 
 type AnilistData = null | {
   id: number
+  format: "TV" | "TV_SHORT" | "MOVIE" | "SPECIAL" | "OVA" | "ONA" | "MUSIC"
+  episodes: number
   title: {
     english?: string
     romaji?: string
@@ -42,6 +44,8 @@ const query = gql`
     data: Page(page: 1, perPage: 50) {
       anime: media(type: ANIME, id_in: $ids) {
         id
+        format
+        episodes
         title {
           english
           romaji
@@ -137,6 +141,9 @@ export class Anilist {
   title!: string
 
   @Field()
+  format!: "MOVIE" | "SERIES"
+
+  @Field()
   imageMedium!: string
 
   @Field()
@@ -159,6 +166,8 @@ export class Anilist {
 
     toReturn.title =
       data.title.english ?? data.title.romaji ?? data.title.native
+    toReturn.format =
+      data.format === "MOVIE" || data.episodes === 1 ? "MOVIE" : "SERIES"
     toReturn.imageLarge = data.coverImage.extraLarge
     toReturn.imageMedium = data.coverImage.medium
     toReturn.banner = data.bannerImage

@@ -6,6 +6,7 @@
 """Data from AniList"""
 type Anilist {
   banner: String
+  format: String!
   imageLarge: String!
   imageMedium: String!
   title: String!
