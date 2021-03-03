@@ -15,6 +15,7 @@ import { ArgsType, Field, ID, Int, ObjectType } from "type-graphql"
 import { Index } from "typeorm"
 
 import { Timestamp } from "@/graphql/scalars"
+import { Anilist } from "@/lib/anilist"
 import { Logger } from "@/lib/logger"
 import { addJob } from "@/lib/queue"
 import { Entry } from "@/modules/entry/entry.model"
@@ -109,11 +110,24 @@ export class Job implements ExtractOptions {
   }: JobCreationArgs & {
     useExistingTimestamps?: boolean
   }): Promise<Job> {
+    const anime = await Anilist.fetch(animeId)
+
+    if (anime == null) {
+      throw new UserInputError(
+        "Could not find an anime or movie with that ID on AniList.",
+      )
+    }
+
     const torrent = await WebTorrent.getMetadata(source)
+
+    // Filter out non-video files from files list
+    const files = torrent.files.filter((file) =>
+      /\.(mkv|mp4|webm)$/.test(file.name),
+    )
 
     if (
       fileName != null &&
-      torrent.files.find((file) => file.name === fileName) == null
+      files.find((file) => file.name === fileName) == null
     ) {
       throw new UserInputError(
         `Torrent does not include a file named ${fileName}`,
@@ -121,10 +135,11 @@ export class Job implements ExtractOptions {
     }
 
     if (fileName == null) {
-      if (torrent.files.length === 1) {
-        fileName = torrent.files[0].name
+      console.log(files)
+      if (files.length === 1) {
+        fileName = files[0].name
       } else {
-        const episodeOne = torrent.files.find((file) => {
+        const episodeOne = files.find((file) => {
           const parsed = parseSync(file.name)
 
           return Number(parsed.episode_number) === 1
@@ -153,11 +168,15 @@ export class Job implements ExtractOptions {
       )
     }
 
-    const episodeNumber = /^(\d+)/.exec(fileInfo.episode_number ?? "")?.[1]
-    if (fileInfo.episode_number == null || episodeNumber == null) {
-      throw new UserInputError(
-        "Could not determine episode number from torrent name.",
-      )
+    let episodeNumber: string | undefined = "1"
+
+    if (anime.format === "SERIES") {
+      episodeNumber = /^(\d+)/.exec(fileInfo.episode_number ?? "")?.[1]
+      if (fileInfo.episode_number == null || episodeNumber == null) {
+        throw new UserInputError(
+          "Could not determine episode number from torrent name.",
+        )
+      }
     }
 
     const group = await Group.findOrCreateByName(
