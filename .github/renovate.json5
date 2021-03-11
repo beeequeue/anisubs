@@ -1,0 +1,28 @@
+{
+  extends: [
+    "config:js-app",
+    "helpers:disableTypesNodeMajor",
+  ],
+  prConcurrentLimit: 5,
+  schedule: ["before 2am"],
+  packageRules: [
+    {
+      matchUpdateTypes: ["minor", "patch"],
+      automerge: true,
+    },
+    {
+      groupName: "linting",
+      extend: ["group:linters"],
+      matchPackagePatterns: ["eslint"],
+    },
+    {
+      groupName: "testing",
+      extend: ["packages:jsUnitTest"],
+      matchPackagePatterns: ["^@testing-library"],
+    },
+    {
+      groupName: "babel",
+      matchPackagePatterns: ["babel"],
+    },
+  ],
+}
