@@ -12,12 +12,12 @@
     },
     {
       groupName: "linting",
-      extend: ["group:linters"],
+      extends: ["group:linters"],
       matchPackagePatterns: ["eslint"],
     },
     {
       groupName: "testing",
-      extend: ["packages:jsUnitTest"],
+      extends: ["packages:jsUnitTest"],
       matchPackagePatterns: ["^@testing-library"],
     },
     {
