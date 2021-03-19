@@ -4473,18 +4473,18 @@
     vscode-languageserver-textdocument "^1.0.1"
     vscode-uri "^2.1.2"
 
-"@vueuse/core@4.0.10":
-  version "4.0.10"
-  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-4.0.10.tgz#863ae7bb9d3325908e3ce388e9050c8bec09f502"
-  integrity sha512-2TxaF9JWutJlrgRtz9r/vFPvpaKKQ8HL5eMIiIMNBpfAkf0BZkT5HsSzphNyJ9vMhjlM+DIlhGKdWVASOdc3Aw==
+"@vueuse/core@4.4.1":
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-4.4.1.tgz#1c1a83ac29306840c96329b1005c4d7608cee92f"
+  integrity sha512-L9TWFwI+pEqgEmfv+uWz2kQ9bXejtpaQdoS67UUyii22rSesjP1aTTU7z7XX5i7aIgsHKnKYv68cDCtEZbjsPA==
   dependencies:
-    "@vueuse/shared" "4.0.10"
+    "@vueuse/shared" "4.4.1"
     vue-demi latest
 
-"@vueuse/shared@4.0.10":
-  version "4.0.10"
-  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-4.0.10.tgz#3f175d7c33831ab7226c5c712ad2a53093a52c19"
-  integrity sha512-x60po8a7v1tyaQNbXJWf/YTzgUzYU5rbmxKgxbxrHC2aDIcSLTMgqmwFrFpqbLwbNxvDta7z/R0MJms5bSaWwg==
+"@vueuse/shared@4.4.1":
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-4.4.1.tgz#8963740d1b8a036933ae5c02b461b430430e2433"
+  integrity sha512-pY7bXgYaA9g25XNREE3zeuIWfOwbyiKeQ0IppE4nIRuro4gVGuLoV/BIU6D0VOTv7hYefv5eqE+WS03v61y8xA==
   dependencies:
     vue-demi latest
 
