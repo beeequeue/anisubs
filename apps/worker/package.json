@@ -27,7 +27,7 @@
     "@anisubs/shared": "*",
     "anitomy-js": "5.0.0",
     "bullmq": "1.15.1",
-    "envsafe": "2.0.2",
+    "envsafe": "2.0.3",
     "fluent-ffmpeg": "2.1.2",
     "got": "11.8.1",
     "ms": "2.1.3",
