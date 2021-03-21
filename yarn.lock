@@ -8013,10 +8013,10 @@ envinfo@^7.3.1:
   resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.7.3.tgz#4b2d8622e3e7366afb8091b23ed95569ea0208cc"
   integrity sha512-46+j5QxbPWza0PB1i15nZx0xQ4I/EfQxg9J8Had3b408SV63nEtor2e+oiY63amTo9KTuh2a3XLObNwduxYwwA==
 
-envsafe@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/envsafe/-/envsafe-2.0.2.tgz#9cfca3335d17040ab1eadd5980b840872e6972d6"
-  integrity sha512-iVebNAEH1M1yh9zTBszwJBrdp1vobjB2ZlUDmhd14Y0RgRtFVZyEjyQm9o08ftQ3OdXNOGO0r5+cj59yjBBsdQ==
+envsafe@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/envsafe/-/envsafe-2.0.3.tgz#cb88a9f750a67455638ebfc16f4cd5296bb5e1a0"
+  integrity sha512-51lek8h5btjXhXUDW//Pno7HPydM1WQzltOb1/ONRKdwB2QkfAURnN4Qn0cJ5LzGvX2Km1ReR2O3K3Bqq9sBMg==
 
 err-code@^1.0.0:
   version "1.1.2"

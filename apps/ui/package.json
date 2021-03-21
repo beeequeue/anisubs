@@ -27,7 +27,7 @@
     "@vue/apollo-composable": "4.0.0-alpha.12",
     "@vueuse/core": "4.4.1",
     "core-js": "3.9.1",
-    "envsafe": "2.0.2",
+    "envsafe": "2.0.3",
     "graphql": "15.4.0",
     "modern-normalize": "1.0.0",
     "vue": "3.0.5",
