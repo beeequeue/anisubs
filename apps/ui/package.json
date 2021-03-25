@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/vue-the-mask": "0.11.1",
-    "@vue/cli-plugin-babel": "5.0.0-alpha.7",
+    "@vue/cli-plugin-babel": "5.0.0-alpha.8",
     "@vue/cli-plugin-router": "5.0.0-alpha.2",
     "@vue/cli-plugin-typescript": "5.0.0-alpha.2",
     "@vue/cli-service": "5.0.0-alpha.2",
