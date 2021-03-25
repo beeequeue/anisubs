@@ -48,7 +48,7 @@
     "koa-static-server": "1.5.2",
     "node-cache": "5.1.2",
     "nyaapi": "2.4.1",
-    "pino": "6.11.0",
+    "pino": "6.11.2",
     "pino-pretty": "4.3.0",
     "pg": "8.5.1",
     "reflect-metadata": "0.1.13",
