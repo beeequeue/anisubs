@@ -16108,10 +16108,10 @@ subscriptions-transport-ws@^0.9.11:
     symbol-observable "^1.0.4"
     ws "^5.2.0"
 
-subtitle@4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/subtitle/-/subtitle-4.0.1.tgz#fd74aea1366b6abc25a3fe8f1e028a0aedcee154"
-  integrity sha512-3ivC8kaSYjMSiVBjLNPd13nmsdtcEmBVm7lc6d1ODF3f6UfUrITwBbkOk064leqDECvdtbAHof/IJBG+q05GMA==
+subtitle@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/subtitle/-/subtitle-4.1.0.tgz#0411331f57a30c6a816f2c6639a3058837fd003f"
+  integrity sha512-ctVa9qAfoNlXGIcWMMhqV8zoTVcRXJDDBDhU6CvpK2zycir3m8IUwofy9vYwUCnC22CfiEe0j83Grmp+GFEOqQ==
   dependencies:
     "@types/multipipe" "^3.0.0"
     multipipe "^4.0.0"
