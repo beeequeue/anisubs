@@ -54,7 +54,7 @@
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "type-graphql": "1.1.1",
-    "typedi": "0.8.0",
+    "typedi": "0.10.0",
     "typeorm": "0.2.30",
     "uuid": "8.3.2"
   },
