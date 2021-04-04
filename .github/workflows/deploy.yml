@@ -31,7 +31,7 @@ jobs:
 
       - name: Deploy
         if: steps.checks.outputs.status == 'success'
-        uses: dokku/github-action@v1.0.1
+        uses: dokku/github-action@v1.0.2
         with:
           git_remote_url: 'ssh://dokku@media.ejdre.se:22/anisubs-manager'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
