@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Cancel previous deployments
         uses: styfle/cancel-workflow-action@0.8.0
