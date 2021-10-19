@@ -29,7 +29,7 @@
     "@anisubs/shared": "*",
     "@koa/cors": "3.1.0",
     "anitomy-js": "5.0.0",
-    "apollo-server-koa": "2.21.1",
+    "apollo-server-koa": "2.25.2",
     "bottleneck": "2.19.5",
     "bullmq": "1.15.1",
     "class-transformer": "0.4.0",
