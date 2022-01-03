@@ -2,7 +2,7 @@
   "name": "@anisubs/root",
   "private": true,
   "engines": {
-    "node": ">=12"
+    "node": ">=14"
   },
   "workspaces": [
     "packages/*",
